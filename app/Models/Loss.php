@@ -41,7 +41,11 @@ class Loss extends Model
 
     public function totalValue(): float
     {
-        return (float) ($this->quantity * ($this->purchase_price ?? 0));
+         if (empty($this->quantity) || empty($this->purchase_price)) {
+        return 0.0;
+        }
+
+        return (float) ($this->quantity * $this->purchase_price);
     }
 
     /**
