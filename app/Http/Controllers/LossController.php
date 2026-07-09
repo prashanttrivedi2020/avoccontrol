@@ -29,9 +29,10 @@ class LossController extends Controller
         }
 
         $losses   = $query->paginate(20)->withQueryString();
-        $products = Auth::user()->products()->orderBy('name')->get();
+       // $products = Auth::user()->products()->orderBy('name')->get();
 
-        return view('losses.index', compact('losses', 'products'));
+        //return view('losses.index', compact('losses', 'products'));
+        return view('losses.index', compact('losses'));
     }
 
     public function create()

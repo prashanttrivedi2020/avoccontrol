@@ -33,12 +33,7 @@
         </div>
         <div>
             <label class="form-label" style="font-size:11px">{{ __('Product') }}</label>
-            <select name="product_id" class="form-control" style="padding:6px 10px;font-size:13px">
-                <option value="">{{ __('All') }}</option>
-                @foreach($products as $p)
-                    <option value="{{ $p->id }}" {{ request('product_id') == $p->id ? 'selected' : '' }}>{{ $p->name }}</option>
-                @endforeach
-            </select>
+            
         </div>
         <div style="display:flex;gap:6px;padding-bottom:1px">
             <button type="submit" class="btn btn-primary btn-sm">🔍 {{ __('Filter') }}</button>
@@ -139,7 +134,9 @@
 
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
         <div style="font-size:13px;color:var(--text-muted)">
-            {{ $losses->total() }} {{ __('Entries') }} · {{ __('Total value') }}: <strong style="color:var(--accent)">{{ number_format($totalValue, 2, ',', '.') }} €</strong>
+            {{ $losses->total() }} {{ __('Entries') }} · {{ __('Total value') }}: <strong style="color:var(--accent)">
+                {{ number_format($losses->sum(fn($l) => $l->totalValue()), 2, ',', '.') }} €
+            </strong>
         </div>
         <div class="pagination">
             {{ $losses->appends(request()->query())->links() }}
