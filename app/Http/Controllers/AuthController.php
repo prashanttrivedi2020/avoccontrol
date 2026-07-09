@@ -69,9 +69,9 @@ class AuthController extends Controller
         $demo = User::firstOrCreate(
             ['username' => 'demo'],
             [
-                'name'       => 'Demo-Benutzer',
-                'email'      => 'demo@firekontrol365.de',
-                'password'   => Hash::make('demo1234'),
+                'name'       => 'Volkan Can',
+                'email'      => 'demo@ekampanya.app',
+                'password'   => Hash::make('control@1234'),
                 'role'       => 'demo',
                 'store_name' => 'Demo-Supermarkt',
             ]
