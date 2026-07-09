@@ -20,6 +20,114 @@
 @else
 <form method="POST" action="{{ route('losses.store') }}" enctype="multipart/form-data" id="loss-form">
     @csrf
+    {{-- ════════════════════════════════════════════════════════
+         SECTION 4: PHOTO
+         ════════════════════════════════════════════════════════ --}}
+    <div class="form-group">
+        <label class="form-label">{{ __('Photo') }}</label>
+         {{-- Camera capture --}}
+        <div id="photo-mode-camera">
+            <div id="camera-wrap" style="display:none;position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
+                <video id="photo-video" autoplay playsinline muted
+                       style="width:100%;max-height:320px;object-fit:cover;display:block"></video>
+                <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;
+                            background:linear-gradient(transparent,rgba(0,0,0,0.7));
+                            display:flex;justify-content:center;gap:10px">
+                    <button type="button" class="btn btn-primary" onclick="capturePhoto()" style="font-size:15px">
+                        📸 {{ __('Take photo') }}
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="stopPhotoCamera()">
+                        ⏹ {{ __('Stop') }}
+                    </button>
+                </div>
+                <button type="button" onclick="switchCamera()" id="btn-switch-cam"
+                        style="position:absolute;top:10px;right:10px;
+                               background:rgba(0,0,0,0.55);border:none;border-radius:8px;
+                               color:#fff;padding:6px 10px;cursor:pointer;font-size:18px"
+                        title="{{ __('Switch camera') }}">🔄</button>
+            </div>
+            <canvas id="photo-canvas" style="display:none"></canvas>
+
+            <div id="camera-start-wrap">
+                <div style="display: none;">
+                    <button type="button" class="btn btn-primary" onclick="startPhotoCamera()">
+                        📷 {{ __('Open camera') }}
+                    </button>
+                    <div class="form-hint" style="margin-top:6px">
+                        {{ __('Opens the back camera to photograph the damage') }}
+                    </div>
+                </div>
+            </div>
+
+            <div id="photo-preview-wrap" style="display:none;margin-top:10px">
+                <div style="display:flex;align-items:flex-start;gap:12px">
+                    <img id="photo-preview-img"
+                         style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:2px solid var(--border)">
+                    <div>
+                        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px">
+                            ✅ {{ __('Photo taken') }}
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="retakePhoto()">
+                            🔄 {{ __('Retake') }}
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deletePhoto()" style="margin-left:6px">
+                            🗑 {{ __('Delete') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" name="photo_data" id="photo-data-input">
+        </div>
+
+        {{-- File upload --}}
+        <div id="file-drop-icon" style="font-size:36px;margin-bottom:8px;display:none;">🖼️{{ __('no_photo_yet') }}</div>
+        <div id="photo-mode-upload" style="display:block;width:49%;height:auto;margin-left: 25%;">
+            <div id="file-drop-zone" style="
+                border:2px dashed var(--border);border-radius:12px;
+                text-align:center;cursor:pointer;
+                transition:border-color .2s,background .2s;
+            " onclick="document.getElementById('photo-file-input').click()">
+               
+                <div id="file-drop-text" style="color:var(--text-muted);font-size:13px">
+                    🖼️
+                  {{ __('no_photo_yet') }}
+                </div>
+                <div id="file-drop-name" style="margin-top:8px;font-weight:600;display:block;">
+                   
+
+                </div>
+                 <img  id="file-drop-preview" style="width:100%;height:auto;object-fit:cover;border-radius:8px;margin-bottom:6px">
+                <input type="file" id="photo-file-input" name="photo" accept="image/*"
+                       style="position:absolute;opacity:0;width:0;height:0"
+                       onchange="onFileChosen(this)">
+            </div>
+            <div class="form-hint">{{ __('Optional: photo as evidence (max. 10 MB)') }}</div>
+        </div>
+
+        <div class="mode-tabs" id="photo-mode-tabs" style="margin-bottom:12px">
+            <!-- <button type="button" class="mode-tab active" onclick="setPhotoMode('camera')" id="photo-tab-camera">
+                <span>📷</span> {{ __('Capture with camera') }}
+            </button> -->
+
+             <button type="button" class="mode-tab active" onclick="startPhotoCamera()" id="photo-tab-camera">
+                <span>📷</span> {{ __('Capture with camera') }}
+            </button>
+
+            <!-- <button type="button" class="mode-tab" onclick="setPhotoMode('upload')" id="photo-tab-upload">
+                <span>📁</span> {{ __('Upload file') }}
+            </button> -->
+            <button type="button" class="mode-tab" onclick="document.getElementById('photo-file-input').click()" id="photo-tab-upload">
+                <span>📁</span> {{ __('Upload file') }}
+            </button>
+           
+        </div>
+
+       
+
+        @error('photo') <div class="form-error">{{ $message }}</div> @enderror
+    </div>
+
 
     {{-- ════════════════════════════════════════════════════════
          SECTION 1: PRODUCT SELECTION
@@ -29,15 +137,21 @@
 
         {{-- Mode tabs --}}
         <div class="mode-tabs" id="product-mode-tabs">
-            <button type="button" class="mode-tab active" onclick="setProductMode('scan')" id="tab-scan">
+            <!-- <button type="button" class="mode-tab" onclick="setProductMode('scan')" id="tab-scan">
+                <span>📷</span> {{ __('Scan barcode') }}
+            </button> -->
+
+            <button type="button" class="mode-tab" onclick="startScan()" id="tab-scan">
                 <span>📷</span> {{ __('Scan barcode') }}
             </button>
-            <button type="button" class="mode-tab" onclick="setProductMode('manual-barcode')" id="tab-manual-barcode">
+
+            
+            <button type="button" class="mode-tab active" onclick="setProductMode('manual-barcode')" id="tab-manual-barcode">
                 <span>🔢</span> {{ __('Enter barcode') }}
             </button>
-            <button type="button" class="mode-tab" onclick="setProductMode('dropdown')" id="tab-dropdown">
+            <!-- <button type="button" class="mode-tab" onclick="setProductMode('dropdown')" id="tab-dropdown">
                 <span>☰</span> {{ __('Select manually') }}
-            </button>
+            </button> -->
         </div>
 
         {{-- Mode: Camera barcode scanner --}}
@@ -193,96 +307,7 @@
         </div>
     </div>
 
-    {{-- ════════════════════════════════════════════════════════
-         SECTION 4: PHOTO
-         ════════════════════════════════════════════════════════ --}}
-    <div class="form-group">
-        <label class="form-label">{{ __('Photo') }}</label>
-
-        <div class="mode-tabs" id="photo-mode-tabs" style="margin-bottom:12px">
-            <button type="button" class="mode-tab active" onclick="setPhotoMode('camera')" id="photo-tab-camera">
-                <span>📷</span> {{ __('Capture with camera') }}
-            </button>
-            <button type="button" class="mode-tab" onclick="setPhotoMode('upload')" id="photo-tab-upload">
-                <span>📁</span> {{ __('Upload file') }}
-            </button>
-        </div>
-
-        {{-- Camera capture --}}
-        <div id="photo-mode-camera">
-            <div id="camera-wrap" style="display:none;position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
-                <video id="photo-video" autoplay playsinline muted
-                       style="width:100%;max-height:320px;object-fit:cover;display:block"></video>
-                <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;
-                            background:linear-gradient(transparent,rgba(0,0,0,0.7));
-                            display:flex;justify-content:center;gap:10px">
-                    <button type="button" class="btn btn-primary" onclick="capturePhoto()" style="font-size:15px">
-                        📸 {{ __('Take photo') }}
-                    </button>
-                    <button type="button" class="btn btn-secondary" onclick="stopPhotoCamera()">
-                        ⏹ {{ __('Stop') }}
-                    </button>
-                </div>
-                <button type="button" onclick="switchCamera()" id="btn-switch-cam"
-                        style="position:absolute;top:10px;right:10px;
-                               background:rgba(0,0,0,0.55);border:none;border-radius:8px;
-                               color:#fff;padding:6px 10px;cursor:pointer;font-size:18px"
-                        title="{{ __('Switch camera') }}">🔄</button>
-            </div>
-            <canvas id="photo-canvas" style="display:none"></canvas>
-
-            <div id="camera-start-wrap">
-                <button type="button" class="btn btn-primary" onclick="startPhotoCamera()">
-                    📷 {{ __('Open camera') }}
-                </button>
-                <div class="form-hint" style="margin-top:6px">
-                    {{ __('Opens the back camera to photograph the damage') }}
-                </div>
-            </div>
-
-            <div id="photo-preview-wrap" style="display:none;margin-top:10px">
-                <div style="display:flex;align-items:flex-start;gap:12px">
-                    <img id="photo-preview-img"
-                         style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:2px solid var(--border)">
-                    <div>
-                        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px">
-                            ✅ {{ __('Photo taken') }}
-                        </div>
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="retakePhoto()">
-                            🔄 {{ __('Retake') }}
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="deletePhoto()" style="margin-left:6px">
-                            🗑 {{ __('Delete') }}
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <input type="hidden" name="photo_data" id="photo-data-input">
-        </div>
-
-        {{-- File upload --}}
-        <div id="photo-mode-upload" style="display:none">
-            <div id="file-drop-zone" style="
-                border:2px dashed var(--border);border-radius:12px;
-                padding:28px 20px;text-align:center;cursor:pointer;
-                transition:border-color .2s,background .2s;
-            " onclick="document.getElementById('photo-file-input').click()">
-                <div id="file-drop-icon" style="font-size:36px;margin-bottom:8px">🖼️</div>
-                <div id="file-drop-text" style="color:var(--text-muted);font-size:13px">
-                    {{ __('Drag image here or') }} <span style="color:var(--accent);font-weight:600">{{ __('click') }}</span>
-                </div>
-                <div id="file-drop-name" style="margin-top:8px;font-weight:600;display:none"></div>
-                <input type="file" id="photo-file-input" name="photo" accept="image/*"
-                       style="position:absolute;opacity:0;width:0;height:0"
-                       onchange="onFileChosen(this)">
-            </div>
-            <div class="form-hint">{{ __('Optional: photo as evidence (max. 10 MB)') }}</div>
-        </div>
-
-        @error('photo') <div class="form-error">{{ $message }}</div> @enderror
-    </div>
-
+    
     {{-- ════════════════════════════════════════════════════════
          SECTION 5: NOTES + SUBMIT
          ════════════════════════════════════════════════════════ --}}
@@ -399,8 +424,9 @@ function setProductMode(mode) {
 // ── Barcode scanner (html5-qrcode) ──────────────────────────────────────────
 let scanner = null;
 let scannerRunning = false;
-
+setProductMode('manual-barcode');
 async function startScan() {
+    setProductMode('scan');
     document.getElementById('btn-start-scan').style.display = 'none';
     document.getElementById('btn-stop-scan').style.display = '';
     document.getElementById('scan-status').textContent = TRANS.scannerStarting;
@@ -609,6 +635,7 @@ function deletePhoto() {
 // ── File upload drag-and-drop ─────────────────────────────────────────────────
 const dropZone = document.getElementById('file-drop-zone');
 if (dropZone) {
+  
     dropZone.addEventListener('dragover', e => {
         e.preventDefault();
         dropZone.classList.add('dragover');
@@ -628,12 +655,19 @@ if (dropZone) {
 }
 
 function onFileChosen(input) {
+      setPhotoMode('upload');
     const file = input.files[0];
     if (!file) return;
     const nameEl = document.getElementById('file-drop-name');
     nameEl.textContent = file.name;
-    nameEl.style.display = '';
+    nameEl.style.display = 'none';
     document.getElementById('file-drop-text').style.display = 'none';
+    document.getElementById('file-drop-icon').style.display = 'none';
+    const preview = document.getElementById('file-drop-preview');
+    preview.src = URL.createObjectURL(file);
+   
+
+   
 }
 
 // ── Pre-select product if old('product_id') is set ───────────────────────────
@@ -642,7 +676,9 @@ function onFileChosen(input) {
     const id = {{ (int) old('product_id') }};
     const p  = PRODUCTS[id];
     if (p) setConfirmedProduct(id, p.name, p.price, p.supplier, p.unit);
-    setProductMode('dropdown');
+    //setProductMode('dropdown');
+     setProductMode('manual-barcode');
+    
     const dd = document.getElementById('product-dropdown');
     if (dd) dd.value = id;
 })();
