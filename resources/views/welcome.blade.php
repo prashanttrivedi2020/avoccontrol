@@ -354,15 +354,9 @@
             </form>
         </div>
 
-        <!-- Demo -->
-        <form method="POST" action="{{ route('demo.login') }}">
-            @csrf
-            <button type="submit" class="btn-demo">{{ __('Demo login (no account needed)') }}</button>
-        </form>
+        
 
-        <p class="proto-notice">
-            {{ __('This is a prototype. Login runs locally in the browser and does not replace real server-side security.') }}
-        </p>
+        
     </div>
 </div>
 
