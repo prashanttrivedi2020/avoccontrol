@@ -1,4 +1,4 @@
-const CACHE_NAME = 'firekontrol-v1';
+const CACHE_NAME = 'firekontrol-v2';
 
 // Static assets to pre-cache on install
 const PRECACHE_URLS = [
@@ -45,18 +45,22 @@ self.addEventListener('fetch', event => {
     // Static assets → cache-first
     if (url.pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|ico|woff2?|ttf)$/)) {
         event.respondWith(
-            caches.match(request).then(cached => {
-                if (cached) return cached;
-                return fetch(request).then(response => {
-                    if (!response || response.status !== 200) return response;
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+        caches.open(CACHE_NAME).then(cache =>
+            cache.match(request).then(cached => {
+
+                const networkFetch = fetch(request).then(response => {
+                    if (response && response.status === 200) {
+                        cache.put(request, response.clone());
+                    }
                     return response;
                 });
+
+                return cached || networkFetch;
             })
-        );
-        return;
-    }
+        )
+    );
+    return;
+    }   
 
     // HTML pages → network-first, fall back to offline page
     event.respondWith(
