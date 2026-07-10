@@ -24,7 +24,7 @@
          SECTION 4: PHOTO
          ════════════════════════════════════════════════════════ --}}
     <div class="form-group">
-        <label class="form-label">{{ __('Photo') }}</label>
+        <label class="form-label">{{ __('Photo') }}<span class="form-hint"> {{ __('Optional: photo as evidence (max. 10 MB)') }}</span></label> 
          {{-- Camera capture --}}
         <div id="photo-mode-camera">
             <div id="camera-wrap" style="display:none;position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
@@ -102,7 +102,7 @@
                        style="position:absolute;opacity:0;width:0;height:0"
                        onchange="onFileChosen(this)">
             </div>
-            <div class="form-hint">{{ __('Optional: photo as evidence (max. 10 MB)') }}</div>
+           
         </div>
 
         <div class="mode-tabs" id="photo-mode-tabs" style="margin-bottom:12px">
@@ -414,7 +414,13 @@ const PRODUCTS = {
 
 // ── Product mode switching ───────────────────────────────────────────────────
 function setProductMode(mode) {
-    ['scan', 'manual-barcode', 'dropdown'].forEach(m => {
+    // ['scan', 'manual-barcode', 'dropdown'].forEach(m => {
+    //     document.getElementById('mode-' + m).style.display = m === mode ? '' : 'none';
+    //     document.getElementById('tab-' + m).classList.toggle('active', m === mode);
+    // });
+    // if (mode !== 'scan') stopScan();
+
+    ['scan', 'manual-barcode'].forEach(m => {
         document.getElementById('mode-' + m).style.display = m === mode ? '' : 'none';
         document.getElementById('tab-' + m).classList.toggle('active', m === mode);
     });

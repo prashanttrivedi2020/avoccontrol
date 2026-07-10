@@ -13,9 +13,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="FK365">
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <!-- <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png"> -->
     
 
     <style>
@@ -241,10 +241,10 @@
             border-radius: 12px;
             padding: 20px;
         }
-        .stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-        .stat-value { font-size: 28px; font-weight: 800; }
+        .stat-label { font-size: 8px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+        .stat-value { font-size: 22px; font-weight: 800; }
         .stat-value.accent { color: var(--accent2); }
-        .stat-sub   { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .stat-sub   { font-size: 8px; color: var(--text-muted); margin-top: 4px; }
 
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -337,7 +337,7 @@
             .mobile-menu-toggle { display: inline-flex; }
             .content { padding: 16px; }
             .grid-2, .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
-            .card, .stat-card { padding: 16px; }
+            .card, .stat-card { padding: 3px; }
             table { min-width: 620px; }
         }
 
@@ -385,7 +385,7 @@
         }
     </style>
 
-    <style>
+<style>
 /* ===========================
    Bootstrap display utilities
    (Required for Laravel pagination)
@@ -491,7 +491,7 @@
     pointer-events: none;
 }
 
-    </style>
+</style>
 </head>
 <body class="<?php echo e(request()->routeIs('products.*') ? 'products-page' : ''); ?>">
 <div class="sidebar-overlay" id="sidebarOverlay"></div>

@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-<div class="grid-4" style="margin-bottom:24px">
+<div class="grid-4" style="margin-bottom:6px;">
     <div class="stat-card">
         <div class="stat-label">{{ __('This Month') }}</div>
         <div class="stat-value">{{ number_format($thisMonthLosses) }}</div>
@@ -37,6 +37,7 @@
             <a href="{{ route('losses.create') }}" class="btn btn-primary">➕ {{ __('Record Loss') }}</a>
         </div>
     @else
+       <a href="{{ route('losses.create') }}" class="btn btn-primary">➕ {{ __('Record Loss') }}</a>
         <div class="table-wrap">
             <table>
                 <thead>
@@ -86,7 +87,7 @@
         </div>
     @endif
 </div>
-<div class="grid-2" style="margin-bottom:24px">
+<div class="grid-2" style="margin-bottom:6px">
     <!-- Top Products -->
     <div class="card">
         <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;color:var(--white)">
@@ -145,7 +146,7 @@
         @endif
     </div>
 </div>
-<div class="grid-4" style="margin-bottom:24px">
+<div class="grid-4" style="margin-bottom:6px">
     <div class="stat-card">
         <div class="stat-label">{{ __('Total Entries') }}</div>
         <div class="stat-value">{{ number_format($totalLosses) }}</div>
