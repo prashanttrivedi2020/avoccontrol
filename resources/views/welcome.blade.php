@@ -310,7 +310,7 @@
 
         <!-- Login -->
         <div id="tab-login" class="tab-panel {{ old('_tab') === 'login' ? 'active' : '' }}">
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login.post') }}">
                 @csrf
                 <input type="hidden" name="_tab" value="login">
                 <div class="form-group">

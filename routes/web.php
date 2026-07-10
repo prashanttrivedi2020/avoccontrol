@@ -24,8 +24,9 @@ Route::get('/lang/{locale}', function (Request $request, string $locale) {
 
 // Landing / Auth
 Route::get('/',          [AuthController::class, 'showLanding'])->name('welcome');
+Route::get('/login',     [AuthController::class, 'showLanding'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/login',    [AuthController::class, 'login'])->name('login');
+Route::post('/login',    [AuthController::class, 'login'])->name('login.post');
 Route::post('/demo',     [AuthController::class, 'demoLogin'])->name('demo.login');
 Route::post('/logout',   [AuthController::class, 'logout'])->name('logout');
 
