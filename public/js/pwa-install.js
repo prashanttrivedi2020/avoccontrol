@@ -22,10 +22,8 @@ window.addEventListener('beforeinstallprompt', (e) => {
     // Store the event for later use
     deferredPrompt = e;
     console.log('[FK365] Install prompt captured and deferred');
-    // Show install prompt if not dismissed
-    if (!localStorage.getItem('fk365_install_dismissed')) {
-        showInstallPrompt();
-    }
+    // Show install prompt on every new session
+    showInstallPrompt();
 });
 
 // Create and manage install prompt UI
@@ -111,6 +109,9 @@ function createInstallPromptUI() {
 
 function showInstallPrompt() {
     if (isInstalled || !deferredPrompt) return;
+    // Don't show if already dismissed in this session
+    if (sessionStorage.getItem('fk365_install_dismissed_session')) return;
+    
     const banner = createInstallPromptUI();
     banner.style.display = 'flex';
     console.log('[FK365] Install prompt shown');
@@ -124,10 +125,11 @@ function hideInstallPrompt() {
 }
 
 function dismissInstallPrompt() {
-    localStorage.setItem('fk365_install_dismissed', 'true');
+    // Only hide for this session (not permanently)
+    sessionStorage.setItem('fk365_install_dismissed_session', 'true');
     hideInstallPrompt();
     deferredPrompt = null;
-    console.log('[FK365] Install prompt dismissed');
+    console.log('[FK365] Install prompt dismissed for this session (will reappear on next visit)');
 }
 
 async function installApp() {
@@ -156,7 +158,7 @@ window.showPWAInstallPrompt = () => {
         alert('FireKontrol 365 ist bereits installiert.');
         return;
     }
-    localStorage.removeItem('fk365_install_dismissed');
+    sessionStorage.removeItem('fk365_install_dismissed_session');
     showInstallPrompt();
 };
 
