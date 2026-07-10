@@ -372,13 +372,13 @@ function switchTab(tab, event) {
 }
 </script>
 <script>
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('[FK365] SW registered:', reg.scope))
-            .catch(err => console.warn('[FK365] SW registration failed:', err));
-    });
-}
+// if ('serviceWorker' in navigator) {
+//     window.addEventListener('load', () => {
+//         navigator.serviceWorker.register('/sw.js')
+//             .then(reg => console.log('[FK365] SW registered:', reg.scope))
+//             .catch(err => console.warn('[FK365] SW registration failed:', err));
+//     });
+// }
 </script>
 </body>
 </html>
