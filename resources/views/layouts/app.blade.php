@@ -572,7 +572,7 @@
         @yield('content')
     </div>
 </div>
-<script src="{{ asset('js/pwa-install.js') }}"></script>
+<!-- <script src="{{ asset('js/pwa-install.js') }}"></script> -->
 <script>
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
