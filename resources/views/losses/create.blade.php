@@ -159,7 +159,7 @@
         </div>
 
         {{-- Mode: Camera barcode scanner --}}
-        <div id="mode-scan" class="product-mode">
+        <div id="mode-scan" class="product-mode" style="display:none">
             <div id="scanner-wrap" style="position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
                 <div id="scanner-box"></div>
                 <div id="scanner-overlay" style="
