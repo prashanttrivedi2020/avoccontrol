@@ -58,7 +58,7 @@
             z-index: 100;
         }
         .sidebar-logo {
-            padding: 24px 20px 20px;
+            padding: 4px 20px 20px;
             border-bottom: 1px solid var(--border);
         }
         .sidebar-logo .brand {
