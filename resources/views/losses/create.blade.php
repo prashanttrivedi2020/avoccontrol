@@ -382,7 +382,7 @@
 #product-confirmed.show { display: flex !important; }
 </style>
 
-<script src="/js/html5-qrcode.min.js"></script>
+<!-- <script src="/js/html5-qrcode.min.js"></script> -->
 <script>
 // ── Translated strings passed from PHP ──────────────────────────────────────
 const TRANS = {
