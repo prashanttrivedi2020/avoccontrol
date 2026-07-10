@@ -74,7 +74,7 @@
             color: var(--text-muted);
             margin-top: 2px;
         }
-        .sidebar nav { flex: 1; padding: 16px 0; }
+        .sidebar nav { padding: 16px 0; }
         .nav-section { padding: 8px 20px 4px; font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
         .nav-link {
             display: flex;
@@ -526,10 +526,7 @@
         <a href="{{ route('losses.export') }}" class="nav-link">
             <span class="icon">📥</span> {{ __('CSV Export') }}
         </a>
-            <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="btn-logout">{{ __('Logout') }}</button>
-        </form>
+           
     </nav>
     <div class="sidebar-footer">
         <div class="sidebar-user">
@@ -545,13 +542,17 @@
         {{-- Language switcher --}}
         @php $locale = app()->getLocale(); @endphp
         <div class="lang-switcher">
-            <a href="{{ route('lang.switch', 'de') }}" class="lang-btn {{ $locale === 'de' ? 'active' : '' }}">🇩🇪 DE</a>
-            <a href="{{ route('lang.switch', 'en') }}" class="lang-btn {{ $locale === 'en' ? 'active' : '' }}">🇬🇧 EN</a>
-            <a href="{{ route('lang.switch', 'tr') }}" class="lang-btn {{ $locale === 'tr' ? 'active' : '' }}">🇹🇷 TR</a>
+            <a href="{{ route('lang.switch', 'de') }}" class="lang-btn {{ $locale === 'de' ? 'active' : '' }}">🇩🇪&nbsp;DE</a>
+            <a href="{{ route('lang.switch', 'en') }}" class="lang-btn {{ $locale === 'en' ? 'active' : '' }}">🇬🇧&nbsp;EN</a>
+            <a href="{{ route('lang.switch', 'tr') }}" class="lang-btn {{ $locale === 'tr' ? 'active' : '' }}">🇹🇷&nbsp;TR</a>
         </div>
 
        
     </div>
+     <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn-logout">{{ __('Logout') }}</button>
+        </form>
 </nav>
 <div class="main">
     <div class="topbar">
