@@ -38,7 +38,11 @@ class User extends Authenticatable
     public function losses()
     {
         return $this->hasMany(Loss::class);
-        
+    }
+
+    public function units()
+    {
+        return $this->hasMany(Unit::class);
     }
 
     public function isDemo(): bool

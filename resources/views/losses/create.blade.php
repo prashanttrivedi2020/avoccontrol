@@ -10,6 +10,8 @@
 @push('styles')
     <link rel="stylesheet"
       href="{{ asset('css/losses-create.css') }}?v={{ filemtime(public_path('css/losses-create.css')) }}">
+    <link rel="stylesheet"
+      href="{{ asset('css/units-modal.css') }}?v={{ filemtime(public_path('css/units-modal.css')) }}">
 @endpush
 
 @section('content')
@@ -290,11 +292,18 @@
         </div>
         <div class="form-group">
             <label class="form-label">{{ __('Unit') }} *</label>
-            <select name="unit" id="unit-select" class="form-control">
-                @foreach(['Stk', 'kg', 'g', 'L', 'ml', 'Pkg', 'Bund', 'Kiste'] as $unit)
-                    <option value="{{ $unit }}" {{ old('unit', 'Stk') === $unit ? 'selected' : '' }}>{{ $unit }}</option>
-                @endforeach
-            </select>
+            <div class="unit-select-wrapper">
+                <select name="unit" id="unit-select" class="form-control">
+                    @foreach($units as $unit)
+                        <option value="{{ $unit->name }}" {{ old('unit', '') === $unit->name ? 'selected' : '' }}>
+                            {{ $unit->name }}
+                        </option>
+                    @endforeach
+                </select>
+                <button type="button" class="unit-add-icon" onclick="openUnitModal()" title="{{ __('Add new unit') }}">
+                    ➕
+                </button>
+            </div>
         </div>
     </div>
 
@@ -348,8 +357,33 @@ const TRANS = {
     cameraAccessMsg:    @json(__('Camera access will be requested when the scanner starts.')),
 };
 
-
 </script>
 
+<!-- Unit Modal -->
+<div id="unit-modal">
+    <div id="unit-modal-content">
+        <h3>{{ __('Add New Unit') }}</h3>
+        
+        <div class="unit-form-group">
+            <label>{{ __('Unit Name') }} *</label>
+            <input type="text" id="unit-name-input" placeholder="{{ __('e.g. Meter, Box, Dozen') }}"
+                   onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewUnit();}">
+        </div>
+
+        <div id="unit-form-error" class="unit-error"></div>
+        <div id="unit-form-success" class="unit-success"></div>
+
+        <div class="unit-modal-actions">
+            <button type="button" class="unit-modal-btn unit-modal-btn-secondary" onclick="closeUnitModal()">
+                {{ __('Cancel') }}
+            </button>
+            <button type="button" class="unit-modal-btn unit-modal-btn-primary" id="unit-submit-btn" onclick="submitNewUnit()">
+                {{ __('Add Unit') }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ asset('js/units-modal.js') }}?v={{ filemtime(public_path('js/units-modal.js')) }}"></script>
 <script src="{{ asset('js/losses-create.js') }}?v={{ filemtime(public_path('js/losses-create.js')) }}"></script>
 @endsection

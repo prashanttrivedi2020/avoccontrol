@@ -68,6 +68,7 @@ async function stopScan() {
 
 // ── Barcode lookup ───────────────────────────────────────────────────────────
 async function lookupBarcode(barcode) {
+   
     if (!barcode) return;
     clearProductError();
     document.getElementById('scan-status').textContent = TRANS.searching + barcode + '…';
@@ -222,25 +223,25 @@ function deletePhoto() {
 
 // ── File upload drag-and-drop ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-    const dropZone = document.getElementById('file-drop-zone');
-    if (dropZone) {
-        dropZone.addEventListener('dragover', e => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-        });
-        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', e => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            const file = e.dataTransfer.files[0];
-            if (!file) return;
-            const dt = new DataTransfer();
-            dt.items.add(file);
-            const input = document.getElementById('photo-file-input');
-            input.files = dt.files;
-            onFileChosen(input);
-        });
-    }
+    // const dropZone = document.getElementById('file-drop-zone');
+    // if (dropZone) {
+    //     dropZone.addEventListener('dragover', e => {
+    //         e.preventDefault();
+    //         dropZone.classList.add('dragover');
+    //     });
+    //     dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    //     dropZone.addEventListener('drop', e => {
+    //         e.preventDefault();
+    //         dropZone.classList.remove('dragover');
+    //         const file = e.dataTransfer.files[0];
+    //         if (!file) return;
+    //         const dt = new DataTransfer();
+    //         dt.items.add(file);
+    //         const input = document.getElementById('photo-file-input');
+    //         input.files = dt.files;
+    //         onFileChosen(input);
+    //     });
+    // }
 });
 
 function onFileChosen(input) {

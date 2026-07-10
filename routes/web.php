@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImportController;
 use App\Http\Controllers\LossController;
+use App\Http\Controllers\Api\UnitController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -41,6 +42,10 @@ Route::middleware('auth')->group(function () {
     // Products
     Route::resource('products', ProductController::class)->except(['show']);
     Route::get('/api/products/barcode', [ProductController::class, 'searchByBarcode'])->name('products.barcode');
+
+    // Units
+    Route::get('/api/units', [UnitController::class, 'getActive'])->name('units.active');
+    Route::post('/api/units', [UnitController::class, 'store'])->name('units.store');
 
     // Losses
     Route::get('/losses/export', [LossController::class, 'export'])->name('losses.export');

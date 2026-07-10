@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Loss;
 use App\Models\Product;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -38,7 +39,8 @@ class LossController extends Controller
     public function create()
     {
         $products = Auth::user()->products()->where('active', true)->orderBy('name')->get();
-        return view('losses.create', compact('products'));
+        $units = Auth::user()->units()->where('is_active', true)->orderBy('sort_order')->orderBy('name')->get();
+        return view('losses.create', compact('products', 'units'));
     }
 
     public function store(Request $request)
