@@ -202,7 +202,9 @@ function capturePhoto() {
 
     stopPhotoCamera();
     document.getElementById('photo-preview-wrap').style.display = '';
-    document.getElementById('camera-start-wrap').style.display  = 'none';
+    document.getElementById('camera-start-wrap').style.display = 'none';
+    document.getElementById('file-drop-text').style.display = 'none';
+    document.getElementById('file-drop-icon').style.display = 'none';
 }
 
 function retakePhoto() {

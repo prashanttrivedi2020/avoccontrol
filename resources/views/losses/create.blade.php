@@ -298,7 +298,7 @@ async function  setProductMode(mode) {
     {{-- ════════════════════════════════════════════════════════
          SECTION 3: QUANTITY + UNIT + PRICE + SUPPLIER
          ════════════════════════════════════════════════════════ --}}
-    <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div class="form-group">
             <label class="form-label">{{ __('Quantity') }} *</label>
             <input type="number" name="quantity" class="form-control"
