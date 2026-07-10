@@ -241,28 +241,13 @@ async function  setProductMode(mode) {
         </div>
 
         {{-- Mode: Dropdown --}}
-        <div id="mode-dropdown" class="product-mode" style="display:none">
-            <select id="product-dropdown" class="form-control" onchange="selectProductFromDropdown(this)">
-                <option value="">{{ __('Select product…') }}</option>
-                @foreach($products as $p)
-                    <option value="{{ $p->id }}"
-                            data-name="{{ $p->name }}"
-                            data-price="{{ $p->purchase_price }}"
-                            data-supplier="{{ $p->supplier ?? '' }}"
-                            data-unit="{{ $p->unit }}"
-                            {{ old('product_id') == $p->id ? 'selected' : '' }}>
-                        {{ $p->name }}{{ $p->category ? ' ('.$p->category.')' : '' }}
-                        {{ $p->barcode ? ' · '.$p->barcode : '' }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+       
 
         {{-- Hidden real product_id that gets submitted --}}
         <input type="hidden" name="product_id" id="product-id-hidden" value="{{ old('product_id') }}">
 
         {{-- Product confirmation card --}}
-        <div id="product-confirmed" style="display:none;margin-top:12px;
+        <div id="product-confirmed" style="display:block;margin-top:12px;
             background:rgba(45,122,45,0.18);border:1px solid #2d7a2d;
             border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px">
             <span style="font-size:24px">✅</span>
