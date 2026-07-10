@@ -249,7 +249,7 @@ HTML;
                 $imagePath = Storage::disk('public')->path($loss->photo_path);
                 $mimeType = mime_content_type($imagePath) ?: 'image/jpeg';
                 $imageData = base64_encode(file_get_contents($imagePath));
-                $photoHtml = '<img style="width: 100px; height: auto; object-fit: cover;" src="data:' . $mimeType . ';base64,' . $imageData . '" alt="Loss photo">';
+                $photoHtml = '<img style="width: 100px; height: 100px;" src="data:' . $mimeType . ';base64,' . $imageData . '" alt="Loss photo">';
             }
 
             $html .= '<tr>';
