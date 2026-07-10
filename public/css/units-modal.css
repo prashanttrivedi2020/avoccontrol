@@ -1,6 +1,7 @@
 /* Unit Modal Styles */
 #unit-modal,
-#product-modal {
+#product-modal,
+#reason-modal {
     display: none;
     position: fixed;
     top: 0;
@@ -15,12 +16,14 @@
 }
 
 #unit-modal.show,
-#product-modal.show {
+#product-modal.show,
+#reason-modal.show {
     display: flex !important;
 }
 
 #unit-modal-content,
-#product-modal-content {
+#product-modal-content,
+#reason-modal-content {
     background: var(--card);
     border-radius: 12px;
     padding: 24px;
@@ -31,7 +34,8 @@
 }
 
 #unit-modal-content h3,
-#product-modal-content h3 {
+#product-modal-content h3,
+#reason-modal-content h3 {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 16px;
@@ -111,7 +115,6 @@
     justify-content: center;
     width: 32px;
     height: 32px;
-    background: var(--accent);
     color: white;
     border-radius: 8px;
     cursor: pointer;

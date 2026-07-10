@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Loss;
 use App\Models\Product;
+use App\Models\Reason;
 use App\Models\Unit;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -42,18 +43,20 @@ class LossController extends Controller
     {
         $products = Auth::user()->products()->where('active', true)->orderBy('name')->get();
         $units = Auth::user()->units()->where('is_active', true)->orderBy('sort_order')->orderBy('name')->get();
-        return view('losses.create', compact('products', 'units'));
+        $reasons = Reason::getAllowedNamesForUser(Auth::user());
+        return view('losses.create', compact('products', 'units', 'reasons'));
     }
 
     public function store(Request $request)
     {
         \Log::info(json_encode($request->all()));
+        $allowedReasons = Reason::getAllowedNamesForUser(Auth::user(), $request->input('reason'));
         $data = $request->validate([
             'product_id'     => ['required', 'exists:products,id'],
             'loss_date'      => ['required', 'date', 'before_or_equal:today'],
             'quantity'       => ['required', 'numeric', 'min:0.001'],
             'unit'           => ['required', 'string', 'max:20'],
-            'reason'         => ['required', 'string', 'in:verderb,ablauf,diebstahl,beschaedigung,tathergang,sonstiges'],
+            'reason'         => ['required', 'string', 'max:50', 'in:' . implode(',', array_map('trim', $allowedReasons))],
             'supplier'       => ['nullable', 'string', 'max:255'],
             'purchase_price' => ['nullable', 'numeric', 'min:0'],
             'photo'          => ['nullable', 'image', 'max:10240'],
@@ -113,22 +116,24 @@ class LossController extends Controller
 
        // $products = Auth::user()->products()->where('active', true)->orderBy('name')->get();
         $units = Auth::user()->units()->where('is_active', true)->orderBy('sort_order')->orderBy('name')->get();
+        $reasons = Reason::getAllowedNamesForUser(Auth::user());
 
         //return view('losses.edit', compact('loss', 'products', 'units'));
-        return view('losses.edit', compact('loss', 'units'));
+        return view('losses.edit', compact('loss', 'units', 'reasons'));
     }
 
     public function update(Request $request, Loss $loss)
     {
         $this->authorize('update', $loss);
 
+        $allowedReasons = Reason::getAllowedNamesForUser(Auth::user(), $request->input('reason'));
         $data = $request->validate([
             // 'product_id'     => ['required', 'exists:products,id'],
             'product_name'   => ['nullable', 'string', 'max:255'],
             'loss_date'      => ['required', 'date', 'before_or_equal:today'],
             'quantity'       => ['required', 'numeric', 'min:0.001'],
             'unit'           => ['required', 'string', 'max:20'],
-            'reason'         => ['required', 'string', 'in:verderb,ablauf,diebstahl,beschaedigung,tathergang,sonstiges'],
+            'reason'         => ['required', 'string', 'max:50', 'in:' . implode(',', array_map('trim', $allowedReasons))],
             'supplier'       => ['nullable', 'string', 'max:255'],
             'purchase_price' => ['nullable', 'numeric', 'min:0'],
             'photo'          => ['nullable', 'image', 'max:10240'],

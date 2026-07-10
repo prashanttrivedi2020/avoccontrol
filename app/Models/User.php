@@ -45,6 +45,11 @@ class User extends Authenticatable
         return $this->hasMany(Unit::class);
     }
 
+    public function reasons()
+    {
+        return $this->hasMany(Reason::class);
+    }
+
     public function isDemo(): bool
     {
         return $this->role === 'demo';

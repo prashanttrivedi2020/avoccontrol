@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImportController;
 use App\Http\Controllers\LossController;
+use App\Http\Controllers\Api\ReasonController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,10 @@ Route::middleware('auth')->group(function () {
     // Units
     Route::get('/api/units', [UnitController::class, 'getActive'])->name('units.active');
     Route::post('/api/units', [UnitController::class, 'store'])->name('units.store');
+
+    // Reasons
+    Route::get('/api/reasons', [ReasonController::class, 'getActive'])->name('reasons.active');
+    Route::post('/api/reasons', [ReasonController::class, 'store'])->name('reasons.store');
 
     // Losses
     Route::get('/losses/export', [LossController::class, 'export'])->name('losses.export');

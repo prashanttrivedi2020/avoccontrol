@@ -277,21 +277,19 @@ async function  setProductMode(mode) {
         </div>
         <div class="form-group">
             <label class="form-label">{{ __('Reason') }} *</label>
-            <select name="reason" class="form-control">
-                <option value="">{{ __('Select reason…') }}</option>
-                @foreach([
-                    'verderb'       => '🍃 Spoilage',
-                    'ablauf'        => '📅 Expiry / BBD',
-                    'diebstahl'     => '🚨 Theft',
-                    'beschaedigung' => '💥 Damage',
-                    'tathergang'    => '📋 Incident report',
-                    'sonstiges'     => '📎 Other',
-                ] as $val => $key)
-                    <option value="{{ $val }}" {{ old('reason') === $val ? 'selected' : '' }}>
-                        {{ __($key) }}
-                    </option>
-                @endforeach
-            </select>
+            <div class="unit-select-wrapper">
+                <select name="reason" id="reason-select" class="form-control">
+                    <option value="">{{ __('Select reason…') }}</option>
+                    @foreach($reasons as $reasonName)
+                        <option value="{{ $reasonName }}" {{ old('reason') === $reasonName ? 'selected' : '' }}>
+                            {{ __($reasonName) }}
+                        </option>
+                    @endforeach
+                </select>
+                <button type="button" class="unit-add-icon" onclick="openReasonModal()" title="{{ __('Add new reason') }}">
+                    ➕
+                </button>
+            </div>
             @error('reason') <div class="form-error">{{ $message }}</div> @enderror
         </div>
     </div>
@@ -395,6 +393,31 @@ const TRANS = {
             </button>
             <button type="button" class="unit-modal-btn unit-modal-btn-primary" id="product-submit-btn" onclick="submitNewProduct()">
                 {{ __('Add Product') }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Reason Modal -->
+<div id="reason-modal">
+    <div id="reason-modal-content">
+        <h3>{{ __('Add New Reason') }}</h3>
+
+        <div class="unit-form-group">
+            <label>{{ __('Reason Name') }} *</label>
+            <input type="text" id="reason-name-input" placeholder="{{ __('e.g. Quality issue') }}"
+                   onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewReason();}">
+        </div>
+
+        <div id="reason-form-error" class="unit-error"></div>
+        <div id="reason-form-success" class="unit-success"></div>
+
+        <div class="unit-modal-actions">
+            <button type="button" class="unit-modal-btn unit-modal-btn-secondary" onclick="closeReasonModal()">
+                {{ __('Cancel') }}
+            </button>
+            <button type="button" class="unit-modal-btn unit-modal-btn-primary" id="reason-submit-btn" onclick="submitNewReason()">
+                {{ __('Add Reason') }}
             </button>
         </div>
     </div>
