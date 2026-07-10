@@ -27,9 +27,9 @@
 <div class="card">
     
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-        <h3 style="font-size:15px;font-weight:800;color:var(--white)">📋 {{ __('Latest Entries') }}</h3>
-        <div><a href="{{ route('losses.index') }}" style="font-size:13px;color:var(--accent2);text-decoration:none;font-weight:700">{{ __('Show all →') }}</a></div>
-        <div style="position: absolute;"><a href="{{ route('losses.create') }}" class="btn btn-primary">➕ {{ __('Record Loss') }}</a>
+        <!-- <h3 style="font-size:15px;font-weight:800;color:var(--white)">📋 {{ __('Latest Entries') }}</h3>
+        <div><a href="{{ route('losses.index') }}" style="font-size:13px;color:var(--accent2);text-decoration:none;font-weight:700">{{ __('Show all →') }}</a></div> -->
+        <div><a href="{{ route('losses.create') }}" class="btn btn-primary">➕ {{ __('Record Loss') }}</a>
          <a href="{{ route('products.create') }}" class="btn btn-primary {{ request()->routeIs('products.create') ? 'active' : '' }}">
             <span class="icon">➕</span> {{ __('Add Product') }}
         </a>
@@ -91,7 +91,7 @@
         </div>
     @endif
 </div>
-<div class="grid-2" style="margin-bottom:6px">
+<div class="grid-1" style="margin-bottom:6px">
     <!-- Top Products -->
     <!-- <div class="card">
         <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;color:var(--white)">

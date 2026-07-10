@@ -336,7 +336,7 @@
             .topbar { padding: 14px 16px; }
             .mobile-menu-toggle { display: inline-flex; }
             .content { padding: 16px; }
-            .grid-2, .grid-3, .grid-4 { grid-template-columns: auto; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
             .card, .stat-card { padding: 3px; }
             table { min-width: 620px; }
         }
