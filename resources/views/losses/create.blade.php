@@ -15,6 +15,36 @@
 @endpush
 
 @section('content')
+<script>
+let loadloosesjsPromise = null;
+
+function loadloosesjs() {
+    if (loadloosesjsPromise) {
+        return loadloosesjsPromise;
+    }
+    
+
+    loadloosesjsPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = "{{ asset('js/losses-create.js') }}?v={{ filemtime(public_path('js/losses-create.js')) }}";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+
+    return loadloosesjsPromise;
+}
+
+async function  setProductMode(mode) {
+    await loadloosesjs();
+    
+    ['scan', 'manual-barcode'].forEach(m => {
+        document.getElementById('mode-' + m).style.display = m === mode ? '' : 'none';
+        document.getElementById('tab-' + m).classList.toggle('active', m === mode);
+    });
+    if (mode !== 'scan') stopScan();
+}
+</script>
 
 <div class="card">
 
@@ -148,7 +178,7 @@
                 <span>📷</span> {{ __('Scan barcode') }}
             </button> -->
 
-            <button type="button" class="mode-tab" onclick="startScan()" id="tab-scan">
+            <button type="button" class="mode-tab" onclick="loadloosesjs().then(() => startScan())" id="tab-scan">
                 <span>📷</span> {{ __('Scan barcode') }}
             </button>
 
@@ -182,7 +212,7 @@
                 ">{{ __('Hold barcode in frame') }}</div>
             </div>
             <div style="display:flex;gap:8px">
-                <button type="button" class="btn btn-primary" id="btn-start-scan" onclick="startScan()">
+                <button type="button" class="btn btn-primary" id="btn-start-scan" onclick="loadloosesjs().then(() => startScan())">
                     📷 {{ __('Start scanner') }}
                 </button>
                 <button type="button" class="btn btn-secondary" id="btn-stop-scan" onclick="stopScan()" style="display:none">
@@ -385,5 +415,6 @@ const TRANS = {
 </div>
 
 <script src="{{ asset('js/units-modal.js') }}?v={{ filemtime(public_path('js/units-modal.js')) }}"></script>
-<script src="{{ asset('js/losses-create.js') }}?v={{ filemtime(public_path('js/losses-create.js')) }}"></script>
+<script src="{{ asset('js/html5-qrcode.min.js') }}?v={{ filemtime(public_path('js/html5-qrcode.min.js')) }}"></script>
+
 @endsection

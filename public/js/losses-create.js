@@ -1,18 +1,11 @@
-// ── Product mode switching ───────────────────────────────────────────────────
-function setProductMode(mode) {
-    ['scan', 'manual-barcode'].forEach(m => {
-        document.getElementById('mode-' + m).style.display = m === mode ? '' : 'none';
-        document.getElementById('tab-' + m).classList.toggle('active', m === mode);
-    });
-    if (mode !== 'scan') stopScan();
-}
+
 
 // ── Barcode scanner (html5-qrcode) ──────────────────────────────────────────
 let scanner = null;
 let scannerRunning = false;
-setProductMode('manual-barcode');
 
 async function startScan() {
+ 
     setProductMode('scan');
     document.getElementById('btn-start-scan').style.display = 'none';
     document.getElementById('btn-stop-scan').style.display = '';
