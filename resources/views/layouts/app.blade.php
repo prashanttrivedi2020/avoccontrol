@@ -492,6 +492,7 @@
 }
 
 </style>
+@stack('styles')
 </head>
 <body class="<?php echo e(request()->routeIs('products.*') ? 'products-page' : ''); ?>">
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -617,5 +618,7 @@ window.addEventListener('resize', () => {
     }
 });
 </script>
+@stack('scripts')
+</body>
 </body>
 </html>
