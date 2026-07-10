@@ -36,7 +36,7 @@ function loadloosesjs() {
 }
 
 async function  setProductMode(mode) {
-    await loadloosesjs();
+   // await loadloosesjs();
     
     ['scan', 'manual-barcode'].forEach(m => {
         document.getElementById('mode-' + m).style.display = m === mode ? '' : 'none';
@@ -401,5 +401,8 @@ const TRANS = {
 
 <script src="{{ asset('js/units-modal.js') }}?v={{ filemtime(public_path('js/units-modal.js')) }}"></script>
 <script src="{{ asset('js/html5-qrcode.min.js') }}?v={{ filemtime(public_path('js/html5-qrcode.min.js')) }}"></script>
+<script src="{{ asset('js/losses-create.js') }}?v={{ filemtime(public_path('js/html5-qrcode.min.js')) }}"></script>
+
+
 
 @endsection
