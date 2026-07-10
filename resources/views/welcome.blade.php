@@ -362,7 +362,7 @@
         
     </div>
 </div>
-
+<script src="{{ asset('js/pwa-install.js') }}"></script>
 <script>
 function switchTab(tab, event) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
