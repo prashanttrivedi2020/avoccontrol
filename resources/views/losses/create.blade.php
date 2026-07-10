@@ -255,6 +255,7 @@ async function  setProductMode(mode) {
                 <div style="font-weight:700;font-size:15px;color:var(--text)" id="confirmed-name">–</div>
                 <div style="font-size:12px;color:var(--text-muted);margin-top:2px" id="confirmed-meta">–</div>
             </div>
+            <button type="button" class="unit-add-icon" onclick="openProductModal()" title="{{ __('Add new product') }}">➕</button>
             <button type="button" onclick="clearProduct()"
                     style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:20px;padding:0 4px"
                     title="{{ __('Remove product') }}">×</button>
@@ -373,6 +374,31 @@ const TRANS = {
 };
 
 </script>
+
+<!-- Product Modal -->
+<div id="product-modal">
+    <div id="product-modal-content">
+        <h3>{{ __('Add New Product') }}</h3>
+
+        <div class="unit-form-group">
+            <label>{{ __('Product Name') }} *</label>
+            <input type="text" id="product-name-input" placeholder="{{ __('e.g. Milk 1L') }}"
+                   onkeydown="if(event.key==='Enter'){event.preventDefault();submitNewProduct();}">
+        </div>
+
+        <div id="product-form-error" class="unit-error"></div>
+        <div id="product-form-success" class="unit-success"></div>
+
+        <div class="unit-modal-actions">
+            <button type="button" class="unit-modal-btn unit-modal-btn-secondary" onclick="closeProductModal()">
+                {{ __('Cancel') }}
+            </button>
+            <button type="button" class="unit-modal-btn unit-modal-btn-primary" id="product-submit-btn" onclick="submitNewProduct()">
+                {{ __('Add Product') }}
+            </button>
+        </div>
+    </div>
+</div>
 
 <!-- Unit Modal -->
 <div id="unit-modal">

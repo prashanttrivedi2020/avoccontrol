@@ -77,6 +77,105 @@ function clearUnitForm() {
 }
 
 /**
+ * Open product modal
+ */
+function openProductModal() {
+    const modal = document.getElementById('product-modal');
+    if (modal) {
+        modal.classList.add('show');
+        document.getElementById('product-name-input').focus();
+    }
+}
+
+/**
+ * Close product modal
+ */
+function closeProductModal() {
+    const modal = document.getElementById('product-modal');
+    if (modal) {
+        modal.classList.remove('show');
+        clearProductForm();
+    }
+}
+
+/**
+ * Clear product form
+ */
+function clearProductForm() {
+    const nameInput = document.getElementById('product-name-input');
+    if (nameInput) nameInput.value = '';
+    const errorEl = document.getElementById('product-form-error');
+    if (errorEl) errorEl.textContent = '';
+    const successEl = document.getElementById('product-form-success');
+    if (successEl) successEl.textContent = '';
+}
+
+/**
+ * Submit new product
+ */
+async function submitNewProduct() {
+    const nameInput = document.getElementById('product-name-input');
+    const errorEl = document.getElementById('product-form-error');
+    const successEl = document.getElementById('product-form-success');
+    const submitBtn = document.getElementById('product-submit-btn');
+
+    if (!nameInput || !errorEl || !successEl || !submitBtn) return;
+
+    const name = nameInput.value.trim();
+    errorEl.textContent = '';
+    successEl.textContent = '';
+
+    if (!name) {
+        errorEl.textContent = 'Product name is required';
+        return;
+    }
+
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Saving...';
+    submitBtn.classList.add('unit-loading');
+
+    try {
+        const response = await fetch('/api/products', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            },
+            body: JSON.stringify({
+                name,
+                unit: document.getElementById('unit-select')?.value || 'Stk',
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            errorEl.textContent = data.message || 'Error creating product';
+            submitBtn.textContent = originalText;
+            submitBtn.classList.remove('unit-loading');
+            return;
+        }
+
+        if (typeof setConfirmedProduct === 'function') {
+            setConfirmedProduct(data.product.id, data.product.name, data.product.purchase_price, data.product.supplier, data.product.unit);
+        }
+
+        successEl.textContent = `✓ ${data.product.name} added successfully!`;
+        submitBtn.textContent = originalText;
+        submitBtn.classList.remove('unit-loading');
+
+        setTimeout(() => {
+            closeProductModal();
+        }, 1000);
+    } catch (err) {
+        console.error('Error:', err);
+        errorEl.textContent = 'Network error. Please try again.';
+        submitBtn.textContent = originalText;
+        submitBtn.classList.remove('unit-loading');
+    }
+}
+
+/**
  * Submit new unit
  */
 async function submitNewUnit() {
@@ -146,22 +245,31 @@ async function submitNewUnit() {
  * Handle Enter key in unit form
  */
 document.addEventListener('DOMContentLoaded', () => {
-    const descInput = document.getElementById('unit-description-input');
-    if (descInput) {
-        descInput.addEventListener('keydown', (e) => {
+    const productInput = document.getElementById('product-name-input');
+    if (productInput) {
+        productInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                submitNewUnit();
+                submitNewProduct();
             }
         });
     }
 
     // Close modal on backdrop click
-    const modal = document.getElementById('unit-modal');
-    if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
+    const unitModal = document.getElementById('unit-modal');
+    if (unitModal) {
+        unitModal.addEventListener('click', (e) => {
+            if (e.target === unitModal) {
                 closeUnitModal();
+            }
+        });
+    }
+
+    const productModal = document.getElementById('product-modal');
+    if (productModal) {
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) {
+                closeProductModal();
             }
         });
     }

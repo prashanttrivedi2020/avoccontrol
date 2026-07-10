@@ -73,6 +73,28 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', __('Product deleted.'));
     }
 
+    public function quickStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'unit' => ['nullable', 'string', 'max:20'],
+        ], [
+            'name.required' => __('Product name is required.'),
+        ]);
+
+        $product = Auth::user()->products()->create([
+            'name' => $validated['name'],
+            'unit' => $validated['unit'] ?? 'Stk',
+            'active' => true,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'product' => $product,
+            'message' => __('Product created successfully.'),
+        ], 201);
+    }
+
     public function searchByBarcode(Request $request)
     {
         $barcode = $request->query('barcode');

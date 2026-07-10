@@ -1,5 +1,6 @@
 /* Unit Modal Styles */
-#unit-modal {
+#unit-modal,
+#product-modal {
     display: none;
     position: fixed;
     top: 0;
@@ -13,11 +14,13 @@
     animation: fadeIn 0.2s ease;
 }
 
-#unit-modal.show {
+#unit-modal.show,
+#product-modal.show {
     display: flex !important;
 }
 
-#unit-modal-content {
+#unit-modal-content,
+#product-modal-content {
     background: var(--card);
     border-radius: 12px;
     padding: 24px;
@@ -27,7 +30,8 @@
     animation: slideUp 0.3s ease;
 }
 
-#unit-modal-content h3 {
+#unit-modal-content h3,
+#product-modal-content h3 {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 16px;
