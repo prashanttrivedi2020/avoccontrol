@@ -536,6 +536,10 @@
                     <span class="demo-badge">DEMO</span>
                 @endif
             </div>
+             <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn-logout">{{ __('Logout') }}</button>
+        </form>
         </div>
 
         {{-- Language switcher --}}
@@ -546,10 +550,7 @@
             <a href="{{ route('lang.switch', 'tr') }}" class="lang-btn {{ $locale === 'tr' ? 'active' : '' }}">🇹🇷 TR</a>
         </div>
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="btn-logout">{{ __('Logout') }}</button>
-        </form>
+       
     </div>
 </nav>
 <div class="main">
