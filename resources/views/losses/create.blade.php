@@ -661,19 +661,19 @@ if (dropZone) {
 }
 
 function onFileChosen(input) {
-      setPhotoMode('upload');
+    setPhotoMode('upload');
     const file = input.files[0];
     if (!file) return;
     const nameEl = document.getElementById('file-drop-name');
     nameEl.textContent = file.name;
     nameEl.style.display = 'none';
+    
+   
+
     document.getElementById('file-drop-text').style.display = 'none';
     document.getElementById('file-drop-icon').style.display = 'none';
     const preview = document.getElementById('file-drop-preview');
     preview.src = URL.createObjectURL(file);
-   
-
-   
 }
 
 // ── Pre-select product if old('product_id') is set ───────────────────────────

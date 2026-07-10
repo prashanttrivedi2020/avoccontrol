@@ -55,81 +55,55 @@
     </div>
 @else
     <div class="card" style="padding:0;margin-bottom:16px">
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>{{ __('Date') }}</th>
-                        <th>{{ __('Product') }}</th>
-                        <th>{{ __('Quantity') }}</th>
-                        <th>{{ __('Reason') }}</th>
-                        <th>{{ __('Value') }}</th>
-                        <th>{{ __('Photo') }}</th>
-                        <th>{{ __('Note') }}</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div style="display:grid;gap:12px">
                     @foreach($losses as $loss)
-                    <tr>
-                        <td style="white-space:nowrap">
-                            <a href="{{ route('losses.show', $loss) }}" style="color:var(--text-muted);text-decoration:none;font-size:13px">
-                                {{ $loss->loss_date->format('d.m.Y') }}
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ route('losses.show', $loss) }}" style="font-weight:600;text-decoration:none;color:var(--text)">
-                                {{ $loss->product->name }}
-                            </a>
-                        </td>
-                        <td style="white-space:nowrap">
-                            {{ number_format($loss->quantity, 2, ',', '.') }} {{ $loss->unit }}
-                        </td>
-                        <td>
-                            @php
-                                $cls = match($loss->reason) {
-                                    'diebstahl','tathergang' => 'badge-red',
-                                    'verderb','ablauf'      => 'badge-orange',
-                                    'beschaedigung'         => 'badge-blue',
-                                    default                 => 'badge-gray',
-                                };
-                            @endphp
-                            <span class="badge {{ $cls }}">{{ \App\Models\Loss::reasonLabel($loss->reason) }}</span>
-                        </td>
-                        <td style="color:var(--accent);font-weight:700;white-space:nowrap">
-                            {{ number_format($loss->totalValue(), 2, ',', '.') }} €
-                        </td>
-                        <td>
+                    @php
+                        $cls = match($loss->reason) {
+                            'diebstahl','tathergang' => 'badge-red',
+                            'verderb','ablauf'      => 'badge-orange',
+                            'beschaedigung'         => 'badge-blue',
+                            default                 => 'badge-gray',
+                        };
+                    @endphp
+                    <div style="display:flex;gap:14px;padding:14px 16px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;background:rgba(255,255,255,0.04);align-items:flex-start">
+                        <!-- Image -->
+                        <div style="flex-shrink:0;width:90px;height:90px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,0.08)">
                             @if($loss->photo_path)
-                                <a href="{{ asset('storage/' . $loss->photo_path) }}" target="_blank" style="font-size:18px;text-decoration:none">📷</a>
+                                <img src="{{ asset('storage/' . $loss->photo_path) }}" alt="Loss Photo" style="width:100%;height:auto;object-fit:cover">
                             @else
-                                <span style="color:var(--text-muted)">–</span>
+                                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:24px">📦</div>
                             @endif
-                        </td>
-                        <td style="max-width:180px">
-                            @if($loss->note)
-                                <span style="font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block">
-                                    {{ Str::limit($loss->note, 40) }}
-                                </span>
-                            @else
-                                <span style="color:var(--text-muted)">–</span>
-                            @endif
-                        </td>
-                        <td>
-                            <div style="display:flex;gap:6px">
-                                <a href="{{ route('losses.show', $loss) }}" class="btn btn-secondary btn-sm">👁</a>
-                                <form method="POST" action="{{ route('losses.destroy', $loss) }}"
-                                      onsubmit="return confirm('{{ __('Really delete this entry? This cannot be undone.') }}')">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">🗑</button>
-                                </form>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                                <div>
+                                    <a href="{{ route('losses.show', $loss) }}" style="font-weight:700;font-size:14px;text-decoration:none">{{ $loss->product->name }}</a>
+                                    <div style="font-size:12px;color:var(--text-muted);margin-top:2px">{{ number_format($loss->quantity, 2, ',', '.') }} {{ $loss->unit }}</div>
+                                    @if($loss->note)
+                                        <div style="font-size:11px;color:var(--text-muted);margin-top:4px;max-width:300px">{{ Str::limit($loss->note, 80) }}</div>
+                                    @endif
+                                </div>
+                                <div style="text-align:right;flex-shrink:0">
+                                    
+                                    <div style="font-weight:700;font-size:15px;color:var(--accent);margin-top:2px">{{ number_format($loss->totalValue(), 2, ',', '.') }} €</div>
+                                </div>
                             </div>
-                        </td>
-                    </tr>
+                            <div style="display:flex;justify-content:space-between;align-items:center">
+                                <span class="badge {{ $cls }}">{{ \App\Models\Loss::reasonLabel($loss->reason) }}</span> <span style="font-size:11px;color:var(--text-muted)">{{ $loss->loss_date->format('d.m.Y') }}</span>
+                                <div style="display:flex;gap:6px">
+                                    <a href="{{ route('losses.show', $loss) }}" class="btn btn-secondary btn-sm">👁</a>
+                                    <form method="POST" action="{{ route('losses.destroy', $loss) }}" style="display:inline" onsubmit="return confirm('{{ __('Really delete this entry? This cannot be undone.') }}')">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">🗑</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
-                </tbody>
-            </table>
-        </div>
+                </div>
     </div>
 
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">

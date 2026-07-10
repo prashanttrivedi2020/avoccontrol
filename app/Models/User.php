@@ -38,6 +38,7 @@ class User extends Authenticatable
     public function losses()
     {
         return $this->hasMany(Loss::class);
+        
     }
 
     public function isDemo(): bool

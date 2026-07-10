@@ -43,6 +43,7 @@ class LossController extends Controller
 
     public function store(Request $request)
     {
+        \Log::info(json_encode($request->all()));
         $data = $request->validate([
             'product_id'     => ['required', 'exists:products,id'],
             'loss_date'      => ['required', 'date', 'before_or_equal:today'],
@@ -92,7 +93,8 @@ class LossController extends Controller
 
         Loss::create($data);
 
-        return redirect()->route('losses.index')->with('success', __('Loss successfully documented.'));
+        //return redirect()->route('losses.index')->with('success', __('Loss successfully documented.'));
+         return redirect()->route('dashboard')->with('success', __('Loss successfully documented.'));
     }
 
     public function show(Loss $loss)

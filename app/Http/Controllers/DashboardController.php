@@ -10,7 +10,8 @@ class DashboardController extends Controller
     public function index()
     {
         $user   = Auth::user();
-        $losses = $user->losses()->with('product')->orderByDesc('loss_date')->get();
+        $losses = $user->losses()->with('product')->orderByDesc('created_at')->get();
+      
 
         // Stats
         $totalLosses      = $losses->count();
@@ -37,7 +38,7 @@ class DashboardController extends Controller
         // Recent losses
         $recentLosses = $user->losses()
             ->with('product')
-            ->orderByDesc('loss_date')
+            ->orderByDesc('created_at')
             ->limit(10)
             ->get();
 
