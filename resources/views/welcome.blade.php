@@ -253,38 +253,7 @@
 </div>
 
 <div class="page-wrap">
-    <!-- Left: Marketing -->
-    <div class="marketing">
-        <h1 class="hero-headline">{{ __('No loss goes undocumented.') }}</h1>
-        <p class="hero-sub">{{ __('Document spoilage, expiry and theft in seconds with a photo — clean, tamper-proof records for the tax office.') }}</p>
-
-        <div class="feature-block">
-            <h3>{{ __('What is FireKontrol 365?') }}</h3>
-            <ul class="feature-list">
-                <li><span class="icon">📸</span> {{ __('Record losses by photo or barcode scan') }}</li>
-                <li><span class="icon">🚨</span> {{ __('Document theft (police report number, incident details)') }}</li>
-                <li><span class="icon">📱</span> {{ __('Add products via barcode scan') }}</li>
-                <li><span class="icon">📄</span> {{ __('Annual CSV export + photo summary report') }}</li>
-                <li><span class="icon">📊</span> {{ __('Statistics: identify your most discarded products') }}</li>
-                <li><span class="icon">🔒</span> {{ __('Immutable, GoBD-compliant recordkeeping') }}</li>
-            </ul>
-        </div>
-
-        <div class="pricing-bar">
-            <div class="label">{{ __('Complete package') }}</div>
-            <div class="price">
-                <span class="cur">99 €</span>
-                <span class="period"> / {{ __('month') }}</span>
-            </div>
-            <div class="vat">{{ __('excl. VAT — 117.81 € incl. 19% VAT') }}</div>
-        </div>
-
-        <div class="impressum">
-            <a href="#">{{ __('Imprint & Legal') }}</a>
-        </div>
-    </div>
-
-    <!-- Right: Auth card -->
+     <!-- Right: Auth card -->
     <div class="auth-card">
         <div class="auth-logo">
             <div class="logo-mark">
@@ -361,6 +330,38 @@
 
         
     </div>
+    <!-- Left: Marketing -->
+    <div class="marketing">
+        <h1 class="hero-headline">{{ __('No loss goes undocumented.') }}</h1>
+        <p class="hero-sub">{{ __('Document spoilage, expiry and theft in seconds with a photo — clean, tamper-proof records for the tax office.') }}</p>
+
+        <div class="feature-block">
+            <h3>{{ __('What is FireKontrol 365?') }}</h3>
+            <ul class="feature-list">
+                <li><span class="icon">📸</span> {{ __('Record losses by photo or barcode scan') }}</li>
+                <li><span class="icon">🚨</span> {{ __('Document theft (police report number, incident details)') }}</li>
+                <li><span class="icon">📱</span> {{ __('Add products via barcode scan') }}</li>
+                <li><span class="icon">📄</span> {{ __('Annual CSV export + photo summary report') }}</li>
+                <li><span class="icon">📊</span> {{ __('Statistics: identify your most discarded products') }}</li>
+                <li><span class="icon">🔒</span> {{ __('Immutable, GoBD-compliant recordkeeping') }}</li>
+            </ul>
+        </div>
+
+        <div class="pricing-bar">
+            <div class="label">{{ __('Complete package') }}</div>
+            <div class="price">
+                <span class="cur">99 €</span>
+                <span class="period"> / {{ __('month') }}</span>
+            </div>
+            <div class="vat">{{ __('excl. VAT — 117.81 € incl. 19% VAT') }}</div>
+        </div>
+
+        <div class="impressum">
+            <a href="#">{{ __('Imprint & Legal') }}</a>
+        </div>
+    </div>
+
+   
 </div>
 <script src="{{ asset('js/pwa-install.js') }}"></script>
 <script>
