@@ -216,5 +216,6 @@
     "Damage": "Beschädigung",
     "Incident report": "Tathergang",
     "Other": "Sonstiges",
-    "Language": "Sprache"
+    "Language": "Sprache",
+    "no_photo_yet" : "Noch kein Foto"
 }
