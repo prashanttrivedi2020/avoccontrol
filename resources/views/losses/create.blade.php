@@ -195,7 +195,7 @@
         </div>
 
         {{-- Mode: Manual barcode text input --}}
-        <div id="mode-manual-barcode" class="product-mode" style="display:none">
+        <div id="mode-manual-barcode" class="product-mode" style="display:block">
             <div style="display:flex;gap:8px">
                 <input type="text" id="barcode-text-input" class="form-control"
                        placeholder="{{ __('Enter EAN / UPC / barcode…') }}"
