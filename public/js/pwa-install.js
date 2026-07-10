@@ -1,6 +1,7 @@
 /**
  * PWA Install Prompt Handler
  * Captures and manages the beforeinstallprompt event for consistent behavior
+ * Shows prompt on every page load (will appear after login/logout)
  */
 
 let deferredPrompt = null;
@@ -22,7 +23,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     // Store the event for later use
     deferredPrompt = e;
     console.log('[FK365] Install prompt captured and deferred');
-    // Show install prompt on every new session
+    // Show install prompt
     showInstallPrompt();
 });
 
@@ -109,8 +110,6 @@ function createInstallPromptUI() {
 
 function showInstallPrompt() {
     if (isInstalled || !deferredPrompt) return;
-    // Don't show if already dismissed in this session
-    if (sessionStorage.getItem('fk365_install_dismissed_session')) return;
     
     const banner = createInstallPromptUI();
     banner.style.display = 'flex';
@@ -125,11 +124,8 @@ function hideInstallPrompt() {
 }
 
 function dismissInstallPrompt() {
-    // Only hide for this session (not permanently)
-    sessionStorage.setItem('fk365_install_dismissed_session', 'true');
     hideInstallPrompt();
-    deferredPrompt = null;
-    console.log('[FK365] Install prompt dismissed for this session (will reappear on next visit)');
+    console.log('[FK365] Install prompt dismissed (will reappear on page reload)');
 }
 
 async function installApp() {
@@ -152,14 +148,16 @@ async function installApp() {
     hideInstallPrompt();
 }
 
-// Show install prompt again if user wants to (store function globally)
-window.showPWAInstallPrompt = () => {
-    if (isInstalled) {
-        alert('FireKontrol 365 ist bereits installiert.');
-        return;
+/**
+ * Manually trigger install prompt (for testing)
+ * Call from console: window.showPWAInstallPrompt()
+ */
+window.showPWAInstallPrompt = function() {
+    if (deferredPrompt) {
+        showInstallPrompt();
+    } else {
+        console.log('[FK365] Install prompt not yet captured');
     }
-    sessionStorage.removeItem('fk365_install_dismissed_session');
-    showInstallPrompt();
 };
 
 // Check if already installed on page load
@@ -170,4 +168,4 @@ window.addEventListener('load', () => {
     }
 });
 
-console.log('[FK365] PWA install handler loaded');
+console.log('[FK365] PWA Install Handler Loaded');
