@@ -46,6 +46,7 @@ class UnitController extends Controller
     {
         $units = Auth::user()->units()
             ->where('is_active', true)
+            ->whereNull('deleted_at')
             ->orderBy('sort_order')
             ->orderBy('name')
             ->get(['id', 'name']);

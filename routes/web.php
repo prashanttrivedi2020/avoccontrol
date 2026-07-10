@@ -54,6 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/reasons', [ReasonController::class, 'getActive'])->name('reasons.active');
     Route::post('/api/reasons', [ReasonController::class, 'store'])->name('reasons.store');
 
+    Route::resource('units', App\Http\Controllers\UnitManagementController::class)->except(['show']);
+    Route::resource('reasons', App\Http\Controllers\ReasonManagementController::class)->except(['show']);
+
     // Losses
     Route::get('/losses/export', [LossController::class, 'export'])->name('losses.export');
     Route::resource('losses', LossController::class);

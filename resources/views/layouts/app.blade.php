@@ -522,6 +522,13 @@
         <a href="{{ route('products.create') }}" class="nav-link {{ request()->routeIs('products.create') ? 'active' : '' }}">
             <span class="icon">➕</span> {{ __('Add Product') }}
         </a>
+        <div class="nav-section">{{ __('Reference Data') }}</div>
+        <a href="{{ route('units.index') }}" class="nav-link {{ request()->routeIs('units.*') ? 'active' : '' }}">
+            <span class="icon">📏</span> {{ __('Units') }}
+        </a>
+        <a href="{{ route('reasons.index') }}" class="nav-link {{ request()->routeIs('reasons.*') ? 'active' : '' }}">
+            <span class="icon">📝</span> {{ __('Reasons') }}
+        </a>
         <div class="nav-section">{{ __('Export') }}</div>
         <a href="{{ route('losses.export') }}" class="nav-link">
             <span class="icon">📥</span> {{ __('PDF Export') }}

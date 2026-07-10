@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Unit extends Model
 {
+    use SoftDeletes;
     protected $fillable = ['user_id', 'name', 'sort_order', 'is_active'];
 
     public $timestamps = true;
