@@ -5,7 +5,7 @@ let scanner = null;
 let scannerRunning = false;
 
 async function startScan() {
- 
+ document.getElementById('scanner-box').style.display = 'block';
     setProductMode('scan');
     document.getElementById('btn-start-scan').style.display = 'none';
     document.getElementById('btn-stop-scan').style.display = '';
@@ -74,11 +74,7 @@ async function lookupBarcode(barcode) {
             const product = await res.json();
             setConfirmedProduct(product.id, product.name, product.purchase_price, product.supplier, product.unit);
             document.getElementById('scan-status').textContent = TRANS.productFound;
-            alert('hi');
-            alert(document.getElementById('scanner-box'));
-            alert(document.getElementById('scanner-box').style.display);
             document.getElementById('scanner-box').style.display = 'none';
-            alert(document.getElementById('scanner-box').style.display);
         } else {
             showProductError(TRANS.noProductMsg + ' <strong>' + barcode + '</strong>');
             document.getElementById('scan-status').textContent = TRANS.productNotFound;
@@ -131,6 +127,7 @@ function clearProduct() {
     document.getElementById('price-input').value    = '';
     document.getElementById('supplier-input').value = '';
     document.getElementById('scan-status').textContent = TRANS.cameraAccessMsg || 'Camera access will be requested when the scanner starts.';
+    document.getElementById('scanner-box').style.display = 'block';
 }
 
 function showProductError(msg) {
