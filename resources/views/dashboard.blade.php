@@ -25,10 +25,16 @@
 
 <!-- Latest Entries -->
 <div class="card">
+    
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
         <h3 style="font-size:15px;font-weight:800;color:var(--white)">📋 {{ __('Latest Entries') }}</h3>
-        <a href="{{ route('losses.index') }}" style="font-size:13px;color:var(--accent2);text-decoration:none;font-weight:700">{{ __('Show all →') }}</a>
-        <div style="position: absolute;"><a href="{{ route('losses.create') }}" class="btn btn-primary">➕ {{ __('Record Loss') }}</a></div>
+        <div><a href="{{ route('losses.index') }}" style="font-size:13px;color:var(--accent2);text-decoration:none;font-weight:700">{{ __('Show all →') }}</a></div>
+        <div style="position: absolute;"><a href="{{ route('losses.create') }}" class="btn btn-primary">➕ {{ __('Record Loss') }}</a>
+         <a href="{{ route('products.create') }}" class="btn btn-primary {{ request()->routeIs('products.create') ? 'active' : '' }}">
+            <span class="icon">➕</span> {{ __('Add Product') }}
+        </a>
+    </div>
+       
     </div>
     @if($recentLosses->isEmpty())
         <div class="empty-state" style="padding:30px 0">
@@ -36,6 +42,8 @@
             <h3>{{ __('No loss data yet') }}</h3>
             <p style="margin-top:8px;margin-bottom:16px;font-size:14px">{{ __('Record your first loss entry.') }}</p>
             <a href="{{ route('losses.create') }}" class="btn btn-primary">➕ {{ __('Record Loss') }}</a>
+            <a href="{{ route('products.create') }}" class="btn btn-primary {{ request()->routeIs('products.create') ? 'active' : '' }}">
+            <span class="icon">➕</span> {{ __('Add Product') }}</a>
         </div>
     @else
     
