@@ -8,7 +8,8 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/losses-create.css') }}">
+    <link rel="stylesheet"
+      href="{{ asset('css/losses-create.css') }}?v={{ filemtime(public_path('css/losses-create.css')) }}">
 @endpush
 
 @section('content')
@@ -347,31 +348,8 @@ const TRANS = {
     cameraAccessMsg:    @json(__('Camera access will be requested when the scanner starts.')),
 };
 
-// ── Product data ─────────────────────────────────────────────────────────────
-const PRODUCTS = {
-    @foreach($products as $p)
-    {{ $p->id }}: {
-        name: @json($p->name),
-        price: {{ $p->purchase_price ?? 'null' }},
-        supplier: @json($p->supplier ?? ''),
-        unit: @json($p->unit),
-        category: @json($p->category ?? ''),
-    },
-    @endforeach
-};
 
-// ── Pre-select product if old('product_id') is set ───────────────────────────
-@if(old('product_id'))
-(function() {
-    const id = {{ (int) old('product_id') }};
-    const p  = PRODUCTS[id];
-    if (p) setConfirmedProduct(id, p.name, p.price, p.supplier, p.unit);
-    setProductMode('manual-barcode');
-    
-    const dd = document.getElementById('product-dropdown');
-    if (dd) dd.value = id;
-})();
-@endif
 </script>
-<script src="{{ asset('js/losses-create.js') }}"></script>
+
+<script src="{{ asset('js/losses-create.js') }}?v={{ filemtime(public_path('js/losses-create.js')) }}"></script>
 @endsection
