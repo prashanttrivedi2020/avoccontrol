@@ -84,7 +84,7 @@
 </div>
 <div class="grid-2" style="margin-bottom:6px">
     <!-- Top Products -->
-    <div class="card">
+    <!-- <div class="card">
         <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;color:var(--white)">
             📊 {{ __('Top discarded products') }}
         </h3>
@@ -110,7 +110,7 @@
             </div>
             @endforeach
         @endif
-    </div>
+    </div> -->
 
     <!-- By Reason -->
     <div class="card">
@@ -141,7 +141,7 @@
         @endif
     </div>
 </div>
-<div class="grid-4" style="margin-bottom:6px">
+<!-- <div class="grid-4" style="margin-bottom:6px">
     <div class="stat-card">
         <div class="stat-label">{{ __('Total Entries') }}</div>
         <div class="stat-value">{{ number_format($totalLosses) }}</div>
@@ -153,5 +153,5 @@
         <div class="stat-sub">{{ __('Purchase cost of all losses') }}</div>
     </div>
     
-</div>
+</div> -->
 @endsection
