@@ -526,6 +526,10 @@
         <a href="{{ route('losses.export') }}" class="nav-link">
             <span class="icon">📥</span> {{ __('CSV Export') }}
         </a>
+         <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn-logout">{{ __('Logout') }}</button>
+        </form>
     </nav>
     <div class="sidebar-footer">
         <div class="sidebar-user">
@@ -536,10 +540,7 @@
                     <span class="demo-badge">DEMO</span>
                 @endif
             </div>
-             <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="btn-logout">{{ __('Logout') }}</button>
-        </form>
+            
         </div>
 
         {{-- Language switcher --}}
