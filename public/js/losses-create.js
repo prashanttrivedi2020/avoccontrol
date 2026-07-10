@@ -74,7 +74,11 @@ async function lookupBarcode(barcode) {
             const product = await res.json();
             setConfirmedProduct(product.id, product.name, product.purchase_price, product.supplier, product.unit);
             document.getElementById('scan-status').textContent = TRANS.productFound;
+            alert('hi');
+            alert(document.getElementById('scanner-box'));
+            alert(document.getElementById('scanner-box').style.display);
             document.getElementById('scanner-box').style.display = 'none';
+            alert(document.getElementById('scanner-box').style.display);
         } else {
             showProductError(TRANS.noProductMsg + ' <strong>' + barcode + '</strong>');
             document.getElementById('scan-status').textContent = TRANS.productNotFound;
