@@ -61,7 +61,7 @@ async function stopScan() {
 
 // ── Barcode lookup ───────────────────────────────────────────────────────────
 async function lookupBarcode(barcode) {
-   
+   document.getElementById('scanner-box').style.display = 'block';
     if (!barcode) return;
     clearProductError();
     document.getElementById('scan-status').textContent = TRANS.searching + barcode + '…';
@@ -74,6 +74,7 @@ async function lookupBarcode(barcode) {
             const product = await res.json();
             setConfirmedProduct(product.id, product.name, product.purchase_price, product.supplier, product.unit);
             document.getElementById('scan-status').textContent = TRANS.productFound;
+            document.getElementById('scanner-box').style.display = 'none';
         } else {
             showProductError(TRANS.noProductMsg + ' <strong>' + barcode + '</strong>');
             document.getElementById('scan-status').textContent = TRANS.productNotFound;
