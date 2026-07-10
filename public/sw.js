@@ -45,22 +45,25 @@ self.addEventListener('fetch', event => {
     // Static assets → cache-first
     if (url.pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|ico|woff2?|ttf)$/)) {
         event.respondWith(
-        caches.open(CACHE_NAME).then(cache =>
-            cache.match(request).then(cached => {
+        caches.match(request).then(cached => {
+                if (cached) {
+                    console.log('CACHE HIT:', request.url);
+                    return cached;
+                }
 
-                const networkFetch = fetch(request).then(response => {
+                console.log('NETWORK FETCH:', request.url);
+
+                return fetch(request).then(response => {
                     if (response && response.status === 200) {
-                        cache.put(request, response.clone());
+                        const clone = response.clone();
+                        caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
                     }
                     return response;
                 });
-
-                return cached || networkFetch;
             })
-        )
-    );
-    return;
-    }   
+        );
+        return;
+    } 
 
     // HTML pages → network-first, fall back to offline page
     event.respondWith(
