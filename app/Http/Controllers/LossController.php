@@ -229,7 +229,7 @@ class LossController extends Controller
         th, td { border: 1px solid #d0d7de; padding: 6px; vertical-align: top; }
         th { background-color: #f6f8fa; text-align: left; }
         .photo-cell { width: 100px; height: 100px; text-align: center; }
-        img { max-width: 160px; max-height: 140px; border: 1px solid #e5e7eb; border-radius: 4px; }
+        img { max-width: 100px; max-height: 100px; border: 1px solid #e5e7eb; border-radius: 4px; }
         .muted { color: #57606a; }
     </style>
 </head>
