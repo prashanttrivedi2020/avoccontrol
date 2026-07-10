@@ -84,6 +84,7 @@
                         <div>
                             <span class="badge {{ $cls }}">{{ \App\Models\Loss::reasonLabel($loss->reason) }} </span> <span style="font-size:11px;color:var(--text-muted)">{{ $loss->loss_date->format('d.m.Y') }}</span>
                         </div>
+                        <span><a href="{{ route('losses.edit', $loss) }}" class="btn btn-primary btn-sm" title="{{ __('Edit') }}">✏️</a></span>
                     </div>
                 </div>
             @endforeach

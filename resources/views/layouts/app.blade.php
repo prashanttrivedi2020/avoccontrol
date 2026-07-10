@@ -524,7 +524,7 @@
         </a>
         <div class="nav-section">{{ __('Export') }}</div>
         <a href="{{ route('losses.export') }}" class="nav-link">
-            <span class="icon">📥</span> {{ __('CSV Export') }}
+            <span class="icon">📥</span> {{ __('PDF Export') }}
         </a>
            
     </nav>

@@ -12,6 +12,11 @@ class LossPolicy
         return $user->id === $loss->user_id;
     }
 
+    public function update(User $user, Loss $loss): bool
+    {
+        return $user->id === $loss->user_id;
+    }
+
     public function delete(User $user, Loss $loss): bool
     {
         return $user->id === $loss->user_id;

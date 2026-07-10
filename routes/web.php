@@ -49,5 +49,5 @@ Route::middleware('auth')->group(function () {
 
     // Losses
     Route::get('/losses/export', [LossController::class, 'export'])->name('losses.export');
-    Route::resource('losses', LossController::class)->except(['edit', 'update']);
+    Route::resource('losses', LossController::class);
 });

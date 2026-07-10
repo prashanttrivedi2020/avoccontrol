@@ -93,10 +93,11 @@
                             <div style="display:flex;justify-content:space-between;align-items:center">
                                 <span class="badge {{ $cls }}">{{ \App\Models\Loss::reasonLabel($loss->reason) }}</span> <span style="font-size:11px;color:var(--text-muted)">{{ $loss->loss_date->format('d.m.Y') }}</span>
                                 <div style="display:flex;gap:6px">
-                                    <a href="{{ route('losses.show', $loss) }}" class="btn btn-secondary btn-sm">👁</a>
+                                    <a href="{{ route('losses.show', $loss) }}" class="btn btn-secondary btn-sm" title="{{ __('View') }}">👁</a>
+                                    <a href="{{ route('losses.edit', $loss) }}" class="btn btn-primary btn-sm" title="{{ __('Edit') }}">✏️</a>
                                     <form method="POST" action="{{ route('losses.destroy', $loss) }}" style="display:inline" onsubmit="return confirm('{{ __('Really delete this entry? This cannot be undone.') }}')">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">🗑</button>
+                                        <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}">🗑</button>
                                     </form>
                                 </div>
                             </div>

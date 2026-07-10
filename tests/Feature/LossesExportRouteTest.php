@@ -25,6 +25,7 @@ class LossesExportRouteTest extends TestCase
         $response = $this->get(route('losses.export', ['year' => now()->year]));
 
         $response->assertOk();
-        $response->assertHeader('Content-Type', 'text/csv; charset=UTF-8');
+        $response->assertHeader('Content-Type', 'application/pdf');
+        $response->assertHeader('Content-Disposition', 'attachment; filename="schwund_export_' . now()->year . '.pdf"');
     }
 }
