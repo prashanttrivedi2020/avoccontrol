@@ -85,6 +85,82 @@ async function lookupBarcode(barcode) {
     }
 }
 
+// ── Name-based product lookup ──────────────────────────────────────────────
+let productSearchDebounce = null;
+
+function debouncedSearchProductsByName(query) {
+    if (productSearchDebounce) clearTimeout(productSearchDebounce);
+    productSearchDebounce = setTimeout(() => searchProductsByName(query), 250);
+}
+
+async function searchProductsByName(query) {
+    const input = document.getElementById('product-name-search-input');
+    const results = document.getElementById('product-name-results');
+    if (!input || !results) return;
+
+    const cleaned = (query || '').trim();
+    if (cleaned.length < 3) {
+        results.innerHTML = '';
+        results.style.display = 'none';
+        return;
+    }
+
+    results.innerHTML = '<div style="padding:10px 12px;color:var(--text-muted)">Searching…</div>';
+    results.style.display = 'block';
+
+    try {
+        const res = await fetch('/api/products/search?query=' + encodeURIComponent(cleaned), {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        const data = await res.json();
+        const products = Array.isArray(data.products) ? data.products : [];
+
+        if (!products.length) {
+            results.innerHTML = '<div style="padding:10px 12px;color:var(--text-muted)">No matching products found.</div>';
+            return;
+        }
+
+        const fragment = document.createDocumentFragment();
+        products.forEach((product) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'product-search-result';
+            button.style.cssText = 'display:block;width:100%;text-align:left;padding:10px 12px;border:0;background:#fff;cursor:pointer;';
+            button.innerHTML = '<div style="font-weight:600;color:var(--text)">' + escapeHtml(product.name) + '</div>' +
+                '<div style="font-size:12px;color:var(--text-muted);margin-top:2px">' + escapeHtml(product.unit || 'Stk') + (product.purchase_price ? ' · ' + escapeHtml(product.purchase_price) + ' €' : '') + '</div>';
+            button.addEventListener('click', () => selectProductFromSearchResult(product));
+            fragment.appendChild(button);
+        });
+
+        results.innerHTML = '';
+        results.appendChild(fragment);
+        results.style.display = 'block';
+    } catch (e) {
+        results.innerHTML = '<div style="padding:10px 12px;color:var(--text-muted)">Unable to search products right now.</div>';
+    }
+}
+
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function selectProductFromSearchResult(product) {
+    if (!product || !product.id) return;
+    setConfirmedProduct(product.id, product.name, product.purchase_price, product.supplier, product.unit);
+    const input = document.getElementById('product-name-search-input');
+    const results = document.getElementById('product-name-results');
+    if (input) input.value = product.name;
+    if (results) {
+        results.innerHTML = '';
+        results.style.display = 'none';
+    }
+}
+
 // ── Dropdown selection ───────────────────────────────────────────────────────
 function selectProductFromDropdown(sel) {
     if (!sel.value) { clearProduct(); return; }
@@ -126,6 +202,13 @@ function clearProduct() {
     document.getElementById('product-confirmed').classList.remove('show');
     document.getElementById('price-input').value    = '';
     document.getElementById('supplier-input').value = '';
+    const searchInput = document.getElementById('product-name-search-input');
+    const results = document.getElementById('product-name-results');
+    if (searchInput) searchInput.value = '';
+    if (results) {
+        results.innerHTML = '';
+        results.style.display = 'none';
+    }
     document.getElementById('scan-status').textContent = TRANS.cameraAccessMsg || 'Camera access will be requested when the scanner starts.';
     document.getElementById('scanner-box').style.display = 'block';
 }
@@ -220,6 +303,15 @@ function deletePhoto() {
 
 // ── File upload drag-and-drop ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+    const nameInput = document.getElementById('product-name-search-input');
+    if (nameInput) {
+        nameInput.addEventListener('focus', () => {
+            if (nameInput.value.trim().length >= 3) {
+                debouncedSearchProductsByName(nameInput.value);
+            }
+        });
+    }
+
     // const dropZone = document.getElementById('file-drop-zone');
     // if (dropZone) {
     //     dropZone.addEventListener('dragover', e => {

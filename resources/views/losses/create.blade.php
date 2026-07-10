@@ -38,7 +38,7 @@ function loadloosesjs() {
 async function  setProductMode(mode) {
    // await loadloosesjs();
     
-    ['scan', 'manual-barcode'].forEach(m => {
+    ['scan', 'manual-barcode', 'search-name'].forEach(m => {
         document.getElementById('mode-' + m).style.display = m === mode ? '' : 'none';
         document.getElementById('tab-' + m).classList.toggle('active', m === mode);
     });
@@ -183,6 +183,9 @@ async function  setProductMode(mode) {
             </button>
 
             
+            <button type="button" class="mode-tab" onclick="setProductMode('search-name')" id="tab-search-name">
+                <span>🔎</span> {{ __('Search product name') }}
+            </button>
             <button type="button" class="mode-tab active" onclick="setProductMode('manual-barcode')" id="tab-manual-barcode">
                 <span>🔢</span> {{ __('Enter barcode') }}
             </button>
@@ -240,7 +243,19 @@ async function  setProductMode(mode) {
             <div class="form-hint">{{ __('Type barcode manually or scan with a USB scanner') }}</div>
         </div>
 
-        {{-- Mode: Dropdown --}}
+        {{-- Mode: Search products by name --}}
+        <div id="mode-search-name" class="product-mode" style="display:none">
+            <div style="position:relative">
+                <input type="text" id="product-name-search-input" class="form-control" autocomplete="off"
+                       placeholder="{{ __('Type at least 3 characters…') }}"
+                       oninput="debouncedSearchProductsByName(this.value)"
+                       onkeydown="if(event.key==='Enter'){event.preventDefault();searchProductsByName(this.value.trim());}">
+                <div id="product-name-results" style="display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,0.12);max-height:240px;overflow:auto"></div>
+            </div>
+            <div class="form-hint">{{ __('Start typing a product name to see live suggestions') }}</div>
+        </div>
+
+        {{-- Mode: manual search --}}
        
 
         {{-- Hidden real product_id that gets submitted --}}

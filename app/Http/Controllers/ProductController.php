@@ -95,6 +95,24 @@ class ProductController extends Controller
         ], 201);
     }
 
+    public function search(Request $request)
+    {
+        $query = trim((string) $request->query('query', ''));
+
+        if (mb_strlen($query) < 3) {
+            return response()->json(['products' => []]);
+        }
+
+        $products = Auth::user()->products()
+            ->where('active', true)
+            ->where('name', 'like', '%' . $query . '%')
+            ->orderBy('name')
+            ->limit(10)
+            ->get(['id', 'name', 'barcode', 'supplier', 'purchase_price', 'unit']);
+
+        return response()->json(['products' => $products]);
+    }
+
     public function searchByBarcode(Request $request)
     {
         $barcode = $request->query('barcode');

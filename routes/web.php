@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     // Products
     Route::resource('products', ProductController::class)->except(['show']);
     Route::post('/api/products', [ProductController::class, 'quickStore'])->name('products.quick-store');
+    Route::get('/api/products/search', [ProductController::class, 'search'])->name('products.search');
     Route::get('/api/products/barcode', [ProductController::class, 'searchByBarcode'])->name('products.barcode');
 
     // Units
