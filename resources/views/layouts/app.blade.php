@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <title>@yield('title', 'FireKontrol 365')</title>
 
     {{-- PWA --}}
@@ -529,9 +530,13 @@
         <a href="{{ route('reasons.index') }}" class="nav-link {{ request()->routeIs('reasons.*') ? 'active' : '' }}">
             <span class="icon">📝</span> {{ __('Reasons') }}
         </a>
-        <div class="nav-section">{{ __('Export') }}</div>
+        <!-- <div class="nav-section">{{ __('Export') }}</div>
         <a href="{{ route('losses.export') }}" class="nav-link">
             <span class="icon">📥</span> {{ __('PDF Export') }}
+        </a> -->
+        <div class="nav-section">{{ __('Account') }}</div>
+        <a href="{{ route('settings') }}" class="nav-link {{ request()->routeIs('settings') ? 'active' : '' }}">
+            <span class="icon">⚙️</span> {{ __('Settings') }}
         </a>
            
     </nav>

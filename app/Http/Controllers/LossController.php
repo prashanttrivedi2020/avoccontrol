@@ -211,11 +211,40 @@ class LossController extends Controller
     {
         $query = Auth::user()->losses()->with('product')->orderByDesc('loss_date');
 
-        if ($request->filled('year')) {
+        if ($request->filled('from')) {
+            $query->whereDate('loss_date', '>=', $request->from);
+        }
+        if ($request->filled('to')) {
+            $query->whereDate('loss_date', '<=', $request->to);
+        }
+        if (! $request->filled('from') && ! $request->filled('to') && $request->filled('year')) {
             $query->whereYear('loss_date', $request->year);
         }
 
         $losses = $query->get();
+        $user = Auth::user();
+        $totalLoss = $losses->sum(fn ($loss) => $loss->totalValue());
+
+        $dateRange = '';
+        if ($request->filled('from') && $request->filled('to')) {
+            $dateRange = e($request->from) . ' – ' . e($request->to);
+        } elseif ($request->filled('from')) {
+            $dateRange = __('From') . ' ' . e($request->from);
+        } elseif ($request->filled('to')) {
+            $dateRange = __('Until') . ' ' . e($request->to);
+        } elseif ($request->filled('year')) {
+            $dateRange = e($request->year);
+        } else {
+            $dateRange = __('All dates');
+        }
+
+        $logoHtml = '';
+        if (! empty($user->logo_path) && Storage::disk('public')->exists($user->logo_path)) {
+            $imagePath = Storage::disk('public')->path($user->logo_path);
+            $mimeType = mime_content_type($imagePath) ?: 'image/png';
+            $imageData = base64_encode(file_get_contents($imagePath));
+            $logoHtml = '<img src="data:' . $mimeType . ';base64,' . $imageData . '" alt="Logo" style="max-width:160px; max-height:80px; object-fit:contain;">';
+        }
 
         $html = <<<'HTML'
 <!DOCTYPE html>
@@ -224,8 +253,13 @@ class LossController extends Controller
     <meta charset="utf-8">
     <style>
         body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 11px; color: #222; }
-        h1 { margin-bottom: 8px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        h1 { margin-bottom: 4px; font-size: 18px; }
+        .header-table { width: 100%; margin-bottom: 16px; }
+        .header-table td { vertical-align: top; }
+        .header-title { font-size: 14px; margin: 0 0 6px 0; }
+        .meta { font-size: 12px; line-height: 1.4; }
+        .summary-box { margin-bottom: 14px; font-size: 13px; font-weight: 700; }
+        table { width: 100%; border-collapse: collapse; margin-top: 8px; }
         th, td { border: 1px solid #d0d7de; padding: 6px; vertical-align: top; }
         th { background-color: #f6f8fa; text-align: left; }
         .photo-cell { width: 100px; height: 100px; text-align: center; }
@@ -236,8 +270,25 @@ class LossController extends Controller
 <body>
 HTML;
 
-        $html .= '<h1>Schwund-Export</h1>';
-        $html .= '<p>Jahr: ' . e($request->filled('year') ? $request->year : date('Y')) . '</p>';
+        $html .= '<table class="header-table"><tr>';
+        $html .= '<td style="width:60%; padding-right:10px;">
+                    <h1>Schwund-Export</h1>
+                    <div class="meta"><strong>Firma:</strong> ' . e($user->company_name ?: $user->store_name ?: __('-')) . '</div>';
+        if (! empty($user->store_name) && ! empty($user->company_name)) {
+            $html .= '<div class="meta"><strong>Geschäftsname:</strong> ' . e($user->store_name) . '</div>';
+        }
+        if (! empty($user->address)) {
+            $html .= '<div class="meta"><strong>Adresse:</strong> ' . e($user->address) . '</div>';
+        }
+        if (! empty($user->tax_number)) {
+            $html .= '<div class="meta"><strong>Steuernummer:</strong> ' . e($user->tax_number) . '</div>';
+        }
+        $html .= '<div class="meta"><strong>Zeitraum:</strong> ' . $dateRange . '</div>';
+        $html .= '</td>';
+        $html .= '<td style="width:40%; text-align:right;">' . $logoHtml . '</td>';
+        $html .= '</tr></table>';
+
+        $html .= '<div class="summary-box">Gesamtverlust: ' . e(number_format($totalLoss, 2, '.', '')) . ' €</div>';
 
         $html .= '<table>';
         $html .= '<thead><tr><th>Datum</th><th>Produkt</th><th>Kategorie</th><th>Menge</th><th>Grund</th><th>Lieferant</th><th>EK-Preis</th><th>Gesamtwert</th><th>Notizen</th><th class="photo-cell">Foto</th></tr></thead>';
@@ -279,8 +330,7 @@ HTML;
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
 
-        $year = $request->filled('year') ? $request->year : date('Y');
-        $filename = "schwund_export_{$year}.pdf";
+        $filename = 'schwund_export_' . now()->format('Ymd_His') . '.pdf';
 
         return response($pdf->output(), 200, [
             'Content-Type' => 'application/pdf',

@@ -4,7 +4,7 @@
 @section('page-title', __('All Entries'))
 
 @section('topbar-actions')
-    <a href="{{ route('losses.export') }}" class="btn btn-secondary">📥 {{ __('CSV Export') }}</a>
+    <a href="{{ route('losses.export', request()->only(['from', 'to', 'reason', 'product_id'])) }}" class="btn btn-secondary">📥 {{ __('PDF Export') }}</a>
     <a href="{{ route('losses.create') }}" class="btn btn-primary">➕ {{ __('Record Loss') }}</a>
 @endsection
 

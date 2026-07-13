@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImportController;
 use App\Http\Controllers\LossController;
 use App\Http\Controllers\Api\ReasonController;
+use App\Http\Controllers\UserSettingsController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,8 @@ Route::post('/logout',   [AuthController::class, 'logout'])->name('logout');
 // Protected routes
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/settings', [UserSettingsController::class, 'show'])->name('settings');
+    Route::post('/settings', [UserSettingsController::class, 'update'])->name('settings.update');
 
     // Product CSV import (must come before resource to avoid {product} wildcard)
     Route::get('/products/import/upload',   [ProductImportController::class, 'showUpload'])->name('products.import.upload');
