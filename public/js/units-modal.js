@@ -86,6 +86,92 @@ function populateReasonSelect() {
         }
         select.appendChild(option);
     });
+
+    select.addEventListener('change', updateReasonTableSelection);
+    populateReasonTable();
+}
+
+/**
+ * Populate reason table below the select.
+ */
+function populateReasonTable() {
+    const tbody = document.getElementById('reason-table-body');
+    const select = document.getElementById('reason-select');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+    if (allReasons.length === 0) {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 1;
+        cell.style.padding = '12px';
+        cell.style.color = 'var(--text-muted)';
+        cell.textContent = 'No reasons yet.';
+        row.appendChild(cell);
+        tbody.appendChild(row);
+        return;
+    }
+
+    allReasons.forEach(reason => {
+        const row = document.createElement('tr');
+        row.style.cursor = 'pointer';
+        row.style.borderTop = '1px solid var(--border)';
+        row.addEventListener('click', () => {
+            if (select) {
+                select.value = reason.name;
+                updateReasonTableSelection();
+            }
+        });
+
+        const cell = document.createElement('td');
+        cell.style.padding = '10px 12px';
+        cell.textContent = reason.name;
+        if (select && select.value === reason.name) {
+            cell.style.fontWeight = '700';
+            cell.style.backgroundColor = 'rgba(0, 123, 255, 0.08)';
+        }
+        row.appendChild(cell);
+        tbody.appendChild(row);
+    });
+}
+
+function updateReasonTableSelection() {
+    const select = document.getElementById('reason-select');
+    const rows = document.querySelectorAll('#reason-table-body tr td');
+    rows.forEach(cell => {
+        if (select && select.value === cell.textContent) {
+            cell.style.fontWeight = '700';
+            cell.style.backgroundColor = 'rgba(0, 123, 255, 0.08)';
+        } else {
+            cell.style.fontWeight = '400';
+            cell.style.backgroundColor = 'transparent';
+        }
+    });
+}
+
+function showInlineReasonEditor() {
+    const input = document.getElementById('inline-reason-name-input');
+    if (input) {
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        input.focus();
+    }
+}
+
+function getReasonFormElements() {
+    const nameInput = document.getElementById('reason-name-input') || document.getElementById('inline-reason-name-input');
+    const errorEl = document.getElementById('reason-form-error') || document.getElementById('reason-inline-error');
+    const successEl = document.getElementById('reason-form-success') || document.getElementById('reason-inline-success');
+    const submitBtn = document.getElementById('reason-submit-btn') || document.getElementById('reason-inline-submit-btn');
+    return { nameInput, errorEl, successEl, submitBtn };
+}
+
+function clearReasonForm() {
+    const nameInput = document.getElementById('reason-name-input') || document.getElementById('inline-reason-name-input');
+    if (nameInput) nameInput.value = '';
+    const errorEl = document.getElementById('reason-form-error') || document.getElementById('reason-inline-error');
+    if (errorEl) errorEl.textContent = '';
+    const successEl = document.getElementById('reason-form-success') || document.getElementById('reason-inline-success');
+    if (successEl) successEl.textContent = '';
 }
 
 /**
@@ -139,18 +225,6 @@ function clearUnitForm() {
     document.getElementById('unit-name-input').value = '';
     document.getElementById('unit-form-error').textContent = '';
     document.getElementById('unit-form-success').textContent = '';
-}
-
-/**
- * Clear reason form
- */
-function clearReasonForm() {
-    const nameInput = document.getElementById('reason-name-input');
-    if (nameInput) nameInput.value = '';
-    const errorEl = document.getElementById('reason-form-error');
-    if (errorEl) errorEl.textContent = '';
-    const successEl = document.getElementById('reason-form-success');
-    if (successEl) successEl.textContent = '';
 }
 
 /**
@@ -322,10 +396,7 @@ async function submitNewUnit() {
  * Submit new reason
  */
 async function submitNewReason() {
-    const nameInput = document.getElementById('reason-name-input');
-    const errorEl = document.getElementById('reason-form-error');
-    const successEl = document.getElementById('reason-form-success');
-    const submitBtn = document.getElementById('reason-submit-btn');
+    const { nameInput, errorEl, successEl, submitBtn } = getReasonFormElements();
 
     if (!nameInput || !errorEl || !successEl || !submitBtn) return;
 

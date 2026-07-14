@@ -10,6 +10,8 @@
 @push('styles')
     <link rel="stylesheet"
       href="{{ asset('css/losses-create.css') }}?v={{ filemtime(public_path('css/losses-create.css')) }}">
+    <link rel="stylesheet"
+      href="{{ asset('css/units-modal.css') }}?v={{ filemtime(public_path('css/units-modal.css')) }}">
 @endpush
 
 @section('content')
@@ -180,6 +182,7 @@
     </form>
 </div>
 
+<!-- Reason Modal -->
 <div id="reason-modal">
     <div id="reason-modal-content">
         <h3>{{ __('Add New Reason') }}</h3>
@@ -217,6 +220,7 @@ const TRANS = {
     cameraAccessMsg:    @json(__('Camera access will be requested when the scanner starts.')),
 };
 </script>
+<script src="{{ asset('js/units-modal.js') }}?v={{ filemtime(public_path('js/units-modal.js')) }}"></script>
 <script src="{{ asset('js/html5-qrcode.min.js') }}?v={{ filemtime(public_path('js/html5-qrcode.min.js')) }}"></script>
 <script src="{{ asset('js/losses-create.js') }}?v={{ filemtime(public_path('js/losses-create.js')) }}"></script>
 @endsection

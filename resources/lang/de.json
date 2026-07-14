@@ -1,5 +1,5 @@
 {
-    "Dashboard": "Dashboard",
+    "Dashboard": "Armaturenbrett",
     "Loss Control & Loss Documentation": "Schwundkontrolle & Verlustdokumentation",
     "Overview": "Übersicht",
     "Loss Documentation": "Schwunddokumentation",
@@ -220,6 +220,12 @@
     "Settings": "Einstellungen",
     "Company settings": "Firmeneinstellungen",
     "Update your company profile that appears in your documents and exports.": "Aktualisieren Sie Ihr Firmenprofil, das in Ihren Dokumenten und Exporten erscheint.",
+    "Available reasons": "Verfügbare Gründe",
+    "Add Reason": "Grund hinzufügen",
+    "Reason Name": "Grundname",
+    "e.g. Quality issue": "z. B. Qualitätsproblem",
+    "Add new reason": "Neuen Grund hinzufügen",
+    "Select reason…": "Grund auswählen…",
     "Company name": "Firmenname",
     "Owner name": "Inhabername",
     "Address": "Adresse",
@@ -228,5 +234,8 @@
     "Current logo": "Aktuelles Logo",
     "Current company logo": "Aktuelles Firmenlogo",
     "Save settings": "Einstellungen speichern",
-    "no_photo_yet" : "Foto Hochladen"
+    "no_photo_yet" : "Foto Hochladen",
+    "Reasons" : "Gründe",
+    "Units" : "Einheiten",
+    "PDF Export" : "PDF-Export"
 }

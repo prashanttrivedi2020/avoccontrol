@@ -225,6 +225,12 @@
     "Settings": "Ayarlar",
     "Company settings": "Şirket ayarları",
     "Update your company profile that appears in your documents and exports.": "Belgelerinize ve dışa aktarımlarınıza görünen şirket profilinizi güncelleyin.",
+    "Available reasons": "Mevcut nedenler",
+    "Add Reason": "Neden ekle",
+    "Reason Name": "Neden adı",
+    "e.g. Quality issue": "örn. Kalite sorunu",
+    "Add new reason": "Yeni neden ekle",
+    "Select reason…": "Neden seç…",
     "Company name": "Şirket adı",
     "Owner name": "Sahip adı",
     "Address": "Adres",
@@ -233,5 +239,8 @@
     "Current logo": "Geçerli logo",
     "Current company logo": "Geçerli şirket logosu",
     "Save settings": "Ayarları kaydet",
-    "no_photo_yet" : "Fotoğraf Yükle"
+    "no_photo_yet" : "Fotoğraf Yükle",
+    "Reasons" : "Sebepler",
+    "Units" : "Birimler",
+    "PDF Export" : "PDF Olarak Dışa Aktar"
 }
