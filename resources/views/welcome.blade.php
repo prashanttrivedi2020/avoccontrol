@@ -350,7 +350,7 @@
         <div class="pricing-bar">
             <div class="label">{{ __('Complete package') }}</div>
             <div class="price">
-                <span class="cur">99 €</span>
+                <span class="cur">149 €</span>
                 <span class="period"> / {{ __('month') }}</span>
             </div>
             <div class="vat">{{ __('excl. VAT — 117.81 € incl. 19% VAT') }}</div>
