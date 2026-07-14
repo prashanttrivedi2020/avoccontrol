@@ -10,7 +10,7 @@ class ReasonManagementController extends Controller
 {
     public function index()
     {
-        $reasons = Auth::user()->reasons()->withTrashed()->orderBy('name')->get();
+        $reasons = Auth::user()->reasons()->withoutTrashed()->orderBy('name')->get();
 
         return view('reasons.index', compact('reasons'));
     }
