@@ -217,5 +217,16 @@
     "Incident report": "Tathergang",
     "Other": "Sonstiges",
     "Language": "Sprache",
+    "Settings": "Einstellungen",
+    "Company settings": "Firmeneinstellungen",
+    "Update your company profile that appears in your documents and exports.": "Aktualisieren Sie Ihr Firmenprofil, das in Ihren Dokumenten und Exporten erscheint.",
+    "Company name": "Firmenname",
+    "Owner name": "Inhabername",
+    "Address": "Adresse",
+    "Tax number": "Steuernummer",
+    "Company logo": "Firmenlogo",
+    "Current logo": "Aktuelles Logo",
+    "Current company logo": "Aktuelles Firmenlogo",
+    "Save settings": "Einstellungen speichern",
     "no_photo_yet" : "Foto Hochladen"
 }

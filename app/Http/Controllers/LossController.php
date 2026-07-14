@@ -291,7 +291,7 @@ HTML;
         $html .= '<div class="summary-box">Gesamtverlust: ' . e(number_format($totalLoss, 2, '.', '')) . ' €</div>';
 
         $html .= '<table>';
-        $html .= '<thead><tr><th>Datum</th><th>Produkt</th><th>Kategorie</th><th>Menge</th><th>Grund</th><th>Lieferant</th><th>EK-Preis</th><th>Gesamtwert</th><th>Notizen</th><th class="photo-cell">Foto</th></tr></thead>';
+        $html .= '<thead><tr><th>Datum</th><th>Produkt</th><th>Menge</th><th>Grund</th><th>Lieferant</th><th>EK-Preis</th><th>Gesamtwert</th><th>Notizen</th><th class="photo-cell">Foto</th></tr></thead>';
         $html .= '<tbody>';
 
         foreach ($losses as $loss) {
@@ -306,7 +306,6 @@ HTML;
             $html .= '<tr>';
             $html .= '<td>' . e($loss->loss_date?->format('d.m.Y') ?? '') . '</td>';
             $html .= '<td>' . e($loss->product->name ?? '') . '</td>';
-            $html .= '<td>' . e($loss->product->category ?? '') . '</td>';
             $html .= '<td>' . e(number_format($loss->quantity, 3, '.', '')) . ' ' . e($loss->unit) . '</td>';
             $html .= '<td>' . e(Loss::reasonLabel($loss->reason)) . '</td>';
             $html .= '<td>' . e($loss->supplier ?? '') . '</td>';

@@ -222,5 +222,16 @@
     "Other": "Diğer",
 
     "Language": "Dil",
+    "Settings": "Ayarlar",
+    "Company settings": "Şirket ayarları",
+    "Update your company profile that appears in your documents and exports.": "Belgelerinize ve dışa aktarımlarınıza görünen şirket profilinizi güncelleyin.",
+    "Company name": "Şirket adı",
+    "Owner name": "Sahip adı",
+    "Address": "Adres",
+    "Tax number": "Vergi numarası",
+    "Company logo": "Şirket logosu",
+    "Current logo": "Geçerli logo",
+    "Current company logo": "Geçerli şirket logosu",
+    "Save settings": "Ayarları kaydet",
     "no_photo_yet" : "Fotoğraf Yükle"
 }

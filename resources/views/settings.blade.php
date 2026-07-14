@@ -42,7 +42,7 @@
             <input id="logo" name="logo" type="file" accept="image/*" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;">
             @if(auth()->user()->logo_path)
                 <div style="margin-top:10px;display:flex;align-items:center;gap:12px;">
-                    <img src="{{ asset('storage/' . auth()->user()->logo_path) }}" alt="Current company logo" style="max-width:120px;max-height:80px;border-radius:8px;border:1px solid var(--border);">
+                    <img src="{{ asset('storage/' . auth()->user()->logo_path) }}" alt="{{ __('Current company logo') }}" style="max-width:120px;max-height:80px;border-radius:8px;border:1px solid var(--border);">
                     <span style="color:var(--text-muted);font-size:13px">{{ __('Current logo') }}</span>
                 </div>
             @endif
