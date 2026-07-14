@@ -4,7 +4,7 @@
 @section('page-title', __('All Entries'))
 
 @section('topbar-actions')
-    <a href="{{ route('losses.export', request()->only(['from', 'to', 'reason', 'product_id'])) }}" class="btn btn-secondary">📥 {{ __('PDF Export') }}</a>
+   
     <a href="{{ route('losses.create') }}" class="btn btn-primary">➕ {{ __('Record Loss') }}</a>
 @endsection
 
@@ -31,15 +31,16 @@
                 @endforeach
             </select>
         </div>
-        <div>
+        <!-- <div>
             <label class="form-label" style="font-size:11px">{{ __('Product') }}</label>
             
-        </div>
+        </div> -->
         <div style="display:flex;gap:6px;padding-bottom:1px">
             <button type="submit" class="btn btn-primary btn-sm">🔍 {{ __('Filter') }}</button>
             <a href="{{ route('losses.index') }}" class="btn btn-secondary btn-sm">✕</a>
         </div>
     </form>
+     <a href="{{ route('losses.export', request()->only(['from', 'to', 'reason', 'product_id'])) }}" class="btn btn-secondary">📥 {{ __('PDF Export') }}</a>
 </div>
 
 @if($losses->isEmpty())
