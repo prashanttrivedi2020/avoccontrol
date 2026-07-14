@@ -244,6 +244,9 @@ async function startPhotoCamera() {
         });
         const video = document.getElementById('photo-video');
         video.srcObject = photoStream;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('muted', '');
+        await video.play();
         document.getElementById('camera-wrap').style.display = '';
         document.getElementById('camera-start-wrap').style.display = 'none';
         document.getElementById('photo-preview-wrap').style.display = 'none';
