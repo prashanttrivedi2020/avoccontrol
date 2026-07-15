@@ -102,7 +102,7 @@ async function  setProductMode(mode) {
    // await loadloosesjs();
     
     ['scan', 'manual-barcode', 'search-name'].forEach(m => {
-        document.getElementById('mode-' + m).style.display = m === mode ? '' : 'none';
+        document.getElementById('mode-' + m).style.display = m === mode ? '' : '';
         document.getElementById('tab-' + m).classList.toggle('active', m === mode);
     });
     if (mode !== 'scan') stopScan();
@@ -251,6 +251,41 @@ async function  setProductMode(mode) {
                             <img src={{asset('images/scan-icon.svg')}} alt="Scan">
                             </button>
                         </div>
+                            {{-- Mode: Camera barcode scanner --}}
+                   
+                    </div>
+                     <div id="mode-scan" class="product-mode" style="display:none">
+                        <div id="scanner-wrap" style="position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
+                            <div id="scanner-box"></div>
+                            <div id="scanner-overlay" style="
+                                position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+                                pointer-events:none;
+                            ">
+                                <div style="
+                                    width:260px;height:120px;border:2px solid var(--accent);border-radius:8px;
+                                    box-shadow:0 0 0 9999px rgba(0,0,0,0.5);
+                                ">
+                                    <div class="scan-line"></div>
+                                </div>
+                            </div>
+                            <div id="scanner-hint" style="
+                                position:absolute;bottom:12px;left:0;right:0;text-align:center;
+                                color:#fff;font-size:13px;text-shadow:0 1px 4px #000;
+                            ">{{ __('Hold barcode in frame') }}</div>
+                        </div>
+                        <div style="display:flex;gap:8px">
+                            <button type="button" class="btn btn-primary" id="btn-start-scan" onclick="loadloosesjs().then(() => startScan())">
+                                📷 {{ __('Start scanner') }}
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="btn-stop-scan" onclick="stopScan()" style="display:none">
+                                ⏹ {{ __('Stop') }}
+                            </button>
+                        </div>
+                        <div id="scan-status" style="margin-top:10px;font-size:13px;color:var(--text-muted)">
+                            {{ __('Camera access will be requested when the scanner starts.') }}
+                        </div>
+                    </div>
+
                        <div class="mode-tab">OR</div>
                         <button type="button" style="display: none;" class="mode-tab active" onclick="setProductMode('manual-barcode')" id="tab-manual-barcode">
                             <span>🔢</span> {{ __('Enter barcode') }}
@@ -258,8 +293,6 @@ async function  setProductMode(mode) {
                         <!-- <button type="button" class="mode-tab" onclick="setProductMode('dropdown')" id="tab-dropdown">
                             <span>☰</span> {{ __('Select manually') }}
                         </button> -->
-                    </div>
-
                     {{-- Mode: Manual barcode text input --}}
                     <div id="mode-manual-barcode" class="product-mode" style="display:block">
                         <div style="display:flex;gap:8px">
@@ -296,38 +329,7 @@ async function  setProductMode(mode) {
         </div>
       
 
-        {{-- Mode: Camera barcode scanner --}}
-        <div id="mode-scan" class="product-mode" style="display:none">
-            <div id="scanner-wrap" style="position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
-                <div id="scanner-box"></div>
-                <div id="scanner-overlay" style="
-                    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-                    pointer-events:none;
-                ">
-                    <div style="
-                        width:260px;height:120px;border:2px solid var(--accent);border-radius:8px;
-                        box-shadow:0 0 0 9999px rgba(0,0,0,0.5);
-                    ">
-                        <div class="scan-line"></div>
-                    </div>
-                </div>
-                <div id="scanner-hint" style="
-                    position:absolute;bottom:12px;left:0;right:0;text-align:center;
-                    color:#fff;font-size:13px;text-shadow:0 1px 4px #000;
-                ">{{ __('Hold barcode in frame') }}</div>
-            </div>
-            <div style="display:flex;gap:8px">
-                <button type="button" class="btn btn-primary" id="btn-start-scan" onclick="loadloosesjs().then(() => startScan())">
-                    📷 {{ __('Start scanner') }}
-                </button>
-                <button type="button" class="btn btn-secondary" id="btn-stop-scan" onclick="stopScan()" style="display:none">
-                    ⏹ {{ __('Stop') }}
-                </button>
-            </div>
-            <div id="scan-status" style="margin-top:10px;font-size:13px;color:var(--text-muted)">
-                {{ __('Camera access will be requested when the scanner starts.') }}
-            </div>
-        </div>
+    
 
         
 
