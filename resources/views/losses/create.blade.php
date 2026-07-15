@@ -286,7 +286,7 @@ async function  setProductMode(mode) {
                         </div>
                     </div>
 
-                       <div class="mode-tab">OR</div>
+                       <div class="mode-tab">{{ __('OR') }}</div>
                         <button type="button" style="display: none;" class="mode-tab active" onclick="setProductMode('manual-barcode')" id="tab-manual-barcode">
                             <span>🔢</span> {{ __('Enter barcode') }}
                         </button>
@@ -308,7 +308,7 @@ async function  setProductMode(mode) {
                         </div>
                         <div class="form-hint">{{ __('Type barcode manually or scan with a USB scanner') }}</div>
                     </div>
-                    <div class="mode-tab">OR</div>
+                    <div class="mode-tab">{{ __('OR') }}</div>
                      <!-- <button type="button" class="mode-tab" onclick="setProductMode('search-name')" id="tab-search-name">
                             <span>🔎</span> {{ __('Search product name') }}
                         </button> -->
