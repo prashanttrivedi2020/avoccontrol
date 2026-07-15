@@ -135,7 +135,6 @@
     "Type barcode manually or scan with a USB scanner": "Barcode manuell eintippen oder mit einem USB-Scanner einscannen",
     "Select product…": "Produkt wählen…",
     "Remove product": "Produkt entfernen",
-    "Select reason…": "Grund wählen…",
     "🍃 Spoilage": "🍃 Verderb",
     "📅 Expiry / BBD": "📅 Ablauf / MHD",
     "🚨 Theft": "🚨 Diebstahl",
@@ -143,7 +142,7 @@
     "📋 Incident report": "📋 Tathergang",
     "📎 Other": "📎 Sonstiges",
     "Pre-filled from product": "Wird aus Produkt übernommen",
-    "Capture with camera": "Kamera aufnehmen",
+    "Capture with camera": "Kamera\naufnehme",
     "Upload file": "Datei hochladen",
     "Take photo": "Foto aufnehmen",
     "Switch camera": "Kamera wechseln",
@@ -237,5 +236,11 @@
     "no_photo_yet" : "Foto Hochladen",
     "Reasons" : "Gründe",
     "Units" : "Einheiten",
-    "PDF Export" : "PDF-Export"
+    "PDF Export" : "PDF-Export",
+    "Search by name (min. 3 characters …)": "Suche nach Name (min. 3 Zeichen …)",
+    "Start typing a product name to see live suggestions": "Beginnen Sie mit der Eingabe eines Produktnamens, um Live-Vorschläge zu sehen.",
+    "Product Name": "Produktname",
+    "Add New Reason": "Neuen Grund hinzufügen",
+    "Unit Name": "Einheitenname",
+    "Add New Unit": "Neue Einheit hinzufügen"
 }

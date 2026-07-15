@@ -230,7 +230,6 @@
     "Reason Name": "Neden adı",
     "e.g. Quality issue": "örn. Kalite sorunu",
     "Add new reason": "Yeni neden ekle",
-    "Select reason…": "Neden seç…",
     "Company name": "Şirket adı",
     "Owner name": "Sahip adı",
     "Address": "Adres",
@@ -242,5 +241,11 @@
     "no_photo_yet" : "Fotoğraf Yükle",
     "Reasons" : "Sebepler",
     "Units" : "Birimler",
-    "PDF Export" : "PDF Olarak Dışa Aktar"
+    "PDF Export" : "PDF Olarak Dışa Aktar",
+    "Search by name (min. 3 characters …)": "İsme göre ara (min. 3 karakter …)",
+    "Start typing a product name to see live suggestions": "Canlı önerileri görmek için bir ürün adı yazmaya başlayın.",
+    "Product Name": "Ürün Adı",
+    "Add New Reason": "Yeni Sebep Ekle",
+    "Unit Name": "Birim Adı",
+    "Add New Unit": "Yeni Birim Ekle"
 }

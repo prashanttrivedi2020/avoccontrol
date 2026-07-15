@@ -237,12 +237,14 @@ let photoStream = null;
 let currentFacingMode = 'environment';
 
 async function startPhotoCamera() {
+   
     try {
         photoStream = await navigator.mediaDevices.getUserMedia({
             video: { facingMode: currentFacingMode, width: { ideal: 1920 }, height: { ideal: 1080 } },
             audio: false,
         });
         const video = document.getElementById('photo-video');
+     
         video.srcObject = photoStream;
         video.setAttribute('playsinline', '');
         video.setAttribute('muted', '');
@@ -250,11 +252,13 @@ async function startPhotoCamera() {
         document.getElementById('camera-wrap').style.display = '';
         document.getElementById('camera-start-wrap').style.display = 'none';
         document.getElementById('photo-preview-wrap').style.display = 'none';
+     
         Html5Qrcode.getCameras().then(cams => {
             document.getElementById('btn-switch-cam').style.display = cams.length > 1 ? '' : 'none';
         }).catch(() => {
             document.getElementById('btn-switch-cam').style.display = 'none';
         });
+     
     } catch (err) {
         alert(TRANS.cameraAccessDenied + (err.message || err));
     }

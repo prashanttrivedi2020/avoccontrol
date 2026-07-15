@@ -15,6 +15,69 @@
 @endpush
 
 @section('content')
+<style>
+    .search-box {
+    width: 100%; 
+    height: 58px;
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.left-icon {
+    width: 34px;
+    height: 34px;
+    background: #f7f7f7;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+}
+
+.left-icon img {
+    width: 18px;
+    height: 18px;
+}
+
+.search-content {
+    flex: 1;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 11px;
+    color: #999;
+    margin-top: 3px;
+}
+
+.scan-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: #fff3f5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.scan-btn img {
+    width: 18px;
+    height: 18px;
+}
+</style>    
 <script>
 let loadloosesjsPromise = null;
 
@@ -57,11 +120,10 @@ async function  setProductMode(mode) {
 @else
 <form method="POST" action="{{ route('losses.store') }}" enctype="multipart/form-data" id="loss-form">
     @csrf
-    {{-- ════════════════════════════════════════════════════════
-         SECTION 4: PHOTO
-         ════════════════════════════════════════════════════════ --}}
-    <div class="form-group">
-        <label class="form-label">{{ __('Photo') }}<span class="form-hint"> {{ __('Optional: photo as evidence (max. 10 MB)') }}</span></label> 
+
+    <div class="grid-2" style="margin-bottom:6px;">
+        <div class="card">
+            <label class="form-label">{{ __('Photo') }}<span class="form-hint"> {{ __('Optional: photo as evidence (max. 10 MB)') }}</span></label> 
          {{-- Camera capture --}}
         <div id="photo-mode-camera">
             <div id="camera-wrap" style="display:none;position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
@@ -87,7 +149,7 @@ async function  setProductMode(mode) {
 
             <div id="camera-start-wrap">
                 <div style="display: none;">
-                    <button type="button" class="btn btn-primary" onclick="startPhotoCamera()">
+                    <button type="button" class="btn btn-primary" onclick="setPhotoMode('camera'); startPhotoCamera()">
                         📷 {{ __('Open camera') }}
                     </button>
                     <div class="form-hint" style="margin-top:6px">
@@ -117,9 +179,9 @@ async function  setProductMode(mode) {
             <input type="hidden" name="photo_data" id="photo-data-input">
         </div>
 
-        {{-- File upload --}}
+         {{-- File upload --}}
         <div id="file-drop-icon" style="font-size:36px;margin-bottom:8px;display:none;">🖼️{{ __('no_photo_yet') }}</div>
-        <div id="photo-mode-upload" style="display:block;width:49%;height:auto;margin-left: 25%;">
+        <div id="photo-mode-upload" style="display:none;width:49%;height:auto;margin-left: 25%;">
             <div id="file-drop-zone" style="
                 border:2px dashed var(--border);border-radius:12px;
                 text-align:center;cursor:pointer;
@@ -134,65 +196,105 @@ async function  setProductMode(mode) {
                    
 
                 </div>
-                 <img  id="file-drop-preview" style="width:100%;height:auto;object-fit:cover;border-radius:8px;margin-bottom:6px">
+                 <img  id="file-drop-preview" style="width:150px;height:auto;object-fit:cover;border-radius:8px;margin-bottom:6px">
                 <input type="file" id="photo-file-input" name="photo" accept="image/*"
                        style="position:absolute;opacity:0;width:0;height:0"
                        onchange="onFileChosen(this)">
             </div>
            
         </div>
-
-        <div class="mode-tabs" id="photo-mode-tabs" style="margin-bottom:12px">
-            <!-- <button type="button" class="mode-tab active" onclick="setPhotoMode('camera')" id="photo-tab-camera">
-                <span>📷</span> {{ __('Capture with camera') }}
-            </button> -->
-
-             <button type="button" class="mode-tab active" onclick="startPhotoCamera()" id="photo-tab-camera">
-                <span>📷</span> {{ __('Capture with camera') }}
-            </button>
-
-            <!-- <button type="button" class="mode-tab" onclick="setPhotoMode('upload')" id="photo-tab-upload">
-                <span>📁</span> {{ __('Upload file') }}
-            </button> -->
-            <button type="button" class="mode-tab" onclick="document.getElementById('photo-file-input').click()" id="photo-tab-upload">
-                <span>📁</span> {{ __('Upload file') }}
-            </button>
-           
+        </div>
+        <div class="card">
+             <div class="mode-tabs" id="photo-mode-tabs" style="margin-bottom:12px">
+                    <button type="button" style="text-align:left;" class="mode-tab active" onclick="setPhotoMode('camera'); startPhotoCamera()" id="photo-tab-camera">
+                        <span>📷</span> {!! nl2br(e(__('Capture with camera'))) !!}
+                    </button>
+                    <br/>
+                    <button type="button" class="mode-tab active" onclick="document.getElementById('photo-file-input').click()" id="photo-tab-upload">
+                        <span>📁</span> {{ __('Upload file') }}
+                    </button>
+                     @error('photo') <div class="form-error">{{ $message }}</div> @enderror
+              </div>
         </div>
 
-       
-
-        @error('photo') <div class="form-error">{{ $message }}</div> @enderror
     </div>
+    
+    
 
 
     {{-- ════════════════════════════════════════════════════════
          SECTION 1: PRODUCT SELECTION
          ════════════════════════════════════════════════════════ --}}
     <div class="form-group">
-        <label class="form-label">{{ __('Product') }} *</label>
+        <div class="grid-1" style="margin-bottom:6px;">
+            <div class="card">
+                  <label class="form-label">{{ __('Product') }} *</label>
+                    {{-- Mode tabs --}}
+                    <div class="mode-tabs" id="product-mode-tabs">
+                        <!-- <button type="button" class="mode-tab" onclick="setProductMode('scan')" id="tab-scan">
+                            <span>📷</span> {{ __('Scan barcode') }}
+                        </button> -->
 
-        {{-- Mode tabs --}}
-        <div class="mode-tabs" id="product-mode-tabs">
-            <!-- <button type="button" class="mode-tab" onclick="setProductMode('scan')" id="tab-scan">
-                <span>📷</span> {{ __('Scan barcode') }}
-            </button> -->
+                        <div class="search-box">
+                            <div class="left-icon">
+                                <img src={{asset('images/barcode-icon.svg')}} alt="Logo">
+                            </div>
 
-            <button type="button" class="mode-tab" onclick="loadloosesjs().then(() => startScan())" id="tab-scan">
-                <span>📷</span> {{ __('Scan barcode') }}
-            </button>
+                            <div class="search-content">
+                                <div class="title">Produkt suchen oder Barcode scannen</div>
+                                <div class="subtitle">EAN / UPC / Barcode</div>
+                            </div>
 
-            
-            <button type="button" class="mode-tab" onclick="setProductMode('search-name')" id="tab-search-name">
-                <span>🔎</span> {{ __('Search product name') }}
-            </button>
-            <button type="button" class="mode-tab active" onclick="setProductMode('manual-barcode')" id="tab-manual-barcode">
-                <span>🔢</span> {{ __('Enter barcode') }}
-            </button>
-            <!-- <button type="button" class="mode-tab" onclick="setProductMode('dropdown')" id="tab-dropdown">
-                <span>☰</span> {{ __('Select manually') }}
-            </button> -->
+                        
+                            <button type="button" class="scan-btn" onclick="loadloosesjs().then(() => startScan())" id="tab-scan">
+                            <!-- <span>📷</span> {{ __('Scan barcode') }} -->
+                            <img src={{asset('images/scan-icon.svg')}} alt="Scan">
+                            </button>
+                        </div>
+                       <div class="mode-tab">OR</div>
+                        <button type="button" style="display: none;" class="mode-tab active" onclick="setProductMode('manual-barcode')" id="tab-manual-barcode">
+                            <span>🔢</span> {{ __('Enter barcode') }}
+                        </button>
+                        <!-- <button type="button" class="mode-tab" onclick="setProductMode('dropdown')" id="tab-dropdown">
+                            <span>☰</span> {{ __('Select manually') }}
+                        </button> -->
+                    </div>
+
+                    {{-- Mode: Manual barcode text input --}}
+                    <div id="mode-manual-barcode" class="product-mode" style="display:block">
+                        <div style="display:flex;gap:8px">
+                            <input type="text" id="barcode-text-input" class="form-control"
+                                placeholder="{{ __('Enter EAN / UPC / barcode…') }}"
+                                style="font-family:monospace;letter-spacing:1px"
+                                onkeydown="if(event.key==='Enter'){event.preventDefault();lookupBarcode(this.value.trim());}">
+                            <button type="button" class="btn btn-primary"
+                                    onclick="lookupBarcode(document.getElementById('barcode-text-input').value.trim())"
+                                    style="white-space:nowrap">
+                                🔍 {{ __('Search') }}
+                            </button>
+                        </div>
+                        <div class="form-hint">{{ __('Type barcode manually or scan with a USB scanner') }}</div>
+                    </div>
+                    <div class="mode-tab">OR</div>
+                     <!-- <button type="button" class="mode-tab" onclick="setProductMode('search-name')" id="tab-search-name">
+                            <span>🔎</span> {{ __('Search product name') }}
+                        </button> -->
+                    {{-- Mode: Search products by name --}}
+                    <div id="mode-search-name" class="product-mode" style="display:block">
+                        <div style="position:relative">
+                            <input type="text" id="product-name-search-input" class="form-control" autocomplete="off"
+                                placeholder="{{ __('Search by name (min. 3 characters …)') }}"
+                                oninput="debouncedSearchProductsByName(this.value)"
+                                onkeydown="if(event.key==='Enter'){event.preventDefault();searchProductsByName(this.value.trim());}">
+                            <div id="product-name-results" style="display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,0.12);max-height:240px;overflow:auto"></div>
+                        </div>
+                        <div class="form-hint">{{ __('Start typing a product name to see live suggestions') }}</div>
+                    </div>
+            </div>
+
+           
         </div>
+      
 
         {{-- Mode: Camera barcode scanner --}}
         <div id="mode-scan" class="product-mode" style="display:none">
@@ -227,33 +329,9 @@ async function  setProductMode(mode) {
             </div>
         </div>
 
-        {{-- Mode: Manual barcode text input --}}
-        <div id="mode-manual-barcode" class="product-mode" style="display:block">
-            <div style="display:flex;gap:8px">
-                <input type="text" id="barcode-text-input" class="form-control"
-                       placeholder="{{ __('Enter EAN / UPC / barcode…') }}"
-                       style="font-family:monospace;letter-spacing:1px"
-                       onkeydown="if(event.key==='Enter'){event.preventDefault();lookupBarcode(this.value.trim());}">
-                <button type="button" class="btn btn-primary"
-                        onclick="lookupBarcode(document.getElementById('barcode-text-input').value.trim())"
-                        style="white-space:nowrap">
-                    🔍 {{ __('Search') }}
-                </button>
-            </div>
-            <div class="form-hint">{{ __('Type barcode manually or scan with a USB scanner') }}</div>
-        </div>
+        
 
-        {{-- Mode: Search products by name --}}
-        <div id="mode-search-name" class="product-mode" style="display:none">
-            <div style="position:relative">
-                <input type="text" id="product-name-search-input" class="form-control" autocomplete="off"
-                       placeholder="{{ __('Type at least 3 characters…') }}"
-                       oninput="debouncedSearchProductsByName(this.value)"
-                       onkeydown="if(event.key==='Enter'){event.preventDefault();searchProductsByName(this.value.trim());}">
-                <div id="product-name-results" style="display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,0.12);max-height:240px;overflow:auto"></div>
-            </div>
-            <div class="form-hint">{{ __('Start typing a product name to see live suggestions') }}</div>
-        </div>
+        
 
         {{-- Mode: manual search --}}
        
