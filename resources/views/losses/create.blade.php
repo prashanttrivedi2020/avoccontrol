@@ -126,7 +126,7 @@ async function  setProductMode(mode) {
             <label class="form-label">{{ __('Photo') }}<span class="form-hint"> {{ __('Optional: photo as evidence (max. 10 MB)') }}</span></label> 
          {{-- Camera capture --}}
         <div id="photo-mode-camera">
-            <div id="camera-wrap" style="display:block;position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
+            <div id="camera-wrap" style="display:none;position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
                 <video id="photo-video" autoplay playsinline muted
                        style="width:100%;max-height:320px;object-fit:cover;display:block"></video>
                 <div style="position:absolute;bottom:0;left:0;right:0;padding:12px;
@@ -145,7 +145,7 @@ async function  setProductMode(mode) {
                                color:#fff;padding:6px 10px;cursor:pointer;font-size:18px"
                         title="{{ __('Switch camera') }}">🔄</button>
             </div>
-            <canvas id="photo-canvas" style="display:block"></canvas>
+            <canvas id="photo-canvas" style="display:none"></canvas>
 
             <div id="camera-start-wrap">
                 <div style="display: none;">
