@@ -207,12 +207,12 @@ async function  setProductMode(mode) {
         <div class="card">
              <div class="mode-tabs" id="photo-mode-tabs" style="margin-bottom:12px">
                 
-                    <button type="button" style="text-align:left;" class="mode-tab active" onclick="retakePhoto()" id="photo-tab-camera">
+                    <button type="button" style="text-align:left;display:none;" class="mode-tab active" onclick="retakePhoto()" id="photo-tab-camera">
                       <img style="width: 65px;height: auto;" src={{asset('images/camera-icon.svg')}} alt="Logo">  {!! nl2br(e(__('Capture with camera'))) !!}
                     </button>
-                    <br/>
-                    <button type="button" class="mode-tab active" onclick="document.getElementById('photo-file-input').click()" id="photo-tab-upload">
-                        <span>📁</span> {{ __('Upload file') }}
+              
+                    <button type="button" class="mode-tab active" style="display:block;" onclick="document.getElementById('photo-file-input').click()" id="photo-tab-upload">
+                         <img style="width: 65px;height: auto;" src={{asset('images/camera-icon.svg')}} alt="Logo" / ><div>{!! nl2br(e(__('Upload file'))) !!}</div>
                     </button>
                      @error('photo') <div class="form-error">{{ $message }}</div> @enderror
               </div>
@@ -228,6 +228,37 @@ async function  setProductMode(mode) {
          ════════════════════════════════════════════════════════ --}}
     <div class="form-group">
         <div class="grid-1" style="margin-bottom:6px;">
+            <div id="mode-scan" class="product-mode" style="display:none">
+                            <div id="scanner-wrap" style="position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
+                                <div id="scanner-box"></div>
+                                <div id="scanner-overlay" style="
+                                    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+                                    pointer-events:none;
+                                ">
+                                    <div style="
+                                        width:260px;height:120px;border:2px solid var(--accent);border-radius:8px;
+                                        box-shadow:0 0 0 9999px rgba(0,0,0,0.5);
+                                    ">
+                                        <div class="scan-line"></div>
+                                    </div>
+                                </div>
+                                <div id="scanner-hint" style="
+                                    position:absolute;bottom:12px;left:0;right:0;text-align:center;
+                                    color:#fff;font-size:13px;text-shadow:0 1px 4px #000;
+                                ">{{ __('Hold barcode in frame') }}</div>
+                            </div>
+                            <div style="display:flex;gap:8px">
+                                <button type="button" class="btn btn-primary" id="btn-start-scan" onclick="loadloosesjs().then(() => startScan())">
+                                    📷 {{ __('Start scanner') }}
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="btn-stop-scan" onclick="stopScan()" style="display:none">
+                                    ⏹ {{ __('Stop') }}
+                                </button>
+                            </div>
+                            <div id="scan-status" style="margin-top:10px;font-size:13px;color:var(--text-muted)">
+                                {{ __('Camera access will be requested when the scanner starts.') }}
+                            </div>
+                        </div>
             <div class="card">
                   <label class="form-label">{{ __('Product') }} *</label>
                     {{-- Mode tabs --}}
@@ -235,7 +266,7 @@ async function  setProductMode(mode) {
                         <!-- <button type="button" class="mode-tab" onclick="setProductMode('scan')" id="tab-scan">
                             <span>📷</span> {{ __('Scan barcode') }}
                         </button> -->
-
+                     
                         <div class="search-box">
                             <div class="left-icon">
                                 <img src={{asset('images/barcode-icon.svg')}} alt="Logo">
@@ -255,37 +286,7 @@ async function  setProductMode(mode) {
                             {{-- Mode: Camera barcode scanner --}}
                    
                     </div>
-                     <div id="mode-scan" class="product-mode" style="display:none">
-                        <div id="scanner-wrap" style="position:relative;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px">
-                            <div id="scanner-box"></div>
-                            <div id="scanner-overlay" style="
-                                position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-                                pointer-events:none;
-                            ">
-                                <div style="
-                                    width:260px;height:120px;border:2px solid var(--accent);border-radius:8px;
-                                    box-shadow:0 0 0 9999px rgba(0,0,0,0.5);
-                                ">
-                                    <div class="scan-line"></div>
-                                </div>
-                            </div>
-                            <div id="scanner-hint" style="
-                                position:absolute;bottom:12px;left:0;right:0;text-align:center;
-                                color:#fff;font-size:13px;text-shadow:0 1px 4px #000;
-                            ">{{ __('Hold barcode in frame') }}</div>
-                        </div>
-                        <div style="display:flex;gap:8px">
-                            <button type="button" class="btn btn-primary" id="btn-start-scan" onclick="loadloosesjs().then(() => startScan())">
-                                📷 {{ __('Start scanner') }}
-                            </button>
-                            <button type="button" class="btn btn-secondary" id="btn-stop-scan" onclick="stopScan()" style="display:none">
-                                ⏹ {{ __('Stop') }}
-                            </button>
-                        </div>
-                        <div id="scan-status" style="margin-top:10px;font-size:13px;color:var(--text-muted)">
-                            {{ __('Camera access will be requested when the scanner starts.') }}
-                        </div>
-                    </div>
+
 
                        <div class="mode-tab">{{ __('OR') }}</div>
                         <button type="button" style="display: none;" class="mode-tab active" onclick="setProductMode('manual-barcode')" id="tab-manual-barcode">
