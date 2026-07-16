@@ -207,7 +207,7 @@ async function  setProductMode(mode) {
         <div class="card">
              <div class="mode-tabs" id="photo-mode-tabs" style="margin-bottom:12px">
                 
-                    <button type="button" style="text-align:left;" class="mode-tab active" onclick="setPhotoMode('camera'); startPhotoCamera()" id="photo-tab-camera">
+                    <button type="button" style="text-align:left;" class="mode-tab active" onclick="setPhotoMode('camera'); retakePhoto()" id="photo-tab-camera">
                       <img style="width: 65px;height: auto;" src={{asset('images/camera-icon.svg')}} alt="Logo">  {!! nl2br(e(__('Capture with camera'))) !!}
                     </button>
                     <br/>
