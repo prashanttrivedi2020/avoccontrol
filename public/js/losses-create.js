@@ -314,7 +314,6 @@ function capturePhoto() {
 }
 
 function retakePhoto() {
-    alert('Starting Camera');
     deletePhoto();
     startPhotoCamera();
 }
