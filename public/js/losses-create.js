@@ -237,18 +237,34 @@ let photoStream = null;
 let currentFacingMode = 'environment';
 
 async function startPhotoCamera() {
-   
+    
     try {
-        photoStream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: currentFacingMode, width: { ideal: 1920 }, height: { ideal: 1080 } },
-            audio: false,
-        });
+           const constraints = {
+            video: {
+                facingMode: { ideal: currentFacingMode }
+            },
+            audio: false
+        };
+        // photoStream = await navigator.mediaDevices.getUserMedia({
+        //     video: { facingMode: currentFacingMode, width: { ideal: 1920 }, height: { ideal: 1080 } },
+        //     audio: false,
+        // });
+        photoStream = await navigator.mediaDevices.getUserMedia(constraints);
         const video = document.getElementById('photo-video');
      
         video.srcObject = photoStream;
-        video.setAttribute('playsinline', '');
-        video.setAttribute('muted', '');
+        // video.setAttribute('playsinline', '');
+        // video.setAttribute('muted', '');
+        //  await video.play();
+           video.playsInline = true;
+        video.muted = true;
+        video.autoplay = true;
+          await new Promise(resolve => {
+            video.onloadedmetadata = resolve;
+        });
+
         await video.play();
+       
         document.getElementById('camera-wrap').style.display = '';
         document.getElementById('camera-start-wrap').style.display = 'none';
         document.getElementById('photo-preview-wrap').style.display = 'none';
