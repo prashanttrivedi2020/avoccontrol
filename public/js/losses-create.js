@@ -321,11 +321,11 @@ function capturePhoto() {
 }
 
 function retakePhoto() {
-    await stopScan();
+     stopScan();
 
-await new Promise(r => setTimeout(r, 500));
+ new Promise(r => setTimeout(r, 500));
  deletePhoto();
-await startPhotoCamera();
+startPhotoCamera();
    
    
 }
