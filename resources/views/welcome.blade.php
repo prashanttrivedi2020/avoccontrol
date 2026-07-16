@@ -353,7 +353,7 @@
                 <span class="cur">149 €</span>
                 <span class="period"> / {{ __('month') }}</span>
             </div>
-            <div class="vat">{{ __('excl. VAT — 117.81 € incl. 19% VAT') }}</div>
+            <div class="vat">{{ __('excl. VAT — 117.31 € incl. 19% VAT') }}</div>
         </div>
 
         <div class="impressum">
