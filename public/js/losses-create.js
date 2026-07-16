@@ -276,7 +276,14 @@ async function startPhotoCamera() {
         });
      
     } catch (err) {
-        alert(TRANS.cameraAccessDenied + (err.message || err));
+          alert(
+        "Name: " + err.name +
+        "\nMessage: " + err.message +
+        "\nConstraint: " + (err.constraint || "")
+    );
+
+    console.error(err);
+        //alert(TRANS.cameraAccessDenied + (err.message || err));
     }
 }
 
@@ -314,8 +321,13 @@ function capturePhoto() {
 }
 
 function retakePhoto() {
-    deletePhoto();
-    startPhotoCamera();
+    await stopScan();
+
+await new Promise(r => setTimeout(r, 500));
+ deletePhoto();
+await startPhotoCamera();
+   
+   
 }
 
 function deletePhoto() {
