@@ -73,6 +73,7 @@ async function lookupBarcode(barcode) {
         if (res.ok) {
             const product = await res.json();
             setConfirmedProduct(product.id, product.name, product.purchase_price, product.supplier, product.unit);
+            document.getElementById('barcode-text-input').value = product.barcode || '';
             document.getElementById('scan-status').textContent = TRANS.productFound;
             document.getElementById('scanner-box').style.display = 'none';
         } else {
@@ -159,6 +160,7 @@ function selectProductFromSearchResult(product) {
         results.innerHTML = '';
         results.style.display = 'none';
     }
+    document.getElementById('barcode-text-input').value = product.barcode || '';
 }
 
 // ── Dropdown selection ───────────────────────────────────────────────────────
