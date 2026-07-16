@@ -237,7 +237,7 @@ let photoStream = null;
 let currentFacingMode = 'environment';
 
 async function startPhotoCamera() {
-    
+    stopPhotoCamera();
     try {
            const constraints = {
             video: {
