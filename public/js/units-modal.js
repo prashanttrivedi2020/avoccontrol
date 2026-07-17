@@ -74,7 +74,7 @@ function populateReasonSelect() {
 
     const defaultOption = document.createElement('option');
     defaultOption.value = '';
-    defaultOption.textContent = 'Select reason…';
+    defaultOption.textContent = '{{ __('Select reason…') }}';
     select.appendChild(defaultOption);
 
     allReasons.forEach(reason => {
