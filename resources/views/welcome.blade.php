@@ -359,7 +359,7 @@
         </div>
 
         <div class="impressum">
-            <a href="#">{{ __('Imprint & Legal') }}</a>
+            <a href="/privacy-policy">{{ __('Imprint & Legal') }}</a>
         </div>
     </div>
 

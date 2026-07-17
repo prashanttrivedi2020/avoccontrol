@@ -26,6 +26,7 @@ Route::get('/lang/{locale}', function (Request $request, string $locale) {
 // Landing / Auth
 Route::get('/',          [AuthController::class, 'showLanding'])->name('welcome');
 Route::get('/login',     [AuthController::class, 'showLanding'])->name('login');
+Route::get('/privacy-policy', fn () => view('policy.privacypolicy'))->name('policy.privacypolicy');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login',    [AuthController::class, 'login'])->name('login.post');
 Route::post('/demo',     [AuthController::class, 'demoLogin'])->name('demo.login');
