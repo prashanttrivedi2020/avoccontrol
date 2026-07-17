@@ -4,6 +4,7 @@
 @section('page-title', __('Failed import rows'))
 
 @section('topbar-actions')
+ <image src={{ asset('storage/' . auth()->user()->logo_path) }} alt="Logo" style="height:41px;width:auto;">
     <a href="{{ route('products.import.upload') }}" class="btn btn-secondary">⬆ {{ __('Import CSV') }}</a>
     <a href="{{ route('products.index') }}" class="btn btn-secondary">📦 {{ __('Products') }}</a>
 @endsection

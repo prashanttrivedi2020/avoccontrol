@@ -4,6 +4,7 @@
 @section('page-title', __('Map columns'))
 
 @section('topbar-actions')
+ <image src={{ asset('storage/' . auth()->user()->logo_path) }} alt="Logo" style="height:41px;width:auto;">
     <a href="{{ route('products.import.upload') }}" class="btn btn-secondary">{{ __('← Back') }}</a>
 @endsection
 

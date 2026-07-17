@@ -4,6 +4,7 @@
 @section('page-title', __('Reasons'))
 
 @section('topbar-actions')
+ <image src={{ asset('storage/' . auth()->user()->logo_path) }} alt="Logo" style="height:41px;width:auto;">
     <a href="{{ route('reasons.create') }}" class="btn btn-primary">{{ __('Add Reason') }}</a>
     <a href="{{ route('dashboard') }}" class="btn btn-secondary">{{ __('← Back') }}</a>
 @endsection

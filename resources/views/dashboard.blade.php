@@ -4,6 +4,7 @@
 @section('page-title', __('Dashboard'))
 
 @section('topbar-actions')
+ <image src={{ asset('storage/' . auth()->user()->logo_path) }} alt="Logo" style="height:41px;width:auto;">
     <a href="{{ route('losses.create') }}" class="btn btn-primary" style="display: none;">➕ {{ __('Record Loss') }}</a>
 @endsection
 

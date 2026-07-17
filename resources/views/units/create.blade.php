@@ -4,6 +4,7 @@
 @section('page-title', __('Add Unit'))
 
 @section('topbar-actions')
+ <image src={{ asset('storage/' . auth()->user()->logo_path) }} alt="Logo" style="height:41px;width:auto;">
     <a href="{{ route('units.index') }}" class="btn btn-secondary">{{ __('← Back') }}</a>
 @endsection
 

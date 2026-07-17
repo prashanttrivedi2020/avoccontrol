@@ -4,6 +4,7 @@
 @section('page-title', __('Record Loss'))
 
 @section('topbar-actions')
+ <image src={{ asset('storage/' . auth()->user()->logo_path) }} alt="Logo" style="height:41px;width:auto;">
     <a href="{{ route('losses.index') }}" class="btn btn-secondary">{{ __('← Back') }}</a>
 @endsection
 

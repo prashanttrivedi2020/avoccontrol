@@ -17,6 +17,7 @@ class LossController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
         $query = Auth::user()->losses()->with('product')->orderByDesc('loss_date');
         
         
@@ -38,7 +39,7 @@ class LossController extends Controller
        // $products = Auth::user()->products()->orderBy('name')->get();
 
         //return view('losses.index', compact('losses', 'products'));
-        return view('losses.index', compact('losses'));
+        return view('losses.index', compact('losses','user'));
     }
 
     public function create()
@@ -57,10 +58,10 @@ class LossController extends Controller
             ->orderBy('name')
             ->get();
         
-        $reasons = Reason::getAllowedNamesForUser(Auth::user());
+        //$reasons = Reason::getAllowedNamesForUser(Auth::user());
        
 
-        //$reasons = Reason::getAllowedNamesForUsers($userIds);
+        $reasons = Reason::getAllowedNamesForUsers($userIds);
 
         return view('losses.create', compact('products', 'units', 'reasons'));
     }
@@ -148,7 +149,8 @@ class LossController extends Controller
             ->get();
         //$reasons = Reason::getAllowedNamesForUser(Auth::user());
         $reasons = Reason::getAllowedNamesForUsers($userIds);
-
+        
+        
         //return view('losses.edit', compact('loss', 'products', 'units'));
         return view('losses.edit', compact('loss', 'units', 'reasons'));
     }

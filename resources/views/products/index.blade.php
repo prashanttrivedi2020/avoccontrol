@@ -4,6 +4,7 @@
 @section('page-title', __('Products'))
 
 @section('topbar-actions')
+ <image src={{ asset('storage/' . auth()->user()->logo_path) }} alt="Logo" style="height:41px;width:auto;">
     <a href="{{ route('products.import.upload') }}" class="btn btn-secondary">⬆ {{ __('Import CSV') }}</a>
     <a href="{{ route('products.import.failures') }}" class="btn btn-secondary">⚠ {{ __('Failed rows') }}</a>
     <a href="{{ route('products.create') }}" class="btn btn-primary">➕ {{ __('Add Product') }}</a>
