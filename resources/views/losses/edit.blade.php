@@ -84,7 +84,7 @@
 
             @if($loss->photo_path)
         
-                <div style="margin-bottom:10px">
+                <div style="margin-bottom:10px;text-align: center;">
                     <img src="{{ asset('storage/' . $loss->photo_path) }}" alt="{{ __('Current photo') }}" style="max-width:220px;max-height:180px;object-fit:cover;border-radius:10px;border:1px solid var(--border)">
                 </div>
             @endif
