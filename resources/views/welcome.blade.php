@@ -139,7 +139,7 @@
         .auth-logo { text-align: center; margin-bottom: 24px; }
         .logo-mark {
             display: inline-block;
-            background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+            /* background: linear-gradient(135deg, #0f172a 0%, #334155 100%); */
             border-radius: 12px;
             padding: 16px 24px;
             margin-bottom: 8px;
@@ -258,8 +258,7 @@
         <div class="auth-logo">
             <div class="logo-mark">
                 <div class="logo-text">
-                    <span class="logo-fire">Fire</span><span class="logo-kont">Kontrol</span>
-                    <span class="logo-365"> 365</span>
+                    <img src={{asset('images/logo.png')}} alt="Logo" style="width: 259px; height: auto;">
                 </div>
             </div>
             <div class="logo-sub">{{ __('No money down the drain!') }} 🔥</div>
@@ -278,14 +277,33 @@
         @endif
 
         <div class="form-tabs">
-            <button class="tab-btn {{ !old('_tab') || old('_tab') === 'register' ? 'active' : '' }}"
-                    onclick="switchTab('register', event)">{{ __('Create account') }}</button>
-            <button class="tab-btn {{ old('_tab') === 'login' ? 'active' : '' }}"
+              <button class="tab-btn {{ !old('_tab') || old('_tab') === 'login' ? 'active' : '' }}"
                     onclick="switchTab('login', event)">{{ __('Log in') }}</button>
+            <button class="tab-btn {{ old('_tab') === 'register' ? 'active' : '' }}"
+                    onclick="switchTab('register', event)">{{ __('Create account') }}</button>
+          
+        </div>
+
+         <!-- Login -->
+        <div id="tab-login" class="tab-panel {{ !old('_tab') || old('_tab') === 'login' ? 'active' : '' }}">
+            <form method="POST" action="{{ route('login.post') }}">
+                @csrf
+                <input type="hidden" name="_tab" value="login">
+                <div class="form-group">
+                    <label class="form-label">{{ __('Username') }}</label>
+                    <input type="text" name="username" class="form-input"
+                           value="{{ old('username') }}" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">{{ __('Password') }}</label>
+                    <input type="password" name="password" class="form-input" autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn-submit">{{ __('Log in') }}</button>
+            </form>
         </div>
 
         <!-- Register -->
-        <div id="tab-register" class="tab-panel {{ !old('_tab') || old('_tab') === 'register' ? 'active' : '' }}">
+        <div id="tab-register" class="tab-panel {{ old('_tab') === 'register' ? 'active' : '' }}">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <input type="hidden" name="_tab" value="register">
@@ -308,23 +326,7 @@
             </form>
         </div>
 
-        <!-- Login -->
-        <div id="tab-login" class="tab-panel {{ old('_tab') === 'login' ? 'active' : '' }}">
-            <form method="POST" action="{{ route('login.post') }}">
-                @csrf
-                <input type="hidden" name="_tab" value="login">
-                <div class="form-group">
-                    <label class="form-label">{{ __('Username') }}</label>
-                    <input type="text" name="username" class="form-input"
-                           value="{{ old('username') }}" autocomplete="username">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">{{ __('Password') }}</label>
-                    <input type="password" name="password" class="form-input" autocomplete="current-password">
-                </div>
-                <button type="submit" class="btn-submit">{{ __('Log in') }}</button>
-            </form>
-        </div>
+       
 
         
 
