@@ -83,6 +83,7 @@
             <label class="form-label">{{ __('Photo') }}<span class="form-hint"> {{ __('Optional: photo as evidence (max. 10 MB)') }}</span></label>
 
             @if($loss->photo_path)
+        
                 <div style="margin-bottom:10px">
                     <img src="{{ asset('storage/' . $loss->photo_path) }}" alt="{{ __('Current photo') }}" style="max-width:220px;max-height:180px;object-fit:cover;border-radius:10px;border:1px solid var(--border)">
                 </div>
@@ -139,7 +140,7 @@
             </div>
 
             <div id="file-drop-icon" style="font-size:36px;margin-bottom:8px;display:none;">🖼️{{ __('no_photo_yet') }}</div>
-            <div id="photo-mode-upload" style="display:block;width:49%;height:auto;margin-left:25%;">
+            <div id="photo-mode-upload" style="display:none;width:49%;height:auto;margin-left:25%;">
                 <div id="file-drop-zone" style="border:2px dashed var(--border);border-radius:12px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;"
                      onclick="document.getElementById('photo-file-input').click()">
                     <div id="file-drop-text" style="color:var(--text-muted);font-size:13px">
@@ -152,14 +153,15 @@
                            onchange="onFileChosen(this)">
                 </div>
             </div>
-
-            <div class="mode-tabs" id="photo-mode-tabs" style="margin-bottom:12px">
-                <button type="button" class="mode-tab active" onclick="startPhotoCamera()" id="photo-tab-camera">
-                    <span>📷</span> {{ __('Capture with camera') }}
-                </button>
-                <button type="button" class="mode-tab" onclick="document.getElementById('photo-file-input').click()" id="photo-tab-upload">
-                    <span>📁</span> {{ __('Upload file') }}
-                </button>
+            <div class="card">
+                <div class="mode-tabs" id="photo-mode-tabs" style="margin-bottom:12px">
+                    <button type="button" style="text-align:left;display:none;" class="mode-tab active" onclick="startPhotoCamera()" id="photo-tab-camera">
+                        <img style="width: 65px;height: auto;" src={{asset('images/camera-icon.svg')}} alt="Logo">  {!! nl2br(e(__('Capture with camera'))) !!}
+                    </button>
+                    <button type="button" class="mode-tab" onclick="document.getElementById('photo-file-input').click()" id="photo-tab-upload">
+                        <img style="width: 65px;height: auto;" src={{asset('images/camera-icon.svg')}} alt="Logo" / ><div>{!! nl2br(e(__('Upload file'))) !!}</div>
+                    </button>
+                </div>
             </div>
 
             <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;color:var(--text-muted)">
