@@ -453,6 +453,11 @@ async function  setProductMode(mode) {
 </div><!-- /.card -->
 
 <script>
+  window.translations = {
+        selectReason: @json(__('Select reason…'))
+    };
+</script>
+<script>
 // ── Translated strings passed from PHP ──────────────────────────────────────
 const TRANS = {
     scannerStarting:    @json(__('Camera is starting…')),
@@ -467,6 +472,7 @@ const TRANS = {
     noProductMsg:       @json(__('No product with barcode found. Please select manually.')),
     ek:                 @json(__('PP:')),
     cameraAccessMsg:    @json(__('Camera access will be requested when the scanner starts.')),
+    
 };
 
 </script>

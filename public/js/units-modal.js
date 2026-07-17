@@ -74,7 +74,7 @@ function populateReasonSelect() {
 
     const defaultOption = document.createElement('option');
     defaultOption.value = '';
-    defaultOption.textContent = '{{ __('Select reason…') }}';
+    defaultOption.textContent = window.translations.selectReason;
     select.appendChild(defaultOption);
 
     allReasons.forEach(reason => {
