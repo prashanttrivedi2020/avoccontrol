@@ -10,7 +10,15 @@ class ReasonManagementController extends Controller
 {
     public function index()
     {
-        $reasons = Auth::user()->reasons()->withoutTrashed()->orderBy('name')->get();
+         $userIds = $this->getUserIds();
+          //$reasons = Auth::user()->reasons()->withoutTrashed()->orderBy('name')->get();
+        
+          $reasons = Reason::whereIn('user_id', $userIds)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->withoutTrashed()
+            ->orderBy('name')
+            ->get();
 
         return view('reasons.index', compact('reasons'));
     }

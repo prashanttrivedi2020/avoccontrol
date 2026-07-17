@@ -66,26 +66,26 @@ class AuthController extends Controller
 
     public function demoLogin(Request $request)
     {
-        $demo = User::firstOrCreate(
-            ['username' => 'demo'],
-            [
-                'name'       => 'Volkan Can',
-                'email'      => 'demo@ekampanya.app',
-                'password'   => Hash::make('control@1234'),
-                'role'       => 'demo',
-                'store_name' => 'Demo-Supermarkt',
-            ]
-        );
+        // $demo = User::firstOrCreate(
+        //     ['username' => 'demo'],
+        //     [
+        //         'name'       => 'Volkan Can',
+        //         'email'      => 'demo@ekampanya.app',
+        //         'password'   => Hash::make('control@1234'),
+        //         'role'       => 'demo',
+        //         'store_name' => 'Demo-Supermarkt',
+        //     ]
+        // );
 
         // Seed demo data if user is freshly created
-        if ($demo->wasRecentlyCreated) {
-            $this->seedDemoData($demo);
-        }
+        // if ($demo->wasRecentlyCreated) {
+        //     $this->seedDemoData($demo);
+        // }
 
-        Auth::login($demo);
-        $request->session()->regenerate();
+        //Auth::login($demo);
+        //$request->session()->regenerate();
 
-        return redirect()->route('dashboard')->with('info', __('You are logged in as demo user.'));
+        //return redirect()->route('dashboard')->with('info', __('You are logged in as demo user.'));
     }
 
     public function logout(Request $request)

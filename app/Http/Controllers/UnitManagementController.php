@@ -10,7 +10,14 @@ class UnitManagementController extends Controller
 {
     public function index()
     {
-        $units = Auth::user()->units()->withoutTrashed()->orderBy('name')->get();
+         $userIds = $this->getUserIds();
+
+        //$units = Auth::user()->units()->withoutTrashed()->orderBy('name')->get();
+         $units = Unit::whereIn('user_id', $userIds)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
 
         return view('units.index', compact('units'));
     }

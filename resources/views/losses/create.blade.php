@@ -406,6 +406,7 @@ async function  setProductMode(mode) {
             <div class="unit-select-wrapper">
                 <select name="unit" id="unit-select" class="form-control">
                     @foreach($units as $unit)
+                      {{ $unit->name }}
                         <option value="{{ $unit->name }}" {{ old('unit', '') === $unit->name ? 'selected' : '' }}>
                             {{ $unit->name }}
                         </option>

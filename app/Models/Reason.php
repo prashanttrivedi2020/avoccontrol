@@ -39,11 +39,11 @@ class Reason extends Model
         $defaults = self::defaultNames();
 
         foreach ($defaults as $index => $name) {
-            $user->reasons()->create([
-                'name' => $name,
-                'sort_order' => $index + 1,
-                'is_active' => true,
-            ]);
+            // $user->reasons()->create([
+            //     'name' => $name,
+            //     'sort_order' => $index + 1,
+            //     'is_active' => true,
+            // ]);
         }
 
         return $defaults;
@@ -51,6 +51,7 @@ class Reason extends Model
 
     public static function getAllowedNamesForUser(User $user, ?string $reason = null): array
     {
+
         $names = self::ensureDefaultsForUser($user);
 
         if ($reason && !in_array($reason, $names, true)) {
@@ -58,5 +59,44 @@ class Reason extends Model
         }
 
         return array_values(array_unique($names));
+    }
+    public static function getAllowedNamesForUsers(array|\Illuminate\Support\Collection $userIds, ?string $reason = null): array
+    {
+        $names = self::ensureDefaultsForUsers($userIds);
+
+        if ($reason && !in_array($reason, $names, true)) {
+            $names[] = $reason;
+        }
+
+        return $names;
+    }
+    public static function ensureDefaultsForUsers(array|\Illuminate\Support\Collection $userIds): array
+    {
+        $userIds = collect($userIds)->unique()->values();
+
+        $existing = self::whereIn('user_id', $userIds)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->pluck('name')
+            ->unique()
+            ->values();
+
+        if ($existing->isNotEmpty()) {
+            return $existing->all();
+        }
+
+        // Only create defaults for the authenticated user if none exist
+        $defaults = self::defaultNames();
+
+        foreach ($defaults as $index => $name) {
+            // auth()->user()->reasons()->create([
+            //     'name' => $name,
+            //     'sort_order' => $index + 1,
+            //     'is_active' => true,
+            // ]);
+        }
+
+        return $defaults;
     }
 }

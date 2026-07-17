@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Unit;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+// use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class UnitController extends Controller
@@ -44,7 +45,18 @@ class UnitController extends Controller
      */
     public function getActive()
     {
-        $units = Auth::user()->units()
+         $userIds = $this->getUserIds();
+
+       
+
+        // $units = Auth::user()->units()
+        //     ->where('is_active', true)
+        //     ->whereNull('deleted_at')
+        //     ->orderBy('sort_order')
+        //     ->orderBy('name')
+        //     ->get(['id', 'name']);
+        
+        $units = Unit::whereIn('user_id', $userIds)
             ->where('is_active', true)
             ->whereNull('deleted_at')
             ->orderBy('sort_order')

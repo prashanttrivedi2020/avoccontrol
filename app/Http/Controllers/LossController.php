@@ -18,6 +18,8 @@ class LossController extends Controller
     public function index(Request $request)
     {
         $query = Auth::user()->losses()->with('product')->orderByDesc('loss_date');
+        
+        
 
         if ($request->filled('reason')) {
             $query->where('reason', $request->reason);
@@ -41,16 +43,35 @@ class LossController extends Controller
 
     public function create()
     {
-        $products = Auth::user()->products()->where('active', true)->orderBy('name')->get();
-        $units = Auth::user()->units()->where('is_active', true)->orderBy('sort_order')->orderBy('name')->get();
+         $userIds = $this->getUserIds();
+         
+        //$products = Auth::user()->products()->where('active', true)->orderBy('name')->get();
+        $products = Product::whereIn('user_id', $userIds)
+            ->where('active', true)
+            ->orderBy('name')
+            ->get();
+        //$units = Auth::user()->units()->where('is_active', true)->orderBy('sort_order')->orderBy('name')->get();
+        $units = Unit::whereIn('user_id', $userIds)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+        
         $reasons = Reason::getAllowedNamesForUser(Auth::user());
+       
+
+        //$reasons = Reason::getAllowedNamesForUsers($userIds);
+
         return view('losses.create', compact('products', 'units', 'reasons'));
     }
 
     public function store(Request $request)
     {
         \Log::info(json_encode($request->all()));
-        $allowedReasons = Reason::getAllowedNamesForUser(Auth::user(), $request->input('reason'));
+          $userIds = $this->getUserIds();
+        //$allowedReasons = Reason::getAllowedNamesForUser(Auth::user(), $request->input('reason'));
+        $allowedReasons = Reason::getAllowedNamesForUsers($userIds, $request->input('reason'));
+        
         $data = $request->validate([
             'product_id'     => ['required', 'exists:products,id'],
             'loss_date'      => ['required', 'date', 'before_or_equal:today'],
@@ -70,7 +91,9 @@ class LossController extends Controller
         ]);
 
         // Ensure this product belongs to the user
-        $product = Auth::user()->products()->findOrFail($data['product_id']);
+        //$product = Auth::user()->products()->findOrFail($data['product_id']);
+        $product = Product::whereIn('user_id', $userIds)
+            ->findOrFail($data['product_id']);
 
         // Camera-captured photo (base64 data URL)
         if ($request->filled('photo_data')) {
@@ -114,9 +137,17 @@ class LossController extends Controller
     {
         $this->authorize('update', $loss);
 
+         $userIds = $this->getUserIds();
+
        // $products = Auth::user()->products()->where('active', true)->orderBy('name')->get();
-        $units = Auth::user()->units()->where('is_active', true)->orderBy('sort_order')->orderBy('name')->get();
-        $reasons = Reason::getAllowedNamesForUser(Auth::user());
+       // $units = Auth::user()->units()->where('is_active', true)->orderBy('sort_order')->orderBy('name')->get();
+         $units = Unit::whereIn('user_id', $userIds)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+        //$reasons = Reason::getAllowedNamesForUser(Auth::user());
+        $reasons = Reason::getAllowedNamesForUsers($userIds);
 
         //return view('losses.edit', compact('loss', 'products', 'units'));
         return view('losses.edit', compact('loss', 'units', 'reasons'));
@@ -124,9 +155,11 @@ class LossController extends Controller
 
     public function update(Request $request, Loss $loss)
     {
+        $userIds = $this->getUserIds();
         $this->authorize('update', $loss);
 
-        $allowedReasons = Reason::getAllowedNamesForUser(Auth::user(), $request->input('reason'));
+        //$allowedReasons = Reason::getAllowedNamesForUser(Auth::user(), $request->input('reason'));
+          $allowedReasons = Reason::getAllowedNamesForUsers($userIds, $request->input('reason'));
         $data = $request->validate([
             // 'product_id'     => ['required', 'exists:products,id'],
             'product_name'   => ['nullable', 'string', 'max:255'],

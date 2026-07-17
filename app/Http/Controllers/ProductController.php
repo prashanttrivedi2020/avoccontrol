@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Auth::user()->products()
+        // $products = Auth::user()->products()
+        //     ->withCount('losses')
+        //     ->orderBy('name')
+        //     ->paginate(50);
+
+        // return view('products.index', compact('products'));
+
+        $userIds = $this->getUserIds();
+
+        $products = Product::whereIn('user_id', $userIds)
             ->withCount('losses')
             ->orderBy('name')
             ->paginate(50);
@@ -97,26 +107,46 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
+         $userIds = $this->getUserIds();
+            
         $query = trim((string) $request->query('query', ''));
 
         if (mb_strlen($query) < 3) {
             return response()->json(['products' => []]);
         }
 
-        $products = Auth::user()->products()
+        // $products = Auth::user()->products()
+        //     ->where('active', true)
+        //     ->where('name', 'like', '%' . $query . '%')
+        //     ->orderBy('name')
+        //     ->limit(10)
+        //     ->get(['id', 'name', 'barcode', 'supplier', 'purchase_price', 'unit']);
+        
+            $products = Product::whereIn('user_id', $userIds)
             ->where('active', true)
             ->where('name', 'like', '%' . $query . '%')
             ->orderBy('name')
             ->limit(10)
-            ->get(['id', 'name', 'barcode', 'supplier', 'purchase_price', 'unit']);
+            ->get([
+                'id',
+                'name',
+                'barcode',
+                'supplier',
+                'purchase_price',
+                'unit'
+            ]);
 
         return response()->json(['products' => $products]);
     }
 
     public function searchByBarcode(Request $request)
     {
+         $userIds = $this->getUserIds();
         $barcode = $request->query('barcode');
-        $product = Auth::user()->products()->where('barcode', $barcode)->first();
+        //$product = Auth::user()->products()->where('barcode', $barcode)->first();
+        $product = Product::whereIn('user_id', $userIds)
+            ->where('barcode', $barcode)
+            ->first();
 
         if ($product) {
             return response()->json($product);

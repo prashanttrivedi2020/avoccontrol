@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Reason;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+// use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class ReasonController extends Controller
 {
@@ -38,9 +40,22 @@ class ReasonController extends Controller
 
     public function getActive()
     {
-        Reason::ensureDefaultsForUser(Auth::user());
+        //Reason::ensureDefaultsForUser(Auth::user());
+        $userIds = $this->getUserIds();
 
-        $reasons = Auth::user()->reasons()
+        $users = User::whereIn('id', $userIds)->get();
+
+        foreach ($users as $user) {
+            Reason::ensureDefaultsForUser($user);
+        }
+
+        // $reasons = Auth::user()->reasons()
+        //     ->where('is_active', true)
+        //     ->orderBy('sort_order')
+        //     ->orderBy('name')
+        //     ->get(['id', 'name']);
+
+        $reasons = Reason::whereIn('user_id', $userIds)
             ->where('is_active', true)
             ->orderBy('sort_order')
             ->orderBy('name')

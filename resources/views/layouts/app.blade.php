@@ -59,7 +59,7 @@
             z-index: 100;
         }
         .sidebar-logo {
-            padding: 4px 20px 20px;
+            /* padding: 4px 20px 20px; */
             border-bottom: 1px solid var(--border);
         }
         .sidebar-logo .brand {
@@ -500,14 +500,15 @@
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-logo">
         <div class="brand">
-            <span class="fire">Fire</span><span class="kont">Kontrol</span> <span class="num">365</span>
+             <img src={{asset('images/logo.png')}} alt="Logo" style="width: 185px; height: auto;">
+            <!-- <span class="fire">Fire</span><span class="kont">Kontrol</span> <span class="num">365</span> -->
         </div>
-        <div class="sub">{{ __('Loss Control & Loss Documentation') }}</div>
+        <!-- <div class="sub">{{ __('Loss Control & Loss Documentation') }}</div> -->
     </div>
     <nav>
         <div class="nav-section">{{ __('Overview') }}</div>
         <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            <span class="icon">📊</span> {{ __('Dashboard') }}
+            <span class="icon"> 🏠</span>{{ __('Dashboard') }}
         </a>
         <div class="nav-section">{{ __('Loss Documentation') }}</div>
         <a href="{{ route('losses.create') }}" class="nav-link {{ request()->routeIs('losses.create') ? 'active' : '' }}">
