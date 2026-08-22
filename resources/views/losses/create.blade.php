@@ -316,16 +316,24 @@ async function  setProductMode(mode) {
                             <span>🔎</span> {{ __('Search product name') }}
                         </button> -->
                     {{-- Mode: Search products by name --}}
-                    <div id="mode-search-name" class="product-mode" style="display:block">
-                        <div style="position:relative">
-                            <input type="text" id="product-name-search-input" class="form-control" autocomplete="off"
-                                placeholder="{{ __('Search by name (min. 3 characters …)') }} {{ __('OR') }} {{ __('Type barcode manually or scan with a USB scanner') }}"
-                                oninput="debouncedSearchProductsByName(this.value)"
-                                onkeydown="if(event.key==='Enter'){event.preventDefault();searchProductsByName(this.value.trim());}">
-                            <div id="product-name-results" style="display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,0.12);max-height:240px;overflow:auto"></div>
+                    <div id="mode-search-name" class="product-mode row" style="display:block">
+                        <div class="col-md-6" style="width:93%">
+                            <div style="position:relative">
+                                <input type="text" id="product-name-search-input" class="form-control" autocomplete="off"
+                                    placeholder="{{ __('Search by name (min. 3 characters …)') }} {{ __('OR') }} {{ __('Type barcode manually or scan with a USB scanner') }}"
+                                    oninput="debouncedSearchProductsByName(this.value)"
+                                    onkeydown="if(event.key==='Enter'){event.preventDefault();searchProductsByName(this.value.trim());}">
+                                <div id="product-name-results" style="display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,0.12);max-height:240px;overflow:auto"></div>
+                            </div>
+                            <div class="form-hint">{{ __('Start typing a product name to see live suggestions') }}</div>
                         </div>
-                        <div class="form-hint">{{ __('Start typing a product name to see live suggestions') }}</div>
+                        <div class="col-md-6">
+                         <button style="position: absolute;right: 69px;top: 68%;" type="button" class="unit-add-icon" onclick="openProductModal()" title="{{ __('Add new product') }}">➕</button>
+                        </div>
+                        
+
                     </div>
+                    
             </div>
 
            
@@ -345,7 +353,7 @@ async function  setProductMode(mode) {
         <input type="hidden" name="product_id" id="product-id-hidden" value="{{ old('product_id') }}">
 
         {{-- Product confirmation card --}}
-        <div id="product-confirmed" style="display:block;margin-top:12px;
+        <div id="product-confirmed" style="display:none !important;margin-top:12px;
             background:rgba(45,122,45,0.18);border:1px solid #2d7a2d;
             border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px">
             <span style="font-size:24px">✅</span>
@@ -353,7 +361,7 @@ async function  setProductMode(mode) {
                 <div style="font-weight:700;font-size:15px;color:var(--text)" id="confirmed-name">–</div>
                 <div style="font-size:12px;color:var(--text-muted);margin-top:2px" id="confirmed-meta">–</div>
             </div>
-            <button type="button" class="unit-add-icon" onclick="openProductModal()" title="{{ __('Add new product') }}">➕</button>
+           
             <button type="button" onclick="clearProduct()"
                     style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:20px;padding:0 4px"
                     title="{{ __('Remove product') }}">×</button>

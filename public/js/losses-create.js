@@ -195,7 +195,9 @@ function setConfirmedProduct(id, name, price, supplier, unit) {
     if (supplier) meta.push(supplier);
     if (unit)     meta.push(unit);
     document.getElementById('confirmed-meta').textContent = meta.join(' · ') || '–';
-    document.getElementById('product-confirmed').classList.add('show');
+    //document.getElementById('product-confirmed').classList.add('show');
+    document.getElementById('product-confirmed').classList.remove('show');
+    
     clearProductError();
 }
 
