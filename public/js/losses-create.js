@@ -128,7 +128,7 @@ async function searchProductsByName(query) {
             button.className = 'product-search-result';
             button.style.cssText = 'display:block;width:100%;text-align:left;padding:10px 12px;border:0;background:#fff;cursor:pointer;';
             button.innerHTML = '<div style="font-weight:600;color:var(--text)">' + escapeHtml(product.name) + '</div>' +
-                '<div style="font-size:12px;color:var(--text-muted);margin-top:2px">' + escapeHtml(product.unit || 'Stk') + (product.purchase_price ? ' · ' + escapeHtml(product.purchase_price) + ' €' : '') + '</div>';
+                '<div style="font-size:12px;color:var(--text-muted);margin-top:2px">' + escapeHtml(product.unit || 'Stk') + (product.purchase_price ? ' · ' + escapeHtml(product.purchase_price) + ' €' : '')  +  ' - ' + escapeHtml(product.barcode) + '</div>';
             button.addEventListener('click', () => selectProductFromSearchResult(product));
             fragment.appendChild(button);
         });
@@ -155,7 +155,7 @@ function selectProductFromSearchResult(product) {
     setConfirmedProduct(product.id, product.name, product.purchase_price, product.supplier, product.unit);
     const input = document.getElementById('product-name-search-input');
     const results = document.getElementById('product-name-results');
-    if (input) input.value = product.name;
+    if (input) input.value = product.name +  ' - ' + product.barcode;
     if (results) {
         results.innerHTML = '';
         results.style.display = 'none';

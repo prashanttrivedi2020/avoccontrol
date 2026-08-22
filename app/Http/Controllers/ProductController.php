@@ -125,6 +125,7 @@ class ProductController extends Controller
             $products = Product::whereIn('user_id', $userIds)
             ->where('active', true)
             ->where('name', 'like', '%' . $query . '%')
+            ->orWhere('barcode', 'like', '%' . $query . '%')
             ->orderBy('name')
             ->limit(10)
             ->get([
