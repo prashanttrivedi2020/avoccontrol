@@ -323,7 +323,7 @@ async function  setProductMode(mode) {
                                     placeholder="{{ __('Search by name (min. 3 characters …)') }} {{ __('OR') }} {{ __('Type barcode manually or scan with a USB scanner') }}"
                                     oninput="debouncedSearchProductsByName(this.value)"
                                     onkeydown="if(event.key==='Enter'){event.preventDefault();searchProductsByName(this.value.trim());}">
-                                <div id="product-name-results" style="display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,0.12);max-height:240px;overflow:auto"></div>
+                                <div id="product-name-results" style="display:none;position:absolute;top:calc(100% - 170px);z-index:20;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,0.12);max-height:240px;overflow:auto"></div>
                             
                             
                         
