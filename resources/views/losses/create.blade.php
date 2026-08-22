@@ -316,23 +316,24 @@ async function  setProductMode(mode) {
                             <span>🔎</span> {{ __('Search product name') }}
                         </button> -->
                     {{-- Mode: Search products by name --}}
-                    <div id="mode-search-name" class="product-mode row" style="display:block">
-                        <div class="col-md-6" style="width:93%">
-                            <div style="position:relative">
-                                <input type="text" id="product-name-search-input" class="form-control" autocomplete="off"
+                    <div id="mode-search-name" class="product-mode form-group" style="display:inline-flex;width:100%;margin-bottom:0px;">
+                       
+                            
+                                <input style="flex: 1;" type="text" id="product-name-search-input" class="form-control" autocomplete="off"
                                     placeholder="{{ __('Search by name (min. 3 characters …)') }} {{ __('OR') }} {{ __('Type barcode manually or scan with a USB scanner') }}"
                                     oninput="debouncedSearchProductsByName(this.value)"
                                     onkeydown="if(event.key==='Enter'){event.preventDefault();searchProductsByName(this.value.trim());}">
                                 <div id="product-name-results" style="display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,0.12);max-height:240px;overflow:auto"></div>
-                            </div>
-                            <div class="form-hint">{{ __('Start typing a product name to see live suggestions') }}</div>
-                        </div>
-                        <div class="col-md-6">
-                         <button style="position: absolute;right: 69px;top: 68%;" type="button" class="unit-add-icon" onclick="openProductModal()" title="{{ __('Add new product') }}">➕</button>
-                        </div>
+                            
+                            
+                        
+                        
+                         <button type="button" class="unit-add-icon" onclick="openProductModal()" title="{{ __('Add new product') }}">➕</button>
+                        
                         
 
                     </div>
+                    <div class="form-hint">{{ __('Start typing a product name to see live suggestions') }}</div>
                     
             </div>
 
