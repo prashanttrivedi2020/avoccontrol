@@ -297,19 +297,21 @@ async function  setProductMode(mode) {
                             <span>☰</span> {{ __('Select manually') }}
                         </button> -->
                     {{-- Mode: Manual barcode text input --}}
-                    <div id="mode-manual-barcode" class="product-mode" style="display:none">
-                        <div style="display:flex;gap:8px">
-                            <input type="text" id="barcode-text-input" class="form-control"
-                                placeholder="{{ __('Enter EAN / UPC / barcode…') }}"
-                                style="font-family:monospace;letter-spacing:1px"
-                                onkeydown="if(event.key==='Enter'){event.preventDefault();lookupBarcode(this.value.trim());}">
-                            <button type="button" class="btn btn-primary"
-                                    onclick="lookupBarcode(document.getElementById('barcode-text-input').value.trim())"
-                                    style="white-space:nowrap">
-                                🔍 {{ __('Search') }}
-                            </button>
+                    <div style="display: none;">
+                        <div id="mode-manual-barcode" class="product-mode" style="display:none">
+                            <div style="display:flex;gap:8px">
+                                <input type="text" id="barcode-text-input" class="form-control"
+                                    placeholder="{{ __('Enter EAN / UPC / barcode…') }}"
+                                    style="font-family:monospace;letter-spacing:1px"
+                                    onkeydown="if(event.key==='Enter'){event.preventDefault();lookupBarcode(this.value.trim());}">
+                                <button type="button" class="btn btn-primary"
+                                        onclick="lookupBarcode(document.getElementById('barcode-text-input').value.trim())"
+                                        style="white-space:nowrap">
+                                    🔍 {{ __('Search') }}
+                                </button>
+                            </div>
+                            <div class="form-hint">{{ __('Type barcode manually or scan with a USB scanner') }}</div>
                         </div>
-                        <div class="form-hint">{{ __('Type barcode manually or scan with a USB scanner') }}</div>
                     </div>
                     <div class="mode-tab" style="display:none">{{ __('OR') }}</div>
                      <!-- <button type="button" class="mode-tab" onclick="setProductMode('search-name')" id="tab-search-name">
