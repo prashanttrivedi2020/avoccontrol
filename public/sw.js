@@ -5,8 +5,8 @@ const PRECACHE_URLS = [
     '/',
     '/offline',
     '/manifest.json',
-    '/icons/icon-192.png',
-    '/icons/icon-512.png',
+    '/icons/icon-192_norgb.png',
+    '/icons/icon-512_norgb.png',
 ];
 
 // ─── Install: pre-cache static shell ────────────────────────────────────────
