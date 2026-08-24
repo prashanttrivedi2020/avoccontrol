@@ -9,7 +9,7 @@ use App\Models\User;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // $products = Auth::user()->products()
         //     ->withCount('losses')
@@ -20,12 +20,21 @@ class ProductController extends Controller
 
         $userIds = $this->getUserIds();
 
+        $search = trim((string) $request->query('search', ''));
+
         $products = Product::whereIn('user_id', $userIds)
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('barcode', 'like', '%' . $search . '%');
+                });
+            })
             ->withCount('losses')
             ->orderBy('name')
-            ->paginate(50);
+            ->paginate(50)
+            ->withQueryString();
 
-        return view('products.index', compact('products'));
+        return view('products.index', compact('products', 'search'));
     }
 
     public function create()
