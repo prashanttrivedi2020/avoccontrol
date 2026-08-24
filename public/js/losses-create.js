@@ -57,6 +57,9 @@ async function stopScan() {
     }
     document.getElementById('btn-start-scan').style.display = 'none';
     document.getElementById('btn-stop-scan').style.display = 'none';
+      document.getElementById('mode-scan').style.display = 'none';
+   
+    
 }
 
 // ── Barcode lookup ───────────────────────────────────────────────────────────
