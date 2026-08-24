@@ -318,14 +318,14 @@ async function  setProductMode(mode) {
                             <span>🔎</span> {{ __('Search product name') }}
                         </button> -->
                     {{-- Mode: Search products by name --}}
-                    <div id="mode-search-name" class="product-mode form-group" style="display:inline-flex;width:100%;margin-bottom:0px;">
+                    <div id="mode-search-name" class="product-mode form-group" style="display:inline-flex;position:relative;width:100%;margin-bottom:0px;">
                        
                             
                                 <input style="flex: 1;" type="text" id="product-name-search-input" class="form-control" autocomplete="off"
                                     placeholder="{{ __('Search by name (min. 3 characters …)') }} {{ __('OR') }} {{ __('Type barcode manually or scan with a USB scanner') }}"
                                     oninput="debouncedSearchProductsByName(this.value)"
                                     onkeydown="if(event.key==='Enter'){event.preventDefault();searchProductsByName(this.value.trim());}">
-                                <div id="product-name-results" style="display:none;position:absolute;top:calc(100% - 170px);z-index:20;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,0.12);max-height:240px;overflow:auto"></div>
+                                <div id="product-name-results" style="display:none;position:absolute;top:calc(100% + 4px);left:0;width:100%;z-index:20;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,0.12);max-height:240px;overflow:auto"></div>
                             
                             
                         
