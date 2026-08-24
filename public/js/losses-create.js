@@ -43,7 +43,7 @@ async function startScan() {
     } catch (err) {
         console.error(err);
         document.getElementById('scan-status').textContent = '⚠️ ' + TRANS.scanError + ' (' + (err.message || err) + ')';
-        document.getElementById('btn-start-scan').style.display = '';
+        document.getElementById('btn-start-scan').style.display = 'none';
         document.getElementById('btn-stop-scan').style.display = 'none';
     }
 }
@@ -55,7 +55,7 @@ async function stopScan() {
         scannerRunning = false;
         scanner = null;
     }
-    document.getElementById('btn-start-scan').style.display = '';
+    document.getElementById('btn-start-scan').style.display = 'none';
     document.getElementById('btn-stop-scan').style.display = 'none';
 }
 
