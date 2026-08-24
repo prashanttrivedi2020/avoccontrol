@@ -28,7 +28,7 @@
                 <p style="margin-top:4px;color:var(--text-muted);font-size:13px">{{ __('Showing :from–:to of :total products', ['from' => $products->firstItem(), 'to' => $products->lastItem(), 'total' => $products->total()]) }}</p>
             </div>
             <form method="GET" action="{{ route('products.index') }}" style="display:flex;align-items:center;gap:8px;width:min(100%,420px)">
-                <label for="product-search" class="sr-only">{{ __('Search products') }}</label>
+                <!-- <label for="product-search" class="sr-only">{{ __('Search products') }}</label> -->
                 <input type="search" id="product-search" name="search" class="form-control"
                        value="{{ $search }}" placeholder="{{ __('Search by name or barcode') }}"
                        style="min-width:0;flex:1">
