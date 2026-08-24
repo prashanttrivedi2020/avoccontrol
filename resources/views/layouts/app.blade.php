@@ -501,7 +501,7 @@
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-logo">
         <div class="brand">
-             <img src={{asset('images/logo.png')}} alt="Logo" style="width: 94px; height: auto;">
+             <img src={{asset('images/logonew.png')}} alt="Logo" style="width: 94px; height: auto;">
             <!-- <span class="fire">Fire</span><span class="kont">Kontrol</span> <span class="num">365</span> -->
         </div>
         <!-- <div class="sub">{{ __('Loss Control & Loss Documentation') }}</div> -->

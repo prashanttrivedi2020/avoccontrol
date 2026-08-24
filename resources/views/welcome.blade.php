@@ -258,7 +258,7 @@
         <div class="auth-logo">
             <div class="logo-mark">
                 <div class="logo-text">
-                    <img src={{asset('images/logo.png')}} alt="Logo" style="width: 259px; height: auto;">
+                    <img src={{asset('images/logonew.png')}} alt="Logo" style="width: 259px; height: auto;">
                 </div>
             </div>
             <div class="logo-sub">{{ __('No money down the drain!') }} 🔥</div>
