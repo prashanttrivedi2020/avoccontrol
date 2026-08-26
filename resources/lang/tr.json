@@ -29,6 +29,9 @@
 
     "Create account": "Hesap Oluştur",
     "Log in": "Giriş Yap",
+    "Name": "Ad",
+    "Email": "E-posta",
+    "Phone number (optional)": "Telefon numarası (isteğe bağlı)",
     "Username": "Kullanıcı Adı",
     "Password": "Şifre",
     "Confirm password": "Şifreyi Tekrarla",

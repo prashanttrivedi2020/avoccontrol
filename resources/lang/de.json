@@ -29,6 +29,9 @@
 
     "Create account": "Konto erstellen",
     "Log in": "Anmelden",
+    "Name": "Name",
+    "Email": "E-Mail",
+    "Phone number (optional)": "Telefonnummer (optional)",
     "Username": "Benutzername",
     "Password": "Kennwort",
     "Confirm password": "Kennwort wiederholen",
