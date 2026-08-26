@@ -17,6 +17,22 @@
 
         <div class="grid-2">
             <div>
+                <label for="name" style="display:block;font-weight:600;margin-bottom:6px">{{ __('Name') }}</label>
+                <input id="name" name="name" type="text" value="{{ old('name', auth()->user()->name) }}" class="form-control" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;">
+            </div>
+            <div>
+                <label for="email" style="display:block;font-weight:600;margin-bottom:6px">{{ __('Email') }}</label>
+                <input id="email" name="email" type="email" value="{{ old('email', auth()->user()->email) }}" class="form-control" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;">
+            </div>
+        </div>
+
+        <div>
+            <label for="phone_number" style="display:block;font-weight:600;margin-bottom:6px">{{ __('Phone number (optional)') }}</label>
+            <input id="phone_number" name="phone_number" type="tel" value="{{ old('phone_number', auth()->user()->phone_number) }}" class="form-control" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;">
+        </div>
+
+        <div class="grid-2">
+            <div>
                 <label for="company_name" style="display:block;font-weight:600;margin-bottom:6px">{{ __('Company name') }}</label>
                 <input id="company_name" name="company_name" type="text" value="{{ old('company_name', auth()->user()->company_name) }}" class="form-control" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;">
             </div>

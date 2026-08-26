@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class UserSettingsController extends Controller
 {
@@ -15,6 +16,9 @@ class UserSettingsController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($request->user()->id)],
+            'phone_number' => ['nullable', 'string', 'max:30'],
             'company_name' => ['nullable', 'string', 'max:255'],
             'owner_name' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:500'],

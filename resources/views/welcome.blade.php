@@ -290,9 +290,9 @@
                 @csrf
                 <input type="hidden" name="_tab" value="login">
                 <div class="form-group">
-                    <label class="form-label">{{ __('Username') }}</label>
-                    <input type="text" name="username" class="form-input"
-                           value="{{ old('username') }}" autocomplete="username">
+                      <label class="form-label">{{ __('Email') }}</label>
+                      <input type="email" name="email" class="form-input"
+                          value="{{ old('email') }}" autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label class="form-label">{{ __('Password') }}</label>
@@ -308,10 +308,22 @@
                 @csrf
                 <input type="hidden" name="_tab" value="register">
                 <div class="form-group">
-                    <label class="form-label">{{ __('Username') }}</label>
-                    <input type="text" name="username" class="form-input"
-                           value="{{ old('username') }}" autocomplete="username" autofocus>
-                    @error('username') <div class="form-error">{{ $message }}</div> @enderror
+                      <label class="form-label">{{ __('Name') }}</label>
+                      <input type="text" name="name" class="form-input"
+                          value="{{ old('name') }}" autocomplete="name" autofocus>
+                      @error('name') <div class="form-error">{{ $message }}</div> @enderror
+                  </div>
+                  <div class="form-group">
+                      <label class="form-label">{{ __('Email') }}</label>
+                      <input type="email" name="email" class="form-input"
+                          value="{{ old('email') }}" autocomplete="email">
+                      @error('email') <div class="form-error">{{ $message }}</div> @enderror
+                  </div>
+                  <div class="form-group">
+                      <label class="form-label">{{ __('Phone number (optional)') }}</label>
+                      <input type="tel" name="phone_number" class="form-input"
+                          value="{{ old('phone_number') }}" autocomplete="tel">
+                      @error('phone_number') <div class="form-error">{{ $message }}</div> @enderror
                 </div>
                 <div class="form-group">
                     <label class="form-label">{{ __('Password') }}</label>

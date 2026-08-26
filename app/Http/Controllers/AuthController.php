@@ -21,22 +21,26 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'username' => ['required', 'string', 'min:3', 'max:50', 'unique:users', 'regex:/^[a-zA-Z0-9_]+$/'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone_number' => ['nullable', 'string', 'max:30'],
             'password' => ['required', 'confirmed', Password::min(6)],
         ], [
-            'username.required'  => __('Username is required.'),
-            'username.unique'    => __('This username is already taken.'),
-            'username.regex'     => __('Only letters, numbers and underscores allowed.'),
+            'name.required'      => __('Name is required.'),
+            'email.required'     => __('Email is required.'),
+            'email.email'        => __('Please enter a valid email address.'),
+            'email.unique'       => __('This email address is already registered.'),
             'password.required'  => __('Password is required.'),
             'password.confirmed' => __('The passwords do not match.'),
             'password.min'       => __('Password must be at least 6 characters.'),
         ]);
 
         $user = User::create([
-            'name'     => $request->username,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'role'     => 'user',
+            'name'         => $request->name,
+            'email'        => $request->email,
+            'phone_number' => $request->phone_number,
+            'password'     => Hash::make($request->password),
+            'role'         => 'user',
         ]);
 
         Auth::login($user);
@@ -47,21 +51,21 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'username' => ['required', 'string'],
+            'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ], [
-            'username.required' => __('Username is required.'),
+            'email.required' => __('Email is required.'),
             'password.required' => __('Password is required.'),
         ]);
 
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $request->boolean('remember'))) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->boolean('remember'))) {
             $request->session()->regenerate();
             return redirect()->intended(route('dashboard'));
         }
 
         return back()->withErrors([
-            'username' => __('Username or password incorrect.'),
-        ])->onlyInput('username');
+            'email' => __('Email or password incorrect.'),
+        ])->onlyInput('email');
     }
 
     public function demoLogin(Request $request)

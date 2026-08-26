@@ -544,9 +544,9 @@
     </nav>
     <div class="sidebar-footer">
         <div class="sidebar-user">
-            <div class="avatar">{{ strtoupper(substr(auth()->user()->username, 0, 1)) }}</div>
+            <div class="avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
             <div>
-                <div style="font-size:13px;color:var(--text);font-weight:500">{{ auth()->user()->username }}</div>
+                <div style="font-size:13px;color:var(--text);font-weight:500">{{ auth()->user()->name }}</div>
                 @if(auth()->user()->isDemo())
                     <span class="demo-badge">DEMO</span>
                 @endif

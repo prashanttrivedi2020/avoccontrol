@@ -87,7 +87,7 @@
                 <div>
                     <div class="stat-label">{{ __('Recorded at') }}</div>
                     <div style="font-size:13px;color:var(--text-muted);margin-top:4px">
-                        {{ $loss->created_at->format('d.m.Y H:i') }} {{ __('by') }} {{ $loss->user->username ?? '–' }}
+                        {{ $loss->created_at->format('d.m.Y H:i') }} {{ __('by') }} {{ $loss->user->name ?? '–' }}
                     </div>
                 </div>
             </div>
