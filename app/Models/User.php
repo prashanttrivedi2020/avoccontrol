@@ -17,6 +17,7 @@ class User extends Authenticatable
         'phone_number',
         'password',
         'role',
+        'is_active',
         'store_name',
         'company_name',
         'owner_name',
@@ -33,6 +34,7 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
     }
 
@@ -64,5 +66,15 @@ class User extends Authenticatable
     public function isDemo(): bool
     {
         return $this->role === 'demo';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isActiveUser(): bool
+    {
+        return (bool) $this->is_active;
     }
 }

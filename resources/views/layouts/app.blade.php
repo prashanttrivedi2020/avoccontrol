@@ -511,6 +511,11 @@
         <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <span class="icon"> 🏠</span>{{ __('Dashboard') }}
         </a>
+        @if(auth()->user()->isAdmin())
+            <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}">
+                <span class="icon">👑</span> {{ __('Admin') }}
+            </a>
+        @endif
         <div class="nav-section">{{ __('Loss Documentation') }}</div>
         <a href="{{ route('losses.create') }}" class="nav-link {{ request()->routeIs('losses.create') ? 'active' : '' }}">
             <span class="icon">➕</span> {{ __('Record Loss') }}

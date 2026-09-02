@@ -8,6 +8,7 @@ use App\Http\Controllers\LossController;
 use App\Http\Controllers\Api\ReasonController;
 use App\Http\Controllers\UserSettingsController;
 use App\Http\Controllers\Api\UnitController;
+use App\Http\Middleware\AdminOnly;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -38,6 +39,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings', [UserSettingsController::class, 'show'])->name('settings');
     Route::post('/settings', [UserSettingsController::class, 'update'])->name('settings.update');
 
+    Route::middleware(AdminOnly::class)->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/users', [\App\Http\Controllers\AdminController::class, 'index'])->name('users.index');
+        Route::post('/users/{user}/toggle-status', [\App\Http\Controllers\AdminController::class, 'toggleStatus'])->name('users.toggle-status');
+        Route::get('/users/{user}/losses', [\App\Http\Controllers\AdminController::class, 'userLosses'])->name('users.losses');
+    });
+
     // Product CSV import (must come before resource to avoid {product} wildcard)
     Route::get('/products/import/upload',   [ProductImportController::class, 'showUpload'])->name('products.import.upload');
     Route::post('/products/import/upload',  [ProductImportController::class, 'upload'])->name('products.import.upload.post');
@@ -52,12 +59,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/products/barcode', [ProductController::class, 'searchByBarcode'])->name('products.barcode');
 
     // Units
-    Route::get('/api/units', [UnitController::class, 'getActive'])->name('units.active');
-    Route::post('/api/units', [UnitController::class, 'store'])->name('units.store');
+    Route::get('/api/units', [UnitController::class, 'getActive'])->name('api.units.active');
+    Route::post('/api/units', [UnitController::class, 'store'])->name('api.units.store');
 
     // Reasons
-    Route::get('/api/reasons', [ReasonController::class, 'getActive'])->name('reasons.active');
-    Route::post('/api/reasons', [ReasonController::class, 'store'])->name('reasons.store');
+    Route::get('/api/reasons', [ReasonController::class, 'getActive'])->name('api.reasons.active');
+    Route::post('/api/reasons', [ReasonController::class, 'store'])->name('api.reasons.store');
 
     Route::resource('units', App\Http\Controllers\UnitManagementController::class)->except(['show']);
     Route::resource('reasons', App\Http\Controllers\ReasonManagementController::class)->except(['show']);

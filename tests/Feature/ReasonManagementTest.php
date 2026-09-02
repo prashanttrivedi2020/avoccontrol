@@ -22,11 +22,11 @@ class ReasonManagementTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->getJson(route('reasons.active'))
+        $this->getJson(route('api.reasons.active'))
             ->assertOk()
             ->assertJsonFragment(['name' => 'Spoilage']);
 
-        $this->postJson(route('reasons.store'), ['name' => 'Quality issue'])
+        $this->postJson(route('api.reasons.store'), ['name' => 'Quality issue'])
             ->assertCreated()
             ->assertJsonPath('reason.name', 'Quality issue');
 

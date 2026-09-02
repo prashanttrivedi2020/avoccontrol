@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('units', function (Blueprint $table) {
-            $table->softDeletes();
-        });
+        if (Schema::hasTable('units')) {
+            Schema::table('units', function (Blueprint $table) {
+                $table->softDeletes();
+            });
+        }
 
-        Schema::table('reasons', function (Blueprint $table) {
-            $table->softDeletes();
-        });
+        if (Schema::hasTable('reasons')) {
+            Schema::table('reasons', function (Blueprint $table) {
+                $table->softDeletes();
+            });
+        }
     }
 
     /**
@@ -25,12 +29,16 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('units', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
+        if (Schema::hasTable('units')) {
+            Schema::table('units', function (Blueprint $table) {
+                $table->dropSoftDeletes();
+            });
+        }
 
-        Schema::table('reasons', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
+        if (Schema::hasTable('reasons')) {
+            Schema::table('reasons', function (Blueprint $table) {
+                $table->dropSoftDeletes();
+            });
+        }
     }
 };

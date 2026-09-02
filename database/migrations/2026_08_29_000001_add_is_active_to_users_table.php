@@ -9,17 +9,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('username')->nullable()->change();
-            $table->timestamp('email_verified_at')->nullable()->after('email');
-            $table->string('phone_number')->nullable()->after('email');
+            if (! Schema::hasColumn('users', 'is_active')) {
+                $table->boolean('is_active')->default(true)->after('role');
+            }
         });
     }
 
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['email_verified_at', 'phone_number']);
-            $table->string('username')->nullable(false)->change();
+            if (Schema::hasColumn('users', 'is_active')) {
+                $table->dropColumn('is_active');
+            }
         });
     }
 };

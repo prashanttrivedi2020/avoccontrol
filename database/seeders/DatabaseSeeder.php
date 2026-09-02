@@ -8,7 +8,6 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Seeding is handled in AuthController::demoLogin()
-        // for the demo user on first login.
+        $this->call(AdminUserSeeder::class);
     }
 }

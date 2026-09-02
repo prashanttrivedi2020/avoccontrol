@@ -41,6 +41,7 @@ class AuthController extends Controller
             'phone_number' => $request->phone_number,
             'password'     => Hash::make($request->password),
             'role'         => 'user',
+            'is_active'    => true,
         ]);
 
         Auth::login($user);
@@ -57,6 +58,14 @@ class AuthController extends Controller
             'email.required' => __('Email is required.'),
             'password.required' => __('Password is required.'),
         ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user && ! $user->is_active) {
+            return back()->withErrors([
+                'email' => __('This account has been deactivated.'),
+            ])->onlyInput('email');
+        }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->boolean('remember'))) {
             $request->session()->regenerate();
